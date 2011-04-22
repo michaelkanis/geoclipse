@@ -19,11 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map.tilefactories;
+package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.projections.IProjection;
+import net.skweez.geoclipse.map.IProjection;
 
 
 /**

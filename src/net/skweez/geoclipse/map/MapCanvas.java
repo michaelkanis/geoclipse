@@ -30,7 +30,6 @@ import net.skweez.geoclipse.map.internal.Tile;
 import net.skweez.geoclipse.map.internal.TileLoadListener;
 import net.skweez.geoclipse.map.internal.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-import net.skweez.geoclipse.model.GeoPoint;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;

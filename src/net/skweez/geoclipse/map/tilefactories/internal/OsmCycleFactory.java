@@ -1,23 +1,23 @@
-package net.skweez.geoclipse.map.tilefactories;
+package net.skweez.geoclipse.map.tilefactories.internal;
 
 import net.skweez.geoclipse.projections.MercatorProjection;
 
 /**
- * The OpenStreetMap Mapnik rendered map.
+ * The OpenStreetMap bicycle map.
  * 
  * @author Michael Kanis
  * @author $Author: damumbl $
  * @version $Rev: 558 $
  * @levd.rating YELLOW Rev: 483
  */
-public class OsmMapnikFactory extends DefaultTileFactory {
+public class OsmCycleFactory extends DefaultTileFactory {
 
-	private static final String NAME = "OSM Mapnik";
+	private static final String NAME = "OSM Cycle map";
 
-	private static final String URL = "http://tile.openstreetmap.org";
+	private static final String URL = "http://andy.sandbox.cloudmade.com/tiles/cycle";
 
 	/** Constructor. */
-	public OsmMapnikFactory() {
+	public OsmCycleFactory() {
 		super(new MercatorProjection(), new OpenStreetMapInfo(URL));
 	}
 

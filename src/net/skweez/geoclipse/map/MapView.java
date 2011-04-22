@@ -27,7 +27,6 @@ import java.util.List;
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.Constants;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-import net.skweez.geoclipse.model.GeoPoint;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Composite;

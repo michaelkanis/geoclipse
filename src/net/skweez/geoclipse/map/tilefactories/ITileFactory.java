@@ -23,14 +23,14 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
+import net.skweez.geoclipse.map.IProjection;
 import net.skweez.geoclipse.map.internal.Tile;
-import net.skweez.geoclipse.projections.IProjection;
 
 
 /**
  * The interface for all tile factories, which are responsible of fetching image
  * data for the map. You probably shouldn't implment this interface directly,
- * but extend {@link TileFactoryBase}.
+ * but extend {@link BaseTileFactory}.
  * 
  * @author Michael Kanis
  * @author $Author: damumbl $

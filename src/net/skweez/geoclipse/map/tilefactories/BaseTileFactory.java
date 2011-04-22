@@ -2,7 +2,8 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.projections.IProjection;
+import net.skweez.geoclipse.map.IProjection;
+
 
 
 /**
@@ -15,13 +16,13 @@ import net.skweez.geoclipse.projections.IProjection;
  * @version $Rev: 561 $
  * @levd.rating YELLOW Rev: 561
  */
-public abstract class TileFactoryBase implements ITileFactory {
+public abstract class BaseTileFactory implements ITileFactory {
 
 	/** The projection that is used by this tile factory. */
 	private final IProjection projection;
 
 	/** Constructor. */
-	public TileFactoryBase(IProjection projection) {
+	public BaseTileFactory(IProjection projection) {
 		this.projection = projection;
 	}
 

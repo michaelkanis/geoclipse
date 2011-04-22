@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map.tilefactories;
+package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -30,9 +30,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
+import net.skweez.geoclipse.map.IProjection;
 import net.skweez.geoclipse.map.internal.MapImageCache;
 import net.skweez.geoclipse.map.internal.Tile;
-import net.skweez.geoclipse.projections.IProjection;
+import net.skweez.geoclipse.map.tilefactories.BaseTileFactory;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -52,7 +53,7 @@ import org.eclipse.swt.widgets.Display;
  * @version $Rev: 561 $
  * @levd.rating RED Rev:
  */
-public abstract class CachedTileFactoryBase extends TileFactoryBase {
+public abstract class CachedTileFactoryBase extends BaseTileFactory {
 
 	/** The number of threads to start for downloading. */
 	private final static int THREAD_POOL_SIZE = 20;

@@ -45,31 +45,31 @@
    <extension
          point="net.skweez.geoclipse.TileFactory">
       <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.OsmMapnikFactory"
+            class="net.skweez.geoclipse.map.tilefactories.internal.OsmMapnikFactory"
             name="OsmMapnikFactory"/>
    </extension>
    <extension
          point="net.skweez.geoclipse.TileFactory">
       <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.OsmCycleFactory"
+            class="net.skweez.geoclipse.map.tilefactories.internal.OsmCycleFactory"
             name="OsmCycleFactory"/>
    </extension>
    <extension
          point="net.skweez.geoclipse.TileFactory">
       <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.OsmTilesAtHomeFactory"
+            class="net.skweez.geoclipse.map.tilefactories.internal.OsmTilesAtHomeFactory"
             name="OsmTilesAtHomeFactory"/>
    </extension>
    <extension
          point="net.skweez.geoclipse.TileFactory">
       <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.OpenStreetBrowserFactory"
+            class="net.skweez.geoclipse.map.tilefactories.internal.OpenStreetBrowserFactory"
             name="OpenStreetBrowserFactory"/>
    </extension>
    <extension
          point="net.skweez.geoclipse.TileFactory">
       <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.NasaBlueMarbleFactory"
+            class="net.skweez.geoclipse.map.tilefactories.internal.NasaBlueMarbleFactory"
             name="NasaBlueMarbleFactory"/>
    </extension>
 </plugin>

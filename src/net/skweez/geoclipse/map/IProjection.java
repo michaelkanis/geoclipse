@@ -18,11 +18,10 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.projections;
+package net.skweez.geoclipse.map;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.model.GeoPoint;
 
 /**
  * A projection is a method to represent the surface of the three dimensional

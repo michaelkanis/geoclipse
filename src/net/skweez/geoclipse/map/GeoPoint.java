@@ -17,7 +17,7 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.model;
+package net.skweez.geoclipse.map;
 
 /**
  * An immutable coordinate in the real (geographic) world, composed of a

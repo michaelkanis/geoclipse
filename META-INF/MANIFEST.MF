@@ -13,7 +13,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: net.skweez.geoclipse.map,
- net.skweez.geoclipse.map.tilefactories,
- net.skweez.geoclipse.model,
- net.skweez.geoclipse.projections
+ net.skweez.geoclipse.map.tilefactories
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

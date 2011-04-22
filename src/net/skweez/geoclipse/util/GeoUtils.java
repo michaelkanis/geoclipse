@@ -19,7 +19,7 @@
 
 package net.skweez.geoclipse.util;
 
-import net.skweez.geoclipse.model.GeoPoint;
+import net.skweez.geoclipse.map.GeoPoint;
 
 /**
  * A utility class for geographical calculations.

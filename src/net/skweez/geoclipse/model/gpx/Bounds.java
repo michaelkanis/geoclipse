@@ -21,7 +21,7 @@ package net.skweez.geoclipse.model.gpx;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.skweez.geoclipse.model.GeoPoint;
+import net.skweez.geoclipse.map.GeoPoint;
 
 import org.w3c.dom.Element;
 

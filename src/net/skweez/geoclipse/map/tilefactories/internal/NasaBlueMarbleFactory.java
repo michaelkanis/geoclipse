@@ -1,4 +1,4 @@
-package net.skweez.geoclipse.map.tilefactories;
+package net.skweez.geoclipse.map.tilefactories.internal;
 
 import net.skweez.geoclipse.projections.EquirectangularProjection;
 

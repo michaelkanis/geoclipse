@@ -21,7 +21,7 @@
  ******************************************************************************/
 package net.skweez.geoclipse;
 
-import net.skweez.geoclipse.model.GeoPoint;
+import net.skweez.geoclipse.map.GeoPoint;
 
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
