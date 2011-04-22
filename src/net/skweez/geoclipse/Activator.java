@@ -27,6 +27,7 @@ import static net.skweez.geoclipse.Constants.LOADING_IMG_KEY;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.skweez.geoclipse.map.Overlay;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.core.runtime.CoreException;
@@ -67,15 +68,23 @@ public class Activator extends AbstractUIPlugin {
 	/** The shared instance. */
 	private static Activator plugin;
 
+	/** The extension registry. */
+	private final IExtensionRegistry registry = RegistryFactory.getRegistry();
+
 	/** Holds all registered tile factories. */
 	private List<ITileFactory> tileFactories;
+
+	/** Holds all registered tile map overlays. */
+	private List<Overlay> overlays;
 
 	/** {@inheritDoc} */
 	@Override
 	public void start(final BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		readTileFactories();
+
+		tileFactories = readExtensionList(TILE_FACTORY_EXTENSION_POINT);
+		overlays = readExtensionList(OVERLAY_EXTENSION_POINT);
 	}
 
 	/** {@inheritDoc} */
@@ -90,36 +99,37 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
-	/**
-	 * Reads all the registered extensions for the extension point
-	 * {@value #TILE_FACTORY_EXTENSION_POINT}.
-	 */
-	private void readTileFactories() {
-		tileFactories = new ArrayList<ITileFactory>();
+	/** Reads all the registered extensions for the given extension point. */
+	@SuppressWarnings("unchecked")
+	private <T> List<T> readExtensionList(String extensionPoint) {
+		List<T> extensionList = new ArrayList<T>();
 
-		final IExtensionRegistry registry = RegistryFactory.getRegistry();
-		final IExtension[] extensions = registry.getExtensionPoint(
-				TILE_FACTORY_EXTENSION_POINT).getExtensions();
+		for (IExtension extension : registry.getExtensionPoint(extensionPoint)
+				.getExtensions()) {
 
-		for (final IExtension extension : extensions) {
 			// The extension point has only one configuration element
-			final IConfigurationElement element = extension
+			IConfigurationElement element = extension
 					.getConfigurationElements()[0];
 
 			try {
 				Object obj = element.createExecutableExtension("class");
-				CCSMAssert.isInstanceOf(obj, ITileFactory.class);
-				// ((TileFactoryBase) obj).
-				tileFactories.add((ITileFactory) obj);
+				extensionList.add((T) obj);
 			} catch (final CoreException e) {
 				CCSMAssert.fail(e.getMessage());
 			}
 		}
+
+		return extensionList;
 	}
 
 	/** Returns a list with all registered tile factories. */
 	public List<ITileFactory> getTileFactories() {
 		return tileFactories;
+	}
+
+	/** Returns overlays. */
+	public List<Overlay> getOverlays() {
+		return overlays;
 	}
 
 	/**
