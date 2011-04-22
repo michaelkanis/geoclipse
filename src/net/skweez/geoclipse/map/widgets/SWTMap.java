@@ -54,11 +54,9 @@ public class SWTMap extends MapBase {
 	/** Setup the listeners. */
 	protected void setupListeners() {
 		MapMouseListener mouseListener = new MapMouseListener(this, canvas);
-		canvas.addListener(SWT.MouseDown, mouseListener);
-		canvas.addListener(SWT.MouseUp, mouseListener);
-		canvas.addListener(SWT.MouseDoubleClick, mouseListener);
-		canvas.addListener(SWT.MouseMove, mouseListener);
-		canvas.addListener(SWT.MouseWheel, mouseListener);
+		canvas.addMouseListener(mouseListener);
+		canvas.addMouseMoveListener(mouseListener);
+		canvas.addMouseWheelListener(mouseListener);
 
 		canvas.addKeyListener(new MapKeyListener(this));
 

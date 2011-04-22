@@ -26,9 +26,10 @@ import java.awt.Rectangle;
 
 import net.skweez.geoclipse.map.Constants;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseWheelListener;
 
 /**
  * This class implements all the listener interfaces for mouse interactions with
@@ -40,7 +41,8 @@ import org.eclipse.swt.widgets.Listener;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class MapMouseListener implements Listener {
+public class MapMouseListener implements MouseListener, MouseMoveListener,
+		MouseWheelListener {
 
 	/** The Map this listener is handling. */
 	private final MapBase map;
@@ -60,30 +62,9 @@ public class MapMouseListener implements Listener {
 		this.canvas = canvas;
 	}
 
-	/** Event dispatcher method. */
-	public void handleEvent(final Event event) {
-
-		switch (event.type) {
-		case SWT.MouseWheel:
-			mouseWheel(event);
-			break;
-		case SWT.MouseDoubleClick:
-			mouseDoubleClick(event);
-			break;
-		case SWT.MouseDown:
-			mouseDown(event);
-			break;
-		case SWT.MouseMove:
-			mouseMove(event);
-			break;
-		case SWT.MouseUp:
-			mouseUp(event);
-			break;
-		}
-	}
-
 	/** Zoom in or out when the user scrolls on the canvas. */
-	private void mouseWheel(final Event event) {
+	@Override
+	public void mouseScrolled(final MouseEvent event) {
 		if (event.count < 0) {
 			map.zoomOut();
 		} else {
@@ -92,7 +73,8 @@ public class MapMouseListener implements Listener {
 	}
 
 	/** Zooms in to the position clicked on. */
-	private void mouseDoubleClick(final Event event) {
+	@Override
+	public void mouseDoubleClick(final MouseEvent event) {
 		if (event.button == 1) {
 			Rectangle viewport = map.getViewport();
 			map.setCenter(viewport.x + event.x, viewport.y + event.y);
@@ -103,7 +85,8 @@ public class MapMouseListener implements Listener {
 	/**
 	 * Only saves state and position of the cursor. This is needed for panning.
 	 */
-	private void mouseDown(final Event e) {
+	@Override
+	public void mouseDown(final MouseEvent e) {
 		if (e.button == 1) {
 			oldPosition = new Point(e.x, e.y);
 			isLeftMouseButtonPressed = true;
@@ -114,7 +97,8 @@ public class MapMouseListener implements Listener {
 	 * If the mouse is moved with the primary mouse button pressed, the map is
 	 * moved by the amount the user moves the mouse.
 	 */
-	private void mouseMove(final Event e) {
+	@Override
+	public void mouseMove(final MouseEvent e) {
 		if ((isLeftMouseButtonPressed) == false) {
 			return;
 		}
@@ -135,7 +119,8 @@ public class MapMouseListener implements Listener {
 	 * Centers the map to the position that was clicked on for the second button
 	 * (normally the middle one). Resets state for primary mouse button.
 	 */
-	private void mouseUp(final Event e) {
+	@Override
+	public void mouseUp(final MouseEvent e) {
 		if (e.button == 1) {
 			isLeftMouseButtonPressed = false;
 			canvas.setCursor(Constants.CURSOR_DEFAULT);
