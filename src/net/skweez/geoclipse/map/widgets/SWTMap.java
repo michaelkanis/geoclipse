@@ -27,11 +27,17 @@ import java.awt.Rectangle;
 
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.gpx.model.GeoPoint;
+import net.skweez.geoclipse.map.Constants;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -46,10 +52,7 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class SWTMap {
-
-	/** The canvas to draw on. */
-	protected SWTMapCanvas canvas;
+public class SWTMap extends Canvas {
 
 	/** The zoom level. Normally a value between around 0 and 20. */
 	protected int zoom = 1;
@@ -63,34 +66,56 @@ public class SWTMap {
 	/** Factory used to grab the tiles necessary for painting the map. */
 	protected ITileFactory tileFactory;
 
+	/** Buffer image that'll hold the visible part of the map. */
+	private Image mapImage;
+
+	/** The graphics context for the map image that we will draw on. */
+	private GC gc;
+
+	/** Queues redraws when a tile has been fully loaded. */
+	final TileLoadListener tileLoadListener;
+
+	/** Used to decide wether a redraw request needs to be executed or not. */
+	private int lastRedrawRequest = 0;
+
 	/** Default constructor. */
 	public SWTMap(final Composite parent) {
-		canvas = new SWTMapCanvas(this, parent);
+		super(parent, SWT.DOUBLE_BUFFERED);
+		tileLoadListener = new TileLoadListener(this);
+
+		/*
+		 * We could implement the listener interfaces directly, but that would
+		 * make the interface methods public. Instead, the SWT convention is to
+		 * use anonymous inner classes to forward the functionality to
+		 * non-public methods of the same name.
+		 */
+		addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(final PaintEvent e) {
+				SWTMap.this.paintControl(e);
+			}
+		});
+
 		setupListeners();
 	}
 
 	/** Setup the listeners. */
 	protected void setupListeners() {
-		MapController controller = new MapController(this, canvas);
-		canvas.addMouseListener(controller);
-		canvas.addMouseMoveListener(controller);
-		canvas.addMouseWheelListener(controller);
-		canvas.addKeyListener(controller);
+		MapController controller = new MapController(this);
+		addMouseListener(controller);
+		addMouseMoveListener(controller);
+		addMouseWheelListener(controller);
+		addKeyListener(controller);
 
-		canvas.addListener(SWT.Resize, new Listener() {
+		addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				viewport.width = canvas.getClientArea().width;
-				viewport.height = canvas.getClientArea().height;
+				viewport.width = getClientArea().width;
+				viewport.height = getClientArea().height;
 				updateViewport();
 				queueRedraw();
 			}
 		});
-	}
-
-	/** Get rid of SWT resoures. */
-	public void dispose() {
-		canvas.dispose();
 	}
 
 	/** Retrieve a tile from the given position. */
@@ -164,14 +189,6 @@ public class SWTMap {
 	/** Returns the current zoom level. */
 	public int getZoom() {
 		return zoom;
-	}
-
-	/**
-	 * Put a map redraw into the GUI thread queue. Only the last entry in the
-	 * queue will be executed.
-	 */
-	public void queueRedraw() {
-		canvas.queueRedraw();
 	}
 
 	/** Sets the new center of the map in pixel coordinates. */
@@ -269,11 +286,6 @@ public class SWTMap {
 						* tileFactory.getTileSize()));
 	}
 
-	/** Set focus, e.g. when the user clicks in the component. */
-	public void setFocus() {
-		canvas.setFocus();
-	}
-
 	/**
 	 * Calculates the offset of a tile's x- or y-component to the origin of the
 	 * map.
@@ -327,14 +339,132 @@ public class SWTMap {
 
 					if (Util.isTileOnMap(position, tileMapSize)) {
 						// draw tile according to its state
-						canvas.drawTile(getTile(position), targetRectangle);
+						drawTile(getTile(position), targetRectangle);
 					} else {
 						// fill space above and under the map
-						canvas.drawBackground(targetRectangle);
+						drawBackground(targetRectangle);
 					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * This method gets called whenever SWT wants to redraw the widget. It gets
+	 * called by the private {@link PaintListener} in this class. For
+	 * performance reasons {@link #renderMapImage()} is called directly from the
+	 * methods that change the view of the map (e.g. zoom, pan, etc.). This
+	 * method only paints the offscreen buffer image produced by
+	 * {@link #renderMapImage()} to the screen.
+	 */
+	private void paintControl(final PaintEvent event) {
+		if (mapImage == null || mapImage.isDisposed()) {
+			return;
+		}
+		event.gc.drawImage(mapImage, 0, 0);
+	}
+
+	/** Check the image or create it when it has the wrong size. */
+	private Image checkOrCreateImage(Image image) {
+
+		final Rectangle mapRect = getViewport();
+
+		// create map image
+		if (!(Util.canReuseImage(image, mapRect))) {
+			image = Util.createImage(getDisplay(), image, mapRect);
+		}
+
+		return image;
+	}
+
+	/**
+	 * This method is called every time, the viewport content has changed. Draws
+	 * everything to an offscreen image, which is then rendered to the screen by
+	 * {@link #paintControl(PaintEvent)}. This method <b>must</b> be called from
+	 * the UI thread!
+	 */
+	private void renderMapImage() {
+		if (isDisposed()) {
+			return;
+		}
+
+		try {
+			mapImage = checkOrCreateImage(mapImage);
+			gc = new GC(mapImage);
+			drawMapTiles();
+		} catch (final Exception e) {
+			// map image is corrupt
+			mapImage.dispose();
+		} finally {
+			Util.disposeResource(gc);
+		}
+
+		redraw();
+	}
+
+	public void drawTile(Tile tile, Rectangle where) {
+
+		switch (tile.getStatus()) {
+		case READY:
+			Image tileImage = tile.getImage();
+			gc.drawImage(tileImage, where.x, where.y);
+			break;
+		case ERROR:
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.ERROR_IMG_KEY), where.x, where.y);
+			break;
+		case LOADING:
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.LOADING_IMG_KEY), where.x, where.y);
+			tile.addObserver(tileLoadListener);
+			break;
+		}
+	}
+
+	public void drawBackground(final Rectangle targetRectangle) {
+		gc.setBackground(getBackground());
+		gc.fillRectangle(targetRectangle.x, targetRectangle.y, getTileFactory()
+				.getTileSize(), getTileFactory().getTileSize());
+	}
+
+	/** Get rid of SWT resoures. */
+	@Override
+	public void dispose() {
+		Util.disposeResource(mapImage);
+		Util.disposeResource(gc);
+		super.dispose();
+	}
+
+	/**
+	 * Put a map redraw into the GUI thread queue. Only the last entry in the
+	 * queue will be executed.
+	 */
+	public void queueRedraw() {
+
+		if (isDisposed()) {
+			return;
+		}
+
+		final Runnable imageRunnable = new Runnable() {
+			// The access to this doesn't need to be atomic, because it's not
+			// so bad, if a few render requests are handled that wouldn't have
+			// to be
+			final int requestNumber = ++lastRedrawRequest;
+
+			@Override
+			public void run() {
+				// check if a newer runnable is available
+				if (isDisposed() || requestNumber != lastRedrawRequest) {
+					return;
+				}
+
+				renderMapImage();
+			}
+		};
+
+		getDisplay().asyncExec(imageRunnable);
 	}
 
 }

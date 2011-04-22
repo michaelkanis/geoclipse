@@ -53,9 +53,6 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** The Map this listener is handling. */
 	private final SWTMap map;
 
-	/** The canvas to draw on. */
-	private final SWTMapCanvas canvas;
-
 	/** Holds the mouse position for the previous event. */
 	private Point oldPosition;
 
@@ -63,9 +60,8 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private boolean isLeftMouseButtonPressed = false;
 
 	/** Constructor. */
-	public MapController(SWTMap map, SWTMapCanvas canvas) {
+	public MapController(SWTMap map) {
 		this.map = map;
-		this.canvas = canvas;
 	}
 
 	/** Zoom in or out when the user scrolls on the canvas. */
@@ -109,7 +105,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 			return;
 		}
 
-		canvas.setCursor(Constants.CURSOR_PAN);
+		map.setCursor(Constants.CURSOR_PAN);
 
 		final Rectangle viewport = map.getViewport();
 		viewport.x += oldPosition.x - e.x;
@@ -129,7 +125,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	public void mouseUp(final MouseEvent e) {
 		if (e.button == 1) {
 			isLeftMouseButtonPressed = false;
-			canvas.setCursor(Constants.CURSOR_DEFAULT);
+			map.setCursor(Constants.CURSOR_DEFAULT);
 		}
 	}
 

@@ -25,7 +25,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import net.skweez.geoclipse.map.Tile;
-
 import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
@@ -40,9 +39,9 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
  */
 public class TileLoadListener implements Observer {
 
-	private final SWTMapCanvas canvas;
+	private final SWTMap canvas;
 
-	public TileLoadListener(SWTMapCanvas canvas) {
+	public TileLoadListener(SWTMap canvas) {
 		this.canvas = canvas;
 	}
 
