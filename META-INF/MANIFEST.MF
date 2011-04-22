@@ -13,19 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: net.skweez.geoclipse.map,
- net.skweez.geoclipse.map.preferences;
-  uses:="org.eclipse.osgi.util,
-   org.eclipse.jface.preference,
-   org.eclipse.jface.resource,
-   org.eclipse.ui,
-   org.eclipse.core.runtime.preferences,
-   org.eclipse.swt.widgets",
  net.skweez.geoclipse.map.tilefactories,
- net.skweez.geoclipse.model.gpx,
- net.skweez.geoclipse.projections,
- net.skweez.geoclipse.util;
-  uses:="net.skweez.geoclipse.map,
-   org.eclipse.swt.graphics,
-   net.skweez.gpx,
-   org.eclipse.swt.widgets"
+ net.skweez.geoclipse.model,
+ net.skweez.geoclipse.projections
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

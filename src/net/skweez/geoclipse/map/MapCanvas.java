@@ -26,6 +26,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import net.skweez.geoclipse.Activator;
+import net.skweez.geoclipse.map.internal.Tile;
+import net.skweez.geoclipse.map.internal.TileLoadListener;
+import net.skweez.geoclipse.map.internal.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 import net.skweez.geoclipse.model.GeoPoint;
 
@@ -53,16 +56,16 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
 public class MapCanvas extends Canvas {
 
 	/** The zoom level. Normally a value between around 0 and 20. */
-	protected int zoom = 1;
+	private int zoom = 1;
 
 	/** The viewport, i.e. the part of the map that is shown. */
-	protected Rectangle viewport = new Rectangle();
+	private Rectangle viewport = new Rectangle();
 
 	/** The position of the map, this is the center of the shown part. */
-	protected GeoPoint position = new GeoPoint(0.0, 0.0);
+	private GeoPoint position = new GeoPoint(0.0, 0.0);
 
 	/** Factory used to grab the tiles necessary for painting the map. */
-	protected ITileFactory tileFactory;
+	private ITileFactory tileFactory;
 
 	/** Buffer image that'll hold the visible part of the map. */
 	private Image mapImage;
@@ -98,7 +101,7 @@ public class MapCanvas extends Canvas {
 	}
 
 	/** Setup the listeners. */
-	protected void setupListeners() {
+	private void setupListeners() {
 		MapController controller = new MapController(this);
 		addMouseListener(controller);
 		addMouseMoveListener(controller);
@@ -302,8 +305,14 @@ public class MapCanvas extends Canvas {
 				/ (double) tileFactory.getTileSize());
 	}
 
+	/** Fill the background. */
+	private void drawBackground() {
+		gc.setBackground(getBackground());
+		drawBackground(gc, 0, 0, getBounds().width, getBounds().height);
+	}
+
 	/** Draws all visible tiles of the map. */
-	protected void drawMapTiles() {
+	private void drawTiles() {
 
 		final Rectangle viewport = getViewport();
 
@@ -321,30 +330,52 @@ public class MapCanvas extends Canvas {
 		final Point offset = new Point(calculateTileOffset(viewport.x),
 				calculateTileOffset(viewport.y));
 
+		Transform transform = new Transform(getDisplay());
+		transform.translate(-viewport.x, -viewport.y);
+		gc.setTransform(transform);
+
 		// draw all visible tiles
 		for (int x = 0; x <= tilesWide; x++) {
 			for (int y = 0; y <= tilesHigh; y++) {
 
 				final Point position = new Point(offset.x + x, offset.y + y);
 
-				// get onscreen rectangle for this tile
-				final Rectangle targetRectangle = new Rectangle(position.x
-						* tileSize - viewport.x, position.y * tileSize
-						- viewport.y, tileSize, tileSize);
-
-				// only draw something that is within the painting area
-				if (targetRectangle.intersects(targetViewport)) {
-
-					if (Util.isTileOnMap(position, tileMapSize)) {
-						// draw tile according to its state
-						drawTile(getTile(position), targetRectangle);
-					} else {
-						// fill space above and under the map
-						drawBackground(targetRectangle);
-					}
+				if (Util.isTileOnMap(position, tileMapSize)) {
+					// draw tile according to its state
+					Point p = new Point(position.x * tileSize, position.y
+							* tileSize);
+					drawTile(getTile(position), p);
 				}
 			}
 		}
+
+		transform.dispose();
+
+		gc.setTransform(null);
+	}
+
+	/** Draw one tile to its position. */
+	private void drawTile(Tile tile, Point where) {
+		int tileSize = getTileFactory().getTileSize();
+
+		Transform transform = new Transform(getDisplay());
+		gc.getTransform(transform);
+
+		transform.translate(where.x, where.y);
+		gc.setTransform(transform);
+
+		gc.setClipping(0, 0, tileSize, tileSize);
+
+		if (tile.getStatus() == Tile.Status.LOADING) {
+			tile.addObserver(tileLoadListener);
+		}
+
+		tile.draw(gc);
+
+		transform.translate(-where.x, -where.y);
+		gc.setTransform(transform);
+
+		transform.dispose();
 	}
 
 	/**
@@ -389,7 +420,8 @@ public class MapCanvas extends Canvas {
 		try {
 			mapImage = checkOrCreateImage(mapImage);
 			gc = new GC(mapImage);
-			drawMapTiles();
+			drawBackground();
+			drawTiles();
 		} catch (final Exception e) {
 			// map image is corrupt
 			mapImage.dispose();
@@ -398,26 +430,6 @@ public class MapCanvas extends Canvas {
 		}
 
 		redraw();
-	}
-
-	public void drawTile(Tile tile, Rectangle where) {
-		Transform translation = new Transform(getDisplay());
-		translation.translate(where.x, where.y);
-		gc.setTransform(translation);
-
-		if (tile.getStatus() == ETileStatus.LOADING) {
-			tile.addObserver(tileLoadListener);
-		}
-
-		tile.draw(gc);
-
-		translation.dispose();
-	}
-
-	public void drawBackground(final Rectangle targetRectangle) {
-		gc.setBackground(getBackground());
-		gc.fillRectangle(targetRectangle.x, targetRectangle.y, getTileFactory()
-				.getTileSize(), getTileFactory().getTileSize());
 	}
 
 	/** Get rid of SWT resoures. */

@@ -20,7 +20,7 @@ import java.io.File;
 import java.text.NumberFormat;
 
 import net.skweez.geoclipse.Activator;
-import net.skweez.geoclipse.map.MapImageCache;
+import net.skweez.geoclipse.map.internal.MapImageCache;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;

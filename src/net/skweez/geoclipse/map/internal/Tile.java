@@ -19,11 +19,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse.map.internal;
 
 import java.util.Observable;
 
 import net.skweez.geoclipse.Activator;
+import net.skweez.geoclipse.Constants;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -45,7 +46,7 @@ import edu.tum.cs.commons.assertion.CCSMPre;
 public class Tile extends Observable {
 
 	/** The tile's status. Whenever it changes, the observers get notified. */
-	private ETileStatus status = ETileStatus.NEW;
+	private Status status = Status.NEW;
 
 	/** If an error occurs while loading a tile, store the exception here. */
 	private Throwable error;
@@ -102,12 +103,12 @@ public class Tile extends Observable {
 	}
 
 	/** Returns status. */
-	public ETileStatus getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
 	/** Sets the status of this tile. */
-	public void setStatus(ETileStatus status) {
+	public void setStatus(Status status) {
 		this.status = status;
 		setChanged();
 		notifyObservers();
@@ -116,7 +117,7 @@ public class Tile extends Observable {
 	/** Sets an error, e.g. if one occured during loading etc.. */
 	public void setError(Throwable error) {
 		this.error = error;
-		setStatus(ETileStatus.ERROR);
+		setStatus(Status.ERROR);
 	}
 
 	/** Set the map image for this tile. */
@@ -131,7 +132,7 @@ public class Tile extends Observable {
 		}
 
 		image = newImage;
-		setStatus(ETileStatus.READY);
+		setStatus(Status.READY);
 	}
 
 	/** {@inheritDoc} */
@@ -169,4 +170,20 @@ public class Tile extends Observable {
 			break;
 		}
 	}
+
+	public static enum Status {
+
+		/** The tile could not be loaded because of some error. */
+		ERROR,
+
+		/** The tile is currently still loading. */
+		LOADING,
+
+		/** The tile has finished loading. */
+		READY,
+
+		/** The tile has just been instantiated, but is not yet loading. */
+		NEW
+	}
+
 }

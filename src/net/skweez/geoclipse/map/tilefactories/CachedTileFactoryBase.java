@@ -30,9 +30,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
-import net.skweez.geoclipse.map.ETileStatus;
-import net.skweez.geoclipse.map.MapImageCache;
-import net.skweez.geoclipse.map.Tile;
+import net.skweez.geoclipse.map.internal.MapImageCache;
+import net.skweez.geoclipse.map.internal.Tile;
 import net.skweez.geoclipse.projections.IProjection;
 
 import org.eclipse.core.runtime.IPath;
@@ -41,7 +40,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Display;
-
 
 /**
  * TODO class comment
@@ -112,8 +110,8 @@ public abstract class CachedTileFactoryBase extends TileFactoryBase {
 			public IPath getCachePath(int x, int y, int zoom) {
 				return new Path(getName()).append(Integer.toString(zoom))
 						.append(Integer.toString(x))
-						.append(Integer.toString(y)).addFileExtension(
-								mapInfo.getFileExtension());
+						.append(Integer.toString(y))
+						.addFileExtension(mapInfo.getFileExtension());
 			}
 
 			@Override
@@ -180,12 +178,12 @@ public abstract class CachedTileFactoryBase extends TileFactoryBase {
 	}
 
 	private void loadTileImage(final Tile tile) {
-		if (tile.getStatus() == ETileStatus.LOADING) {
+		if (tile.getStatus() == Tile.Status.LOADING) {
 			return;
 		}
 
 		try {
-			tile.setStatus(ETileStatus.LOADING);
+			tile.setStatus(Tile.Status.LOADING);
 			loadingTiles.put(mapInfo.getTileUrl(tile), tile);
 			tileQueue.put(tile);
 			getExecutor().submit(new TileRunner());

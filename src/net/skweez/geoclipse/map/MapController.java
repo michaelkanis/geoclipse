@@ -25,6 +25,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 
+import net.skweez.geoclipse.Constants;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;

@@ -19,13 +19,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse.map.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
+
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.graphics.Image;

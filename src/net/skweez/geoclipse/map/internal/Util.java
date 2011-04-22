@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse.map.internal;
 
 import java.awt.Dimension;
 import java.awt.Point;

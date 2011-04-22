@@ -21,13 +21,12 @@
  ******************************************************************************/
 package net.skweez.geoclipse;
 
-import static net.skweez.geoclipse.map.Constants.ERROR_IMG_KEY;
-import static net.skweez.geoclipse.map.Constants.LOADING_IMG_KEY;
+import static net.skweez.geoclipse.Constants.ERROR_IMG_KEY;
+import static net.skweez.geoclipse.Constants.LOADING_IMG_KEY;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.skweez.geoclipse.map.Constants;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.core.runtime.CoreException;

@@ -13,7 +13,7 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.net.URL;
 
-import net.skweez.geoclipse.map.Tile;
+import net.skweez.geoclipse.map.internal.Tile;
 
 
 /**

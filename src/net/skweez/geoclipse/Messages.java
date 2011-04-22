@@ -34,7 +34,7 @@ import org.eclipse.osgi.util.NLS;
 /* package */abstract class Messages extends NLS {
 
 	/** Name of this bundle. */
-	private static final String BUNDLE_NAME = "net.skweez.geoclipse.map.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "net.skweez.geoclipse.messages"; //$NON-NLS-1$
 
 	/** Shown on tiles, while loading. */
 	public static String MAP_EXTENSIONS_LOADING;

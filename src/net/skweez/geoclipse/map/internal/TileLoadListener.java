@@ -19,10 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse.map.internal;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import net.skweez.geoclipse.map.MapCanvas;
 
 import edu.tum.cs.commons.assertion.CCSMAssert;
 

@@ -23,7 +23,7 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.map.Tile;
+import net.skweez.geoclipse.map.internal.Tile;
 import net.skweez.geoclipse.projections.IProjection;
 
 

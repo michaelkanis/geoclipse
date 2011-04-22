@@ -24,7 +24,7 @@ package net.skweez.geoclipse.map.tilefactories;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import net.skweez.geoclipse.map.Tile;
+import net.skweez.geoclipse.map.internal.Tile;
 
 
 /**
