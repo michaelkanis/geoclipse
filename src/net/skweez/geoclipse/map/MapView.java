@@ -57,6 +57,8 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
  */
 public class MapView extends Canvas {
 
+	public static final String ID = "net.skweez.geoclipse.mapview";
+
 	/** The zoom level. Normally a value between around 0 and 20. */
 	private int zoom = 1;
 
