@@ -39,9 +39,9 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
  */
 public class TileLoadListener implements Observer {
 
-	private final SWTMap canvas;
+	private final MapCanvas canvas;
 
-	public TileLoadListener(SWTMap canvas) {
+	public TileLoadListener(MapCanvas canvas) {
 		this.canvas = canvas;
 	}
 

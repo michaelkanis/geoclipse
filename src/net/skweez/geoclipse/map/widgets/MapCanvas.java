@@ -53,7 +53,7 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class SWTMap extends Canvas {
+public class MapCanvas extends Canvas {
 
 	/** The zoom level. Normally a value between around 0 and 20. */
 	protected int zoom = 1;
@@ -80,7 +80,7 @@ public class SWTMap extends Canvas {
 	private int lastRedrawRequest = 0;
 
 	/** Default constructor. */
-	public SWTMap(final Composite parent) {
+	public MapCanvas(final Composite parent) {
 		super(parent, SWT.DOUBLE_BUFFERED);
 		tileLoadListener = new TileLoadListener(this);
 
@@ -93,7 +93,7 @@ public class SWTMap extends Canvas {
 		addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(final PaintEvent e) {
-				SWTMap.this.paintControl(e);
+				MapCanvas.this.paintControl(e);
 			}
 		});
 

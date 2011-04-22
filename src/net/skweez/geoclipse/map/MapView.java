@@ -27,7 +27,7 @@ import java.util.List;
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-import net.skweez.geoclipse.map.widgets.SWTMap;
+import net.skweez.geoclipse.map.widgets.MapCanvas;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Composite;
@@ -62,7 +62,7 @@ public class MapView extends ViewPart {
 	private static final String TILEFACTORY_KEY = "tilefactory";
 
 	/** The map widget. */
-	private SWTMap map;
+	private MapCanvas map;
 
 	/** Holds all the registered tile factories. */
 	private List<ITileFactory> factories;
@@ -88,7 +88,7 @@ public class MapView extends ViewPart {
 	/** {@inheritDoc} */
 	@Override
 	public void createPartControl(Composite parent) {
-		map = new SWTMap(parent);
+		map = new MapCanvas(parent);
 		factories = Activator.getDefault().getTileFactories();
 
 		CCSMAssert.isTrue(factories != null && factories.size() > 0,
