@@ -22,7 +22,7 @@ package net.skweez.geoclipse.projections;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 
 /**
  * A projection is a method to represent the surface of the three dimensional
@@ -47,10 +47,10 @@ public interface IProjection {
 	 * appropriate point in <em>pixels</em>. The zoom level is necessary because
 	 * pixel coordinates are in terms of the zoom level.
 	 */
-	public abstract Point geoToPixel(GeoPosition c, int width, int height);
+	public abstract Point geoToPixel(GeoPoint c, int width, int height);
 
 	/** Converts an on screen pixel coordinate to a geo position. */
-	public abstract GeoPosition pixelToGeo(int pixelX, int pixelY, int width,
+	public abstract GeoPoint pixelToGeo(int pixelX, int pixelY, int width,
 			int height);
 
 }

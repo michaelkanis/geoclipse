@@ -50,10 +50,10 @@ public class Bounds extends GpxElementBase {
 		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MINLON));
 	}
 
-	public List<GeoPosition> toList() {
-		List<GeoPosition> positions = new ArrayList<GeoPosition>();
-		positions.add(new GeoPosition(getMinLat(), getMinLon()));
-		positions.add(new GeoPosition(getMaxLat(), getMaxLon()));
+	public List<GeoPoint> toList() {
+		List<GeoPoint> positions = new ArrayList<GeoPoint>();
+		positions.add(new GeoPoint(getMinLat(), getMinLon()));
+		positions.add(new GeoPoint(getMaxLat(), getMaxLon()));
 		return positions;
 	}
 }

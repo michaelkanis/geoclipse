@@ -19,7 +19,7 @@
 
 package net.skweez.geoclipse.util;
 
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 
 /**
  * A utility class for geographical calculations.
@@ -39,8 +39,8 @@ public class GeoUtils {
 	private static final double EARTH_RADIUS = 6380d;
 
 	/** Returns the distance between two points on earth, pos1 and pos2 in km. */
-	public static double getDistance(final GeoPosition pos1,
-			final GeoPosition pos2) {
+	public static double getDistance(final GeoPoint pos1,
+			final GeoPoint pos2) {
 
 		final double lat1 = Math.toRadians(pos1.getLatitude());
 		final double lon1 = Math.toRadians(pos1.getLongitude());

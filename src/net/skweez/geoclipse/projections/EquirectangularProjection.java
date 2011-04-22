@@ -21,7 +21,7 @@ package net.skweez.geoclipse.projections;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 
 /**
  * This is an equirectangular cylindrical projection. This means that any pair
@@ -45,7 +45,7 @@ public class EquirectangularProjection implements IProjection {
 
 	/** {@inheritDoc} */
 	@Override
-	public Point geoToPixel(GeoPosition c, int width, int height) {
+	public Point geoToPixel(GeoPoint c, int width, int height) {
 		return new Point((int) lonToX(c.getLongitude(), width), (int) latToY(c
 				.getLatitude(), height));
 	}
@@ -63,8 +63,8 @@ public class EquirectangularProjection implements IProjection {
 	}
 
 	/** {@inheritDoc} */
-	public GeoPosition pixelToGeo(int pixelX, int pixelY, int width, int height) {
-		return new GeoPosition(yToLat(pixelY, height), xToLon(pixelX, width));
+	public GeoPoint pixelToGeo(int pixelX, int pixelY, int width, int height) {
+		return new GeoPoint(yToLat(pixelY, height), xToLon(pixelX, width));
 	}
 
 	/** Converts a given x coordinate to a longitude using a given map width. */

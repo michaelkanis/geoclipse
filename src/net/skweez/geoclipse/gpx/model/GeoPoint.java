@@ -23,9 +23,9 @@ package net.skweez.geoclipse.gpx.model;
  * An immutable coordinate in the real (geographic) world, composed of a
  * latitude and a longitude.
  * 
- * @author rbair
+ * @author Michael Kanis
  */
-public class GeoPosition {
+public class GeoPoint {
 
 	/**
 	 * Denotes the location of a place on Earth (or other planetary body) north
@@ -51,7 +51,7 @@ public class GeoPosition {
 	 * @param longitude
 	 *            a longitude value in decimal degrees
 	 */
-	public GeoPosition(double latitude, double longitude) {
+	public GeoPoint(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -74,7 +74,7 @@ public class GeoPosition {
 	 * @param lonSeconds
 	 *            the seconds part of the current longitude
 	 */
-	public GeoPosition(double latDegrees, double latMinutes, double latSeconds,
+	public GeoPoint(double latDegrees, double latMinutes, double latSeconds,
 			double lonDegrees, double lonMinutes, double lonSeconds) {
 		this(latDegrees + (latMinutes + latSeconds / 60.0) / 60.0, lonDegrees
 				+ (lonMinutes + lonSeconds / 60.0) / 60.0);
@@ -108,8 +108,8 @@ public class GeoPosition {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof GeoPosition) {
-			GeoPosition coord = (GeoPosition) obj;
+		if (obj != null && obj instanceof GeoPoint) {
+			GeoPoint coord = (GeoPoint) obj;
 			return latitude == coord.latitude && longitude == coord.longitude;
 		}
 		return false;

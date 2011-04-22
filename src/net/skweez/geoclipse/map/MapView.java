@@ -25,7 +25,7 @@ package net.skweez.geoclipse.map;
 import java.util.List;
 
 import net.skweez.geoclipse.Activator;
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 import net.skweez.geoclipse.map.widgets.MapBase;
 import net.skweez.geoclipse.map.widgets.SWTMap;
@@ -117,7 +117,7 @@ public class MapView extends ViewPart {
 		}
 
 		if (initialLongitude != null && initialLatitude != null) {
-			map.setPosition(new GeoPosition(initialLatitude, initialLongitude));
+			map.setPosition(new GeoPoint(initialLatitude, initialLongitude));
 		} else {
 			map.setPosition(Constants.START_POSITION);
 		}

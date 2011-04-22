@@ -26,7 +26,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import net.skweez.geoclipse.Activator;
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
@@ -55,7 +55,7 @@ public abstract class MapBase {
 	protected Rectangle viewport = new Rectangle();
 
 	/** The position of the map, this is the center of the shown part. */
-	protected GeoPosition position = new GeoPosition(0.0, 0.0);
+	protected GeoPoint position = new GeoPoint(0.0, 0.0);
 
 	/** Factory used to grab the tiles necessary for painting the map. */
 	protected ITileFactory tileFactory;
@@ -68,7 +68,7 @@ public abstract class MapBase {
 	}
 
 	/** Returns the center of the current map viewport. */
-	public GeoPosition getPosition() {
+	public GeoPoint getPosition() {
 		return position;
 	}
 
@@ -154,7 +154,7 @@ public abstract class MapBase {
 	}
 
 	/** Recenter the map to the given location. Causes a redraw of the map. */
-	public void setPosition(final GeoPosition position) {
+	public void setPosition(final GeoPoint position) {
 		this.position = position;
 	}
 
@@ -199,7 +199,7 @@ public abstract class MapBase {
 	 * {@link #setZoom(int)} with <code>{@link #getZoom()} + 1</code> as argument.
 	 */
 	public void zoomIn() {
-		final GeoPosition center = getPosition();
+		final GeoPoint center = getPosition();
 		setZoom(getZoom() + 1);
 		setPosition(center);
 		updateViewport();
@@ -210,7 +210,7 @@ public abstract class MapBase {
 	 * {@link #setZoom(int)} with <code>{@link #getZoom()} - 1</code> as argument.
 	 */
 	public void zoomOut() {
-		final GeoPosition center = getPosition();
+		final GeoPoint center = getPosition();
 		setZoom(getZoom() - 1);
 		setPosition(center);
 		updateViewport();

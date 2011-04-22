@@ -21,7 +21,7 @@
  ******************************************************************************/
 package net.skweez.geoclipse.map;
 
-import net.skweez.geoclipse.gpx.model.GeoPosition;
+import net.skweez.geoclipse.gpx.model.GeoPoint;
 
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
@@ -61,7 +61,7 @@ public abstract class Constants {
 	public static final String ERROR_IMG_KEY = "error-img";
 
 	/** The position to start at. */
-	public static final GeoPosition START_POSITION = new GeoPosition(0, 0);
+	public static final GeoPoint START_POSITION = new GeoPoint(0, 0);
 
 	/** The zoom level to start at. */
 	public static final int START_ZOOM = 0;
