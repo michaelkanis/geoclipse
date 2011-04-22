@@ -26,6 +26,9 @@ import java.awt.Rectangle;
 
 import net.skweez.geoclipse.map.Constants;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -42,7 +45,10 @@ import org.eclipse.swt.events.MouseWheelListener;
  * @levd.rating RED Rev:
  */
 public class MapMouseListener implements MouseListener, MouseMoveListener,
-		MouseWheelListener {
+		MouseWheelListener, KeyListener {
+
+	/** The amount by which the map is moved, when pressing the arrow keys. */
+	private static final int OFFSET = 10;
 
 	/** The Map this listener is handling. */
 	private final MapBase map;
@@ -125,5 +131,53 @@ public class MapMouseListener implements MouseListener, MouseMoveListener,
 			isLeftMouseButtonPressed = false;
 			canvas.setCursor(Constants.CURSOR_DEFAULT);
 		}
+	}
+
+	/** Handle key presses. */
+	@Override
+	public void keyPressed(final KeyEvent event) {
+		int delta_x = 0;
+		int delta_y = 0;
+
+		switch (event.keyCode) {
+		case SWT.ARROW_LEFT:
+			delta_x -= OFFSET;
+			break;
+		case SWT.ARROW_RIGHT:
+			delta_x += OFFSET;
+			break;
+		case SWT.ARROW_UP:
+			delta_y -= OFFSET;
+			break;
+		case SWT.ARROW_DOWN:
+			delta_y += OFFSET;
+			break;
+		}
+
+		switch (event.character) {
+		case '+':
+			map.zoomIn();
+			break;
+		case '-':
+			map.zoomOut();
+			break;
+		}
+
+		if (delta_x != 0 || delta_y != 0) {
+			final Rectangle viewport = map.getViewport();
+
+			viewport.x += delta_x;
+			viewport.y += delta_y;
+			map.setViewport(viewport);
+			map.updatePosition();
+		}
+
+		map.queueRedraw();
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// Do nothing
 	}
 }

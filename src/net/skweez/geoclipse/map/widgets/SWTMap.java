@@ -57,8 +57,7 @@ public class SWTMap extends MapBase {
 		canvas.addMouseListener(mouseListener);
 		canvas.addMouseMoveListener(mouseListener);
 		canvas.addMouseWheelListener(mouseListener);
-
-		canvas.addKeyListener(new MapKeyListener(this));
+		canvas.addKeyListener(mouseListener);
 
 		canvas.addListener(SWT.Resize, new Listener() {
 			@Override
