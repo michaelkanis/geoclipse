@@ -380,10 +380,10 @@ public class MapCanvas extends Canvas {
 	/**
 	 * This method gets called whenever SWT wants to redraw the widget. It gets
 	 * called by the private {@link PaintListener} in this class. For
-	 * performance reasons {@link #renderMapImage()} is called directly from the
+	 * performance reasons {@link #drawMap()} is called directly from the
 	 * methods that change the view of the map (e.g. zoom, pan, etc.). This
 	 * method only paints the offscreen buffer image produced by
-	 * {@link #renderMapImage()} to the screen.
+	 * {@link #drawMap()} to the screen.
 	 */
 	private void paintControl(final PaintEvent event) {
 		if (mapImage == null || mapImage.isDisposed()) {
@@ -411,7 +411,7 @@ public class MapCanvas extends Canvas {
 	 * {@link #paintControl(PaintEvent)}. This method <b>must</b> be called from
 	 * the UI thread!
 	 */
-	private void renderMapImage() {
+	private void drawMap() {
 		if (isDisposed()) {
 			return;
 		}
@@ -462,7 +462,7 @@ public class MapCanvas extends Canvas {
 					return;
 				}
 
-				renderMapImage();
+				drawMap();
 			}
 		};
 
