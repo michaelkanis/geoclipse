@@ -52,7 +52,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private static final int OFFSET = 10;
 
 	/** The Map this listener is handling. */
-	private final MapCanvas map;
+	private final MapView map;
 
 	/** Holds the mouse position for the previous event. */
 	private Point oldPosition;
@@ -61,7 +61,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private boolean isLeftMouseButtonPressed = false;
 
 	/** Constructor. */
-	public MapController(MapCanvas map) {
+	public MapController(MapView map) {
 		this.map = map;
 	}
 

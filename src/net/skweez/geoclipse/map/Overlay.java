@@ -5,6 +5,8 @@
  +-----------------------------------------------------------------------*/
 package net.skweez.geoclipse.map;
 
+import org.eclipse.swt.graphics.GC;
+
 /**
  * 
  * @author mks
@@ -14,7 +16,8 @@ package net.skweez.geoclipse.map;
  */
 public abstract class Overlay {
 
-	public void draw(MapView mapView, boolean shadow) {
+	public void draw(GC gc, MapView mapView, boolean shadow) {
+		// Draw nothing by default
 	}
 
 }
