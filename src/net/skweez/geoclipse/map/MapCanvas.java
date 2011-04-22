@@ -118,13 +118,6 @@ public class MapCanvas extends Canvas {
 		});
 	}
 
-	/** Retrieve a tile from the given position. */
-	private Tile getTile(Point tilePosition) {
-		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y, zoom);
-		CCSMAssert.isFalse(tile == null, "Tile may nerver be null.");
-		return tile;
-	}
-
 	/** Returns the center of the current map viewport. */
 	public GeoPoint getPosition() {
 		return position;
@@ -304,6 +297,62 @@ public class MapCanvas extends Canvas {
 				/ (double) tileFactory.getTileSize());
 	}
 
+	/**
+	 * Put a map redraw into the GUI thread queue. Only the last entry in the
+	 * queue will be executed.
+	 */
+	public void queueRedraw() {
+
+		if (isDisposed()) {
+			return;
+		}
+
+		final Runnable imageRunnable = new Runnable() {
+			// The access to this doesn't need to be atomic, because it's not
+			// so bad, if a few render requests are handled that wouldn't have
+			// to be
+			final int requestNumber = ++lastRedrawRequest;
+
+			@Override
+			public void run() {
+				// check if a newer runnable is available
+				if (isDisposed() || requestNumber != lastRedrawRequest) {
+					return;
+				}
+
+				drawMap();
+			}
+		};
+
+		getDisplay().asyncExec(imageRunnable);
+	}
+
+	/**
+	 * This method is called every time, the viewport content has changed. Draws
+	 * everything to an offscreen image, which is then rendered to the screen by
+	 * {@link #paintControl(PaintEvent)}. This method <b>must</b> be called from
+	 * the UI thread!
+	 */
+	private void drawMap() {
+		if (isDisposed()) {
+			return;
+		}
+
+		try {
+			mapImage = checkOrCreateImage(mapImage);
+			gc = new GC(mapImage);
+			drawBackground();
+			drawTiles();
+		} catch (final Exception e) {
+			// map image is corrupt
+			mapImage.dispose();
+		} finally {
+			Util.disposeResource(gc);
+		}
+
+		redraw();
+	}
+
 	/** Fill the background. */
 	private void drawBackground() {
 		gc.setBackground(getBackground());
@@ -351,6 +400,13 @@ public class MapCanvas extends Canvas {
 		transform.dispose();
 
 		gc.setTransform(null);
+	}
+
+	/** Retrieve a tile from the given position. */
+	private Tile getTile(Point tilePosition) {
+		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y, zoom);
+		CCSMAssert.isFalse(tile == null, "Tile may nerver be null.");
+		return tile;
 	}
 
 	/** Draw one tile to its position. */
@@ -405,68 +461,12 @@ public class MapCanvas extends Canvas {
 		return image;
 	}
 
-	/**
-	 * This method is called every time, the viewport content has changed. Draws
-	 * everything to an offscreen image, which is then rendered to the screen by
-	 * {@link #paintControl(PaintEvent)}. This method <b>must</b> be called from
-	 * the UI thread!
-	 */
-	private void drawMap() {
-		if (isDisposed()) {
-			return;
-		}
-
-		try {
-			mapImage = checkOrCreateImage(mapImage);
-			gc = new GC(mapImage);
-			drawBackground();
-			drawTiles();
-		} catch (final Exception e) {
-			// map image is corrupt
-			mapImage.dispose();
-		} finally {
-			Util.disposeResource(gc);
-		}
-
-		redraw();
-	}
-
 	/** Get rid of SWT resoures. */
 	@Override
 	public void dispose() {
 		Util.disposeResource(mapImage);
 		Util.disposeResource(gc);
 		super.dispose();
-	}
-
-	/**
-	 * Put a map redraw into the GUI thread queue. Only the last entry in the
-	 * queue will be executed.
-	 */
-	public void queueRedraw() {
-
-		if (isDisposed()) {
-			return;
-		}
-
-		final Runnable imageRunnable = new Runnable() {
-			// The access to this doesn't need to be atomic, because it's not
-			// so bad, if a few render requests are handled that wouldn't have
-			// to be
-			final int requestNumber = ++lastRedrawRequest;
-
-			@Override
-			public void run() {
-				// check if a newer runnable is available
-				if (isDisposed() || requestNumber != lastRedrawRequest) {
-					return;
-				}
-
-				drawMap();
-			}
-		};
-
-		getDisplay().asyncExec(imageRunnable);
 	}
 
 }
