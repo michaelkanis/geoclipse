@@ -27,7 +27,7 @@ import java.awt.Rectangle;
 
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.gpx.model.GeoPoint;
-import net.skweez.geoclipse.map.Constants;
+import net.skweez.geoclipse.map.ETileStatus;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
@@ -37,6 +37,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -403,24 +404,17 @@ public class SWTMap extends Canvas {
 	}
 
 	public void drawTile(Tile tile, Rectangle where) {
+		Transform translation = new Transform(getDisplay());
+		translation.translate(where.x, where.y);
+		gc.setTransform(translation);
 
-		switch (tile.getStatus()) {
-		case READY:
-			Image tileImage = tile.getImage();
-			gc.drawImage(tileImage, where.x, where.y);
-			break;
-		case ERROR:
-			gc.drawImage(
-					Activator.getDefault().getImageRegistry()
-							.get(Constants.ERROR_IMG_KEY), where.x, where.y);
-			break;
-		case LOADING:
-			gc.drawImage(
-					Activator.getDefault().getImageRegistry()
-							.get(Constants.LOADING_IMG_KEY), where.x, where.y);
+		if (tile.getStatus() == ETileStatus.LOADING) {
 			tile.addObserver(tileLoadListener);
-			break;
 		}
+
+		tile.draw(gc);
+
+		translation.dispose();
 	}
 
 	public void drawBackground(final Rectangle targetRectangle) {

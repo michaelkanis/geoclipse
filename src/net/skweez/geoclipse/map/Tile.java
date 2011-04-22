@@ -23,6 +23,9 @@ package net.skweez.geoclipse.map;
 
 import java.util.Observable;
 
+import net.skweez.geoclipse.Activator;
+
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 
 import edu.tum.cs.commons.assertion.CCSMPre;
@@ -147,5 +150,23 @@ public class Tile extends Observable {
 		}
 
 		return false;
+	}
+
+	public void draw(GC gc) {
+		switch (getStatus()) {
+		case READY:
+			gc.drawImage(getImage(), 0, 0);
+			break;
+		case ERROR:
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.ERROR_IMG_KEY), 0, 0);
+			break;
+		case LOADING:
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.LOADING_IMG_KEY), 0, 0);
+			break;
+		}
 	}
 }
