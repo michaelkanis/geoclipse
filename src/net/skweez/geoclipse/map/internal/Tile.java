@@ -26,10 +26,9 @@ import java.util.Observable;
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.Constants;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-
-import edu.tum.cs.commons.assertion.CCSMPre;
 
 /**
  * The Tile class represents a particular square image piece of the world bitmap
@@ -123,8 +122,8 @@ public class Tile extends Observable {
 	/** Set the map image for this tile. */
 	@SuppressWarnings("null")
 	public void setImage(final Image newImage) {
-		CCSMPre.isFalse(newImage == null, "Image may not be null.");
-		CCSMPre.isFalse(newImage.isDisposed(),
+		Assert.isLegal(newImage != null, "Image may not be null.");
+		Assert.isLegal(!newImage.isDisposed(),
 				"Image may not already be disposed.");
 
 		if (image != null && !image.isDisposed()) {

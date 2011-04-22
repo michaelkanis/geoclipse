@@ -27,11 +27,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.graphics.Image;
-
-import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
  * This cache manages map images by saving the images for the offline mode.
@@ -104,9 +102,9 @@ public abstract class MapImageCache {
 		tileCache.put(key, tile);
 		imageCacheFifo.add(key);
 
-		CCSMAssert.isTrue(tileCache.size() <= MAX_CACHE_ENTRIES,
+		Assert.isTrue(tileCache.size() <= MAX_CACHE_ENTRIES,
 				"Tile cache is too big.");
-		CCSMAssert.isTrue(tileCache.size() == imageCacheFifo.size(),
+		Assert.isTrue(tileCache.size() == imageCacheFifo.size(),
 				"Tile cache and image age queue are out of sync.");
 	}
 

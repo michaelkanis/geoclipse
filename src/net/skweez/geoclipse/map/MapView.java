@@ -34,6 +34,7 @@ import net.skweez.geoclipse.map.internal.TileLoadListener;
 import net.skweez.geoclipse.map.internal.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -44,8 +45,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-
-import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
  * This class does all the actual map drawing.
@@ -433,7 +432,7 @@ public class MapView extends Canvas {
 	/** Retrieve a tile from the given position. */
 	private Tile getTile(Point tilePosition) {
 		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y, zoom);
-		CCSMAssert.isFalse(tile == null, "Tile may nerver be null.");
+		Assert.isTrue(tile != null, "Tile may never be null.");
 		return tile;
 	}
 

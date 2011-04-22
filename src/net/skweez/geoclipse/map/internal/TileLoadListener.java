@@ -26,7 +26,7 @@ import java.util.Observer;
 
 import net.skweez.geoclipse.map.MapView;
 
-import edu.tum.cs.commons.assertion.CCSMAssert;
+import org.eclipse.core.runtime.Assert;
 
 /**
  * This listener puts a redraw request in the draw queue of the widget when a
@@ -48,7 +48,7 @@ public class TileLoadListener implements Observer {
 
 	/** Informs the map that it must redraw. */
 	public void update(final Observable o, final Object arg) {
-		CCSMAssert.isInstanceOf(o, Tile.class);
+		Assert.isTrue(o instanceof Tile);
 		canvas.queueRedraw();
 		((Tile) o).deleteObserver(this);
 	}

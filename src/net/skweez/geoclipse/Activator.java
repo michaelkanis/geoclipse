@@ -30,6 +30,7 @@ import java.util.List;
 import net.skweez.geoclipse.map.Overlay;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -43,8 +44,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
-import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -115,7 +114,7 @@ public class Activator extends AbstractUIPlugin {
 				Object obj = element.createExecutableExtension("class");
 				extensionList.add((T) obj);
 			} catch (final CoreException e) {
-				CCSMAssert.fail(e.getMessage());
+				Assert.isTrue(false, e.getMessage());
 			}
 		}
 

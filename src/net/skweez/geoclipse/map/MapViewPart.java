@@ -28,6 +28,7 @@ import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.Constants;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
@@ -35,8 +36,6 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
-
-import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
  * An Eclipse view that shows a map.
@@ -90,7 +89,7 @@ public class MapViewPart extends ViewPart {
 		map = new MapView(parent);
 		factories = Activator.getDefault().getTileFactories();
 
-		CCSMAssert.isTrue(factories != null && factories.size() > 0,
+		Assert.isTrue(factories != null && factories.size() > 0,
 				"At least one tile factory is needed to run Geoclipse.");
 
 		// Add actions to toolbar
