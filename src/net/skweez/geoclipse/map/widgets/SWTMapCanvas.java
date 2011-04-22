@@ -36,7 +36,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-
 /**
  * A widget for SWT to show a map of the world (or a part of it).
  * <p>
@@ -47,7 +46,7 @@ import org.eclipse.swt.widgets.Composite;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class SWTMapCanvas extends Canvas implements IMapCanvas {
+public class SWTMapCanvas extends Canvas {
 
 	/** The map component this canvas belongs to. */
 	final MapBase map;
@@ -146,13 +145,15 @@ public class SWTMapCanvas extends Canvas implements IMapCanvas {
 			gc.drawImage(tileImage, targetRectangle.x, targetRectangle.y);
 			break;
 		case ERROR:
-			gc.drawImage(Activator.getDefault().getImageRegistry().get(
-					Constants.ERROR_IMG_KEY), targetRectangle.x,
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.ERROR_IMG_KEY), targetRectangle.x,
 					targetRectangle.y);
 			break;
 		case LOADING:
-			gc.drawImage(Activator.getDefault().getImageRegistry().get(
-					Constants.LOADING_IMG_KEY), targetRectangle.x,
+			gc.drawImage(
+					Activator.getDefault().getImageRegistry()
+							.get(Constants.LOADING_IMG_KEY), targetRectangle.x,
 					targetRectangle.y);
 			tile.addObserver(tileLoadListener);
 			break;

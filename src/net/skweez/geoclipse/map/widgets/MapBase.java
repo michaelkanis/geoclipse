@@ -30,8 +30,6 @@ import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-
-
 import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
@@ -46,7 +44,7 @@ import edu.tum.cs.commons.assertion.CCSMAssert;
 public abstract class MapBase {
 
 	/** The canvas to draw on. */
-	protected IMapCanvas canvas;
+	protected SWTMapCanvas canvas;
 
 	/** The zoom level. Normally a value between around 0 and 20. */
 	protected int zoom = 1;
@@ -196,7 +194,8 @@ public abstract class MapBase {
 
 	/**
 	 * Increase the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoom()} + 1</code> as argument.
+	 * {@link #setZoom(int)} with <code>{@link #getZoom()} + 1</code> as
+	 * argument.
 	 */
 	public void zoomIn() {
 		final GeoPoint center = getPosition();
@@ -207,7 +206,8 @@ public abstract class MapBase {
 
 	/**
 	 * Decrease the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoom()} - 1</code> as argument.
+	 * {@link #setZoom(int)} with <code>{@link #getZoom()} - 1</code> as
+	 * argument.
 	 */
 	public void zoomOut() {
 		final GeoPoint center = getPosition();

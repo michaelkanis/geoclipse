@@ -30,7 +30,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-
 /**
  * This class implements all the listener interfaces for mouse interactions with
  * the map. This includes panning by dragging, double click to zoom, mouse wheel
@@ -47,7 +46,7 @@ public class MapMouseListener implements Listener {
 	private final MapBase map;
 
 	/** The canvas to draw on. */
-	private final IMapCanvas canvas;
+	private final SWTMapCanvas canvas;
 
 	/** Holds the mouse position for the previous event. */
 	private Point oldPosition;
@@ -56,7 +55,7 @@ public class MapMouseListener implements Listener {
 	private boolean isLeftMouseButtonPressed = false;
 
 	/** Constructor. */
-	public MapMouseListener(MapBase map, IMapCanvas canvas) {
+	public MapMouseListener(MapBase map, SWTMapCanvas canvas) {
 		this.map = map;
 		this.canvas = canvas;
 	}
