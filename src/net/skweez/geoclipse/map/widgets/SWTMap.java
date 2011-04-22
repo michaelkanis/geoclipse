@@ -39,8 +39,7 @@ import org.eclipse.swt.widgets.Listener;
 import edu.tum.cs.commons.assertion.CCSMAssert;
 
 /**
- * This is the more or less toolkit independent base class for all map
- * implementations.
+ * This class does all the actual map drawing.
  * 
  * @author mks
  * @author $Author: damumbl $
@@ -95,7 +94,7 @@ public class SWTMap {
 	}
 
 	/** Retrieve a tile from the given position. */
-	Tile getTile(Point tilePosition) {
+	private Tile getTile(Point tilePosition) {
 		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y, zoom);
 		CCSMAssert.isFalse(tile == null, "Tile may nerver be null.");
 		return tile;
