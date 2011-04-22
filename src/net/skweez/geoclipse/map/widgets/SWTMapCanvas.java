@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Composite;
 public class SWTMapCanvas extends Canvas {
 
 	/** The map component this canvas belongs to. */
-	final MapBase map;
+	final SWTMap map;
 
 	/** Buffer image that'll hold the visible part of the map. */
 	private Image mapImage;
@@ -64,7 +64,7 @@ public class SWTMapCanvas extends Canvas {
 	private int lastRedrawRequest = 0;
 
 	/** Creates a new map widget. */
-	public SWTMapCanvas(final MapBase map, final Composite parent) {
+	public SWTMapCanvas(final SWTMap map, final Composite parent) {
 
 		super(parent, SWT.DOUBLE_BUFFERED);
 		this.map = map;

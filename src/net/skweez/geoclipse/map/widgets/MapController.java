@@ -51,7 +51,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private static final int OFFSET = 10;
 
 	/** The Map this listener is handling. */
-	private final MapBase map;
+	private final SWTMap map;
 
 	/** The canvas to draw on. */
 	private final SWTMapCanvas canvas;
@@ -63,7 +63,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private boolean isLeftMouseButtonPressed = false;
 
 	/** Constructor. */
-	public MapController(MapBase map, SWTMapCanvas canvas) {
+	public MapController(SWTMap map, SWTMapCanvas canvas) {
 		this.map = map;
 		this.canvas = canvas;
 	}

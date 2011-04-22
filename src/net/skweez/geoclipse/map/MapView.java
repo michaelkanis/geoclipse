@@ -27,7 +27,6 @@ import java.util.List;
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-import net.skweez.geoclipse.map.widgets.MapBase;
 import net.skweez.geoclipse.map.widgets.SWTMap;
 
 import org.eclipse.jface.action.Action;
@@ -63,7 +62,7 @@ public class MapView extends ViewPart {
 	private static final String TILEFACTORY_KEY = "tilefactory";
 
 	/** The map widget. */
-	private MapBase map;
+	private SWTMap map;
 
 	/** Holds all the registered tile factories. */
 	private List<ITileFactory> factories;
@@ -134,8 +133,8 @@ public class MapView extends ViewPart {
 
 	/** Create the toolbar actions. */
 	private void makeActions() {
-		zoomInAction = new Action("Zoom in", Activator
-				.getImageDescriptor("icons/zoom_in.png")) {
+		zoomInAction = new Action("Zoom in",
+				Activator.getImageDescriptor("icons/zoom_in.png")) {
 			/** {@inheritDoc} */
 			@Override
 			public void run() {
@@ -143,8 +142,8 @@ public class MapView extends ViewPart {
 			}
 		};
 
-		zoomOutAction = new Action("Zoom out", Activator
-				.getImageDescriptor("icons/zoom_out.png")) {
+		zoomOutAction = new Action("Zoom out",
+				Activator.getImageDescriptor("icons/zoom_out.png")) {
 			/** {@inheritDoc} */
 			@Override
 			public void run() {
