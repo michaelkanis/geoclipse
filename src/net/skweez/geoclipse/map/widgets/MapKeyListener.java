@@ -24,9 +24,8 @@ package net.skweez.geoclipse.map.widgets;
 import java.awt.Rectangle;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
-
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 /**
  * Used to pan using the arrow keys.
@@ -36,7 +35,7 @@ import org.eclipse.swt.widgets.Listener;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class MapKeyListener implements Listener {
+public class MapKeyListener extends KeyAdapter {
 
 	/** The amount by which the map is moved, when pressing the arrow keys. */
 	private static final int OFFSET = 10;
@@ -49,17 +48,9 @@ public class MapKeyListener implements Listener {
 		this.map = map;
 	}
 
-	/** {@inheritDoc} */
-	@Override
-	public void handleEvent(Event event) {
-		switch (event.type) {
-		case SWT.KeyDown:
-			keyDown(event);
-		}
-	}
-
 	/** Handle key presses. */
-	private void keyDown(final Event event) {
+	@Override
+	public void keyPressed(final KeyEvent event) {
 		int delta_x = 0;
 		int delta_y = 0;
 
@@ -98,4 +89,5 @@ public class MapKeyListener implements Listener {
 
 		map.queueRedraw();
 	}
+
 }

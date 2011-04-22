@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-
 /**
  * A SWT widget to show a world map. It draws on a SWT canvas.
  * 
@@ -61,8 +60,7 @@ public class SWTMap extends MapBase {
 		canvas.addListener(SWT.MouseMove, mouseListener);
 		canvas.addListener(SWT.MouseWheel, mouseListener);
 
-		MapKeyListener keyListener = new MapKeyListener(this);
-		canvas.addListener(SWT.KeyDown, keyListener);
+		canvas.addKeyListener(new MapKeyListener(this));
 
 		canvas.addListener(SWT.Resize, new Listener() {
 			@Override
