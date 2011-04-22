@@ -17,38 +17,27 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.gpx.model;
-
-import static net.skweez.geoclipse.gpx.model.XmlTokens.XML_ATTRIBUTE_LATITUDE;
-import static net.skweez.geoclipse.gpx.model.XmlTokens.XML_ATTRIBUTE_LONGITUDE;
-
-import org.w3c.dom.Element;
+package net.skweez.geoclipse.model.gpx;
 
 /**
- * A Waypoint represents a waypoint, point of interest, or named feature on a
- * map.
+ * Used for bearing, heading, course. Units are decimal degrees, true (not magnetic).
  * 
  * @author Michael Kanis
  */
-public class Waypoint extends GpxElementBase {
+public class Degrees {
 
-	protected Waypoint(Element domNode, GpxDocument model) {
-		super(domNode, model);
+	private Double degrees;
+
+	public Double get() {
+		return degrees;
 	}
 
-	public double getLongitude() {
-		return Double
-				.parseDouble(domNode.getAttribute(XML_ATTRIBUTE_LONGITUDE));
-	}
-
-	public double getLatitude() {
-		return Double.parseDouble(domNode.getAttribute(XML_ATTRIBUTE_LATITUDE));
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public String toString() {
-		return Waypoint.class.getSimpleName() + " [" + getLongitude() + ","
-				+ getLatitude() + ": " + getName() + "]";
+	public void set(Double latitude) {
+		
+		if (latitude < -0 || latitude > 360) {
+			throw new IllegalArgumentException("Latitude must be between -0 and 360.");
+		}
+		
+		this.degrees = latitude;
 	}
 }

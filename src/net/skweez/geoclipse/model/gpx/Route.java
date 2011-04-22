@@ -17,27 +17,38 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.gpx.model;
+package net.skweez.geoclipse.model.gpx;
+
+import java.util.List;
+
+import org.w3c.dom.Element;
+
+import edu.tum.cs.commons.xml.XMLUtils;
+import edu.tum.cs.eclipse.commons.xmlmodel.ElementCache;
 
 /**
- * Used for bearing, heading, course. Units are decimal degrees, true (not magnetic).
+ * A Route is an ordered list of waypoints representing a series of turn points
+ * leading to a destination.
  * 
  * @author Michael Kanis
  */
-public class Degrees {
+public class Route extends GpxElementBase {
 
-	private Double degrees;
+	/** Element cache for the contained {@link Waypoint}s. */
+	private final ElementCache<Waypoint> waypointCache = new ElementCache<Waypoint>() {
+		/** {@inheritDoc} */
+		@Override
+		protected Waypoint createFromXmlElement(Element e) {
+			return new Waypoint(e, model);
+		}
+	};
 
-	public Double get() {
-		return degrees;
+	public Route(Element domNode, GpxDocument model) {
+		super(domNode, model);
 	}
 
-	public void set(Double latitude) {
-		
-		if (latitude < -0 || latitude > 360) {
-			throw new IllegalArgumentException("Latitude must be between -0 and 360.");
-		}
-		
-		this.degrees = latitude;
+	public List<Waypoint> getPoints() {
+		return waypointCache.getModelElementsFor(XMLUtils.getNamedChildren(
+				domNode, XmlTokens.XML_ELEMENT_ROUTE_POINT));
 	}
 }

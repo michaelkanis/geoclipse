@@ -21,7 +21,7 @@ package net.skweez.geoclipse.projections;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.gpx.model.GeoPoint;
+import net.skweez.geoclipse.model.GeoPoint;
 
 /**
  * This is an equirectangular cylindrical projection. This means that any pair

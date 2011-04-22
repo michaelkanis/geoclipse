@@ -22,7 +22,7 @@ package net.skweez.geoclipse.projections;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.gpx.model.GeoPoint;
+import net.skweez.geoclipse.model.GeoPoint;
 
 /**
  * A projection is a method to represent the surface of the three dimensional

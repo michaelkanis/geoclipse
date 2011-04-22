@@ -18,7 +18,7 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.gpx.model;
+package net.skweez.geoclipse.model.gpx;
 
 import java.util.List;
 

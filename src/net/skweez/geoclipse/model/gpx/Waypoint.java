@@ -16,44 +16,39 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
-package net.skweez.geoclipse.gpx.model;
 
-import java.util.ArrayList;
-import java.util.List;
+package net.skweez.geoclipse.model.gpx;
+
+import static net.skweez.geoclipse.model.gpx.XmlTokens.XML_ATTRIBUTE_LATITUDE;
+import static net.skweez.geoclipse.model.gpx.XmlTokens.XML_ATTRIBUTE_LONGITUDE;
 
 import org.w3c.dom.Element;
 
 /**
- * Two lat/lon pairs defining the extent of an element.
+ * A Waypoint represents a waypoint, point of interest, or named feature on a
+ * map.
  * 
  * @author Michael Kanis
  */
-public class Bounds extends GpxElementBase {
+public class Waypoint extends GpxElementBase {
 
-	public Bounds(Element domNode, GpxDocument model) {
+	protected Waypoint(Element domNode, GpxDocument model) {
 		super(domNode, model);
 	}
 
-	public double getMaxLat() {
-		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MAXLAT));
+	public double getLongitude() {
+		return Double
+				.parseDouble(domNode.getAttribute(XML_ATTRIBUTE_LONGITUDE));
 	}
 
-	public double getMaxLon() {
-		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MAXLON));
+	public double getLatitude() {
+		return Double.parseDouble(domNode.getAttribute(XML_ATTRIBUTE_LATITUDE));
 	}
 
-	public double getMinLat() {
-		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MINLAT));
-	}
-
-	public double getMinLon() {
-		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MINLON));
-	}
-
-	public List<GeoPoint> toList() {
-		List<GeoPoint> positions = new ArrayList<GeoPoint>();
-		positions.add(new GeoPoint(getMinLat(), getMinLon()));
-		positions.add(new GeoPoint(getMaxLat(), getMaxLon()));
-		return positions;
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return Waypoint.class.getSimpleName() + " [" + getLongitude() + ","
+				+ getLatitude() + ": " + getName() + "]";
 	}
 }

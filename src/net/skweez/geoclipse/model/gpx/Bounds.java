@@ -16,39 +16,46 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
+package net.skweez.geoclipse.model.gpx;
 
-package net.skweez.geoclipse.gpx.model;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import net.skweez.geoclipse.model.GeoPoint;
 
 import org.w3c.dom.Element;
 
-import edu.tum.cs.commons.xml.XMLUtils;
-import edu.tum.cs.eclipse.commons.xmlmodel.ElementCache;
-
 /**
- * A Route is an ordered list of waypoints representing a series of turn points
- * leading to a destination.
+ * Two lat/lon pairs defining the extent of an element.
  * 
  * @author Michael Kanis
  */
-public class Route extends GpxElementBase {
+public class Bounds extends GpxElementBase {
 
-	/** Element cache for the contained {@link Waypoint}s. */
-	private final ElementCache<Waypoint> waypointCache = new ElementCache<Waypoint>() {
-		/** {@inheritDoc} */
-		@Override
-		protected Waypoint createFromXmlElement(Element e) {
-			return new Waypoint(e, model);
-		}
-	};
-
-	public Route(Element domNode, GpxDocument model) {
+	public Bounds(Element domNode, GpxDocument model) {
 		super(domNode, model);
 	}
 
-	public List<Waypoint> getPoints() {
-		return waypointCache.getModelElementsFor(XMLUtils.getNamedChildren(
-				domNode, XmlTokens.XML_ELEMENT_ROUTE_POINT));
+	public double getMaxLat() {
+		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MAXLAT));
+	}
+
+	public double getMaxLon() {
+		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MAXLON));
+	}
+
+	public double getMinLat() {
+		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MINLAT));
+	}
+
+	public double getMinLon() {
+		return Double.parseDouble(getAttribute(XmlTokens.XML_ATTRIBUTE_MINLON));
+	}
+
+	public List<GeoPoint> toList() {
+		List<GeoPoint> positions = new ArrayList<GeoPoint>();
+		positions.add(new GeoPoint(getMinLat(), getMinLon()));
+		positions.add(new GeoPoint(getMaxLat(), getMaxLon()));
+		return positions;
 	}
 }

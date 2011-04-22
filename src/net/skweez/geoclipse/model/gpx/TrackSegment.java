@@ -17,7 +17,7 @@
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  *******************************************************************************/
 
-package net.skweez.geoclipse.gpx.model;
+package net.skweez.geoclipse.model.gpx;
 
 import java.util.List;
 
@@ -27,39 +27,36 @@ import edu.tum.cs.commons.xml.XMLUtils;
 import edu.tum.cs.eclipse.commons.xmlmodel.ElementCache;
 
 /**
- * A Track is an ordered list of points describing a path. Tracks consist of one
- * ore more {@link TrackSegment}s.
- * <p>
- * It has the following parameters (which may not all be available in the
- * current implementation).
- * <li><i>name</i>
- * <li><i>comment</i>
- * <li><i>description</i>
- * <li><i>source</i> - Source of data. Included to give user some idea of
- * reliability and accuracy of data.
- * <li><i>link</i> - Links to external information about track.
- * <li><i>number</i> - Track number.
- * <li><i>type</i> - Classification of track.
+ * A Track Segment holds a list of Track Points which are logically connected in
+ * order. To represent a single GPS track where GPS reception was lost, or the
+ * GPS receiver was turned off, start a new Track Segment for each continuous
+ * span of track data.
  * 
  * @author Michael Kanis
  */
-public class Track extends GpxElementBase {
+public class TrackSegment extends GpxElementBase {
 
-	/** Element cache for the contained {@link TrackSegment}s. */
-	private final ElementCache<TrackSegment> segmentCache = new ElementCache<TrackSegment>() {
+	/** Element cache for the contained {@link Waypoint}s. */
+	private final ElementCache<Waypoint> waypointCache = new ElementCache<Waypoint>() {
 		/** {@inheritDoc} */
 		@Override
-		protected TrackSegment createFromXmlElement(Element e) {
-			return new TrackSegment(e, model);
+		protected Waypoint createFromXmlElement(Element e) {
+			return new Waypoint(e, model);
 		}
 	};
 
-	public Track(Element domNode, GpxDocument model) {
+	public TrackSegment(Element domNode, GpxDocument model) {
 		super(domNode, model);
 	}
 
-	public List<TrackSegment> getSegments() {
-		return segmentCache.getModelElementsFor(XMLUtils.getNamedChildren(
-				domNode, XmlTokens.XML_ELEMENT_TRACK_SEGMENT));
+	public List<Waypoint> getPoints() {
+		return waypointCache.getModelElementsFor(XMLUtils.getNamedChildren(
+				domNode, XmlTokens.XML_ELEMENT_TRACK_POINT));
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getName() + " (" + getPoints().size() + " points)";
 	}
 }

@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.gpx.model;
+package net.skweez.geoclipse.model.gpx;
 
-import static net.skweez.geoclipse.gpx.model.XmlTokens.XML_ELEMENT_NAME;
+import static net.skweez.geoclipse.model.gpx.XmlTokens.XML_ELEMENT_NAME;
 
 import org.w3c.dom.Element;
 

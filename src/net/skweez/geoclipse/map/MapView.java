@@ -25,9 +25,8 @@ package net.skweez.geoclipse.map;
 import java.util.List;
 
 import net.skweez.geoclipse.Activator;
-import net.skweez.geoclipse.gpx.model.GeoPoint;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-import net.skweez.geoclipse.map.widgets.MapCanvas;
+import net.skweez.geoclipse.model.GeoPoint;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Composite;

@@ -19,18 +19,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map.widgets;
+package net.skweez.geoclipse.map;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
 import net.skweez.geoclipse.Activator;
-import net.skweez.geoclipse.gpx.model.GeoPoint;
-import net.skweez.geoclipse.map.ETileStatus;
-import net.skweez.geoclipse.map.Tile;
-import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
+import net.skweez.geoclipse.model.GeoPoint;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
