@@ -2,7 +2,7 @@ package net.skweez.geoclipse.map.preferences;
 
 import java.util.List;
 
-import net.skweez.geoclipse.map.Activator;
+import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.jface.layout.GridDataFactory;

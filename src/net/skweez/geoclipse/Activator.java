@@ -19,7 +19,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
  ******************************************************************************/
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse;
 
 import static net.skweez.geoclipse.map.Constants.ERROR_IMG_KEY;
 import static net.skweez.geoclipse.map.Constants.LOADING_IMG_KEY;
@@ -27,6 +27,7 @@ import static net.skweez.geoclipse.map.Constants.LOADING_IMG_KEY;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.skweez.geoclipse.map.Constants;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.core.runtime.CoreException;

@@ -16,11 +16,10 @@
 
 package net.skweez.geoclipse.map.preferences;
 
-import net.skweez.geoclipse.core.Activator;
+import net.skweez.geoclipse.Activator;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 
 /**
  * Initialize preferences for the mapping plugin
@@ -33,9 +32,11 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
 		store.setDefault(IMappingPreferences.OFFLINE_CACHE_USE_OFFLINE, false);
-		store.setDefault(IMappingPreferences.OFFLINE_CACHE_USE_DEFAULT_LOCATION, true);
+		store.setDefault(
+				IMappingPreferences.OFFLINE_CACHE_USE_DEFAULT_LOCATION, true);
 
-		store.setDefault(IMappingPreferences.OFFLINE_CACHE_PERIOD_OF_VALIDITY, 7);
+		store.setDefault(IMappingPreferences.OFFLINE_CACHE_PERIOD_OF_VALIDITY,
+				7);
 		store.setDefault(IMappingPreferences.OFFLINE_CACHE_MAX_SIZE, 100);
 
 	}

@@ -23,7 +23,7 @@ package net.skweez.geoclipse.map.widgets;
 
 import java.awt.Rectangle;
 
-import net.skweez.geoclipse.map.Activator;
+import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.map.Constants;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;

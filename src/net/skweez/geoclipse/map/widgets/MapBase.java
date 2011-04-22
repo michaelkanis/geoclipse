@@ -25,8 +25,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.gpx.model.GeoPosition;
-import net.skweez.geoclipse.map.Activator;
 import net.skweez.geoclipse.map.Tile;
 import net.skweez.geoclipse.map.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
