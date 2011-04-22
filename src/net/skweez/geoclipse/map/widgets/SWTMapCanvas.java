@@ -55,7 +55,7 @@ public class SWTMapCanvas extends Canvas {
 	private Image mapImage;
 
 	/** The graphics context for the map image that we will draw on. */
-	GC gc;
+	private GC gc;
 
 	/** Queues redraws when a tile has been fully loaded. */
 	final TileLoadListener tileLoadListener;
