@@ -44,7 +44,7 @@ import org.eclipse.swt.events.MouseWheelListener;
  * @version $Rev: 657 $
  * @levd.rating RED Rev:
  */
-public class MapMouseListener implements MouseListener, MouseMoveListener,
+public class MapController implements MouseListener, MouseMoveListener,
 		MouseWheelListener, KeyListener {
 
 	/** The amount by which the map is moved, when pressing the arrow keys. */
@@ -63,7 +63,7 @@ public class MapMouseListener implements MouseListener, MouseMoveListener,
 	private boolean isLeftMouseButtonPressed = false;
 
 	/** Constructor. */
-	public MapMouseListener(MapBase map, SWTMapCanvas canvas) {
+	public MapController(MapBase map, SWTMapCanvas canvas) {
 		this.map = map;
 		this.canvas = canvas;
 	}
