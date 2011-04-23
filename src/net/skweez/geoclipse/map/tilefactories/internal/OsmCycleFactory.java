@@ -1,6 +1,5 @@
 package net.skweez.geoclipse.map.tilefactories.internal;
 
-import net.skweez.geoclipse.projections.MercatorProjection;
 
 /**
  * The OpenStreetMap bicycle map.
@@ -18,7 +17,7 @@ public class OsmCycleFactory extends DefaultTileFactory {
 
 	/** Constructor. */
 	public OsmCycleFactory() {
-		super(new MercatorProjection(), new OpenStreetMapInfo(URL));
+		super(new OpenStreetMapInfo(URL));
 	}
 
 	/** {@inheritDoc} */

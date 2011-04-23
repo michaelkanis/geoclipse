@@ -1,6 +1,5 @@
 package net.skweez.geoclipse.map.tilefactories.internal;
 
-import net.skweez.geoclipse.projections.MercatorProjection;
 
 /**
  * A tile factory to load tiles from the OpenStreetMap Tiles@home servers. These
@@ -19,7 +18,7 @@ public class OsmTilesAtHomeFactory extends DefaultTileFactory {
 
 	/** Constructor. */
 	public OsmTilesAtHomeFactory() {
-		super(new MercatorProjection(), new OpenStreetMapInfo(URL));
+		super(new OpenStreetMapInfo(URL));
 	}
 
 	/** {@inheritDoc} */

@@ -23,9 +23,6 @@ package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.map.Projection;
-
-
 /**
  * 
  * @author Michael Kanis
@@ -35,8 +32,8 @@ import net.skweez.geoclipse.map.Projection;
  */
 public class DefaultTileFactory extends CachedTileFactoryBase {
 
-	public DefaultTileFactory(Projection projection, MapInfo info) {
-		super(projection, info);
+	public DefaultTileFactory(MapInfo info) {
+		super(info);
 	}
 
 	/** Returns the {@link MapInfo} describing this tile factory. */

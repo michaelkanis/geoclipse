@@ -2,8 +2,6 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.map.Projection;
-
 /**
  * A base class for tile factories. You can extend this class instead of
  * implementing {@link ITileFactory} directly.
@@ -16,15 +14,6 @@ import net.skweez.geoclipse.map.Projection;
  */
 public abstract class BaseTileFactory implements ITileFactory {
 
-	/** The projection that is used by this tile factory. */
-	private final Projection projection;
-
-	/** Constructor. */
-	public BaseTileFactory(Projection projection) {
-		this.projection = projection;
-		projection.setTileFactory(this);
-	}
-
 	/**
 	 * Dispose of all of the images and other SWT
 	 * {@link org.eclipse.swt.graphics.Resource}s.
@@ -33,11 +22,6 @@ public abstract class BaseTileFactory implements ITileFactory {
 	 */
 	public void dispose() {
 		// do nothing by default
-	}
-
-	/** {@inheritDoc} */
-	public Projection getProjection() {
-		return projection;
 	}
 
 	/** {@inheritDoc} */

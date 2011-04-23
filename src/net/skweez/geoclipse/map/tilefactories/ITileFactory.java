@@ -23,9 +23,7 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.map.Projection;
 import net.skweez.geoclipse.map.internal.Tile;
-
 
 /**
  * The interface for all tile factories, which are responsible of fetching image
@@ -53,9 +51,6 @@ public interface ITileFactory {
 	 * {@link #getTileSize()}.
 	 */
 	public abstract Dimension getMapSizeInPixels(int zoom);
-
-	/** Returns the projection that is used by this tile factory. */
-	public abstract Projection getProjection();
 
 	/**
 	 * Return the Tile at a given TilePoint and zoom level. This method must not

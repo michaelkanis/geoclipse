@@ -31,6 +31,7 @@ import net.skweez.geoclipse.map.internal.Tile;
 import net.skweez.geoclipse.map.internal.TileLoadListener;
 import net.skweez.geoclipse.map.internal.Util;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
+import net.skweez.geoclipse.projections.MercatorProjection;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.swt.SWT;
@@ -72,6 +73,8 @@ public class MapView extends Canvas {
 	/** Factory used to grab the tiles necessary for painting the map. */
 	private ITileFactory tileFactory;
 
+	private final Projection projection;
+
 	/** Buffer image that'll hold the visible part of the map. */
 	private Image mapImage;
 
@@ -89,7 +92,12 @@ public class MapView extends Canvas {
 	/** Default constructor. */
 	public MapView(final Composite parent) {
 		super(parent, SWT.DOUBLE_BUFFERED);
+
 		tileLoadListener = new TileLoadListener(this);
+
+		// FIXME net.skweez.map.Projection must be an extension point
+		// and TileFactory extensions must reference one
+		projection = new MercatorProjection();
 
 		offset = new Point(0, 0);
 
@@ -134,7 +142,7 @@ public class MapView extends Canvas {
 	}
 
 	public Projection getProjection() {
-		return getTileFactory().getProjection();
+		return projection;
 	}
 
 	/** Returns the current factory used to draw the map tiles. */
