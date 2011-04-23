@@ -165,9 +165,10 @@ public class MapView extends Canvas {
 		}
 
 		this.viewport = viewport;
-		setOffset(viewport.x, viewport.y);
-		queueRedraw();
 
+		setOffset(viewport.x, viewport.y);
+
+		queueRedraw();
 		updatePosition();
 	}
 
@@ -175,6 +176,9 @@ public class MapView extends Canvas {
 	public void setOffset(int x, int y) {
 		offset.x = x;
 		offset.y = y;
+
+		queueRedraw();
+		updatePosition();
 	}
 
 	/**
