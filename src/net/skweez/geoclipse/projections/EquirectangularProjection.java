@@ -20,11 +20,12 @@
 package net.skweez.geoclipse.projections;
 
 import java.awt.Dimension;
-import java.awt.Point;
 
 import net.skweez.geoclipse.map.GeoPoint;
 import net.skweez.geoclipse.map.MapView;
 import net.skweez.geoclipse.map.Projection;
+
+import org.eclipse.swt.graphics.Point;
 
 /**
  * This is an equirectangular cylindrical projection. This means that any pair

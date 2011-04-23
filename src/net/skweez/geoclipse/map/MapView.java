@@ -63,12 +63,7 @@ public class MapView extends Canvas {
 	private int zoomLevel = 1;
 
 	/** The viewport, i.e. the part of the map that is shown. */
-	private final Rectangle viewport = new Rectangle(0, 0, 0, 0);
-
 	private final Point offset;
-
-	/** The position of the map, this is the center of the shown part. */
-	private GeoPoint mapCenter = new GeoPoint(0.0, 0.0);
 
 	/** Factory used to grab the tiles necessary for painting the map. */
 	private ITileFactory tileFactory;
@@ -88,6 +83,8 @@ public class MapView extends Canvas {
 	private int lastRedrawRequest = 0;
 
 	private final List<Overlay> overlays;
+
+	private MapController controller;
 
 	/** Default constructor. */
 	public MapView(final Composite parent) {
@@ -121,7 +118,7 @@ public class MapView extends Canvas {
 
 	/** Setup the listeners. */
 	private void setupListeners() {
-		MapController controller = new MapController(this);
+		controller = new MapController(this);
 		addMouseListener(controller);
 		addMouseMoveListener(controller);
 		addMouseWheelListener(controller);
@@ -130,15 +127,23 @@ public class MapView extends Canvas {
 		addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				updateViewport();
 				queueRedraw();
 			}
 		});
 	}
 
+	/** Returns controller. */
+	public MapController getController() {
+		return controller;
+	}
+
 	/** Returns the center of the current map viewport. */
 	public GeoPoint getMapCenter() {
-		return mapCenter;
+		Rectangle bounds = getBounds();
+		int x = getOffset().x + bounds.width / 2;
+		int y = getOffset().y + bounds.height / 2;
+
+		return getProjection().pixelToGeo(x, y);
 	}
 
 	public Projection getProjection() {
@@ -156,7 +161,6 @@ public class MapView extends Canvas {
 		offset.y = y;
 
 		queueRedraw();
-		updatePosition();
 	}
 
 	/** Returns offset. */
@@ -177,17 +181,17 @@ public class MapView extends Canvas {
 		return zoomLevel;
 	}
 
+	/** Recenter the map to the given location. */
+	/* package */void setMapCenter(final GeoPoint position) {
+		setMapCenter(getProjection().geoToPixel(position));
+	}
+
 	/** Sets the new center of the map in pixel coordinates. */
 	/* package */void setMapCenter(Point center) {
 		Rectangle bounds = getBounds();
 		int x = center.x - bounds.width / 2;
 		int y = center.y - bounds.height / 2;
 		setOffset(x, y);
-	}
-
-	/** Recenter the map to the given location. */
-	/* package */void setPosition(final GeoPoint position) {
-		this.mapCenter = position;
 	}
 
 	/** Set the tile factory for the map. Causes a redraw of the map. */
@@ -197,9 +201,10 @@ public class MapView extends Canvas {
 		}
 
 		if (tileFactory != null) {
+			GeoPoint center = getMapCenter();
 			tileFactory = factory;
 			setZoom(getZoomLevel());
-			setPosition(getMapCenter());
+			setMapCenter(center);
 		} else {
 			tileFactory = factory;
 			setZoom(factory.getMinimumZoom());
@@ -207,7 +212,6 @@ public class MapView extends Canvas {
 
 		Activator.getDefault().makeDefaultTileImages(factory.getTileSize());
 
-		updateViewport();
 		queueRedraw();
 	}
 
@@ -223,50 +227,6 @@ public class MapView extends Canvas {
 
 		this.zoomLevel = zoom;
 		queueRedraw();
-	}
-
-	/**
-	 * Increase the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
-	 * argument.
-	 */
-	/* package */void zoomIn() {
-		final GeoPoint center = getMapCenter();
-		setZoom(getZoomLevel() + 1);
-		setPosition(center);
-		updateViewport();
-	}
-
-	/**
-	 * Decrease the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
-	 * argument.
-	 */
-	/* package */void zoomOut() {
-		final GeoPoint center = getMapCenter();
-		setZoom(getZoomLevel() - 1);
-		setPosition(center);
-		updateViewport();
-	}
-
-	/** Update the viewport based on a set position. */
-	private void updateViewport() {
-		Dimension dim = tileFactory.getMapSizeInPixels(getZoomLevel());
-		setMapCenter(pointToPoint(getProjection().geoToPixel(getMapCenter())));
-	}
-
-	private Point pointToPoint(java.awt.Point point) {
-		return new Point(point.x, point.y);
-	}
-
-	/** Update the position based on the currently displayed viewport. */
-	private void updatePosition() {
-
-		Rectangle bounds = getBounds();
-		int centerX = offset.x + bounds.width / 2;
-		int centerY = offset.y + bounds.height / 2;
-
-		setPosition(getProjection().pixelToGeo(centerX, centerY));
 	}
 
 	/**
@@ -380,18 +340,12 @@ public class MapView extends Canvas {
 		final int tilesHigh = Math.min(calculateTileNumber(bounds.height),
 				getTileFactory().getMapSize(getZoomLevel()).height);
 
-		System.out.println("tilesWide:" + tilesWide);
-		System.out.println("tilesHigh:" + tilesHigh);
-
 		// the offset of the visible screen to the origin of the map in tiles
 		final Point tileOffset = new Point(calculateTileOffset(getOffset().x),
 				calculateTileOffset(getOffset().y));
 
-		System.out.println("tileOffset:" + tileOffset);
-
 		Transform transform = new Transform(getDisplay());
 		transform.translate(-getOffset().x, -getOffset().y);
-		System.out.println("transform:" + transform);
 		// gc.setTransform(transform);
 
 		// draw all visible tiles
@@ -399,15 +353,12 @@ public class MapView extends Canvas {
 			for (int y = 0; y <= tilesHigh; y++) {
 
 				Point position = new Point(tileOffset.x + x, tileOffset.y + y);
-				System.out.println("position:" + position);
 
 				Point pixelPosition = new Point(position.x * tileSize,
 						position.y * tileSize);
-				System.out.println("pixelPosition:" + pixelPosition);
 
 				// draw tile according to its state
 				transform.translate(pixelPosition.x, pixelPosition.y);
-				System.out.println("transform:" + transform);
 				gc.setTransform(transform);
 
 				gc.setClipping(0, 0, tileSize, tileSize);

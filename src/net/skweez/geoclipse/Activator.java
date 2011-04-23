@@ -30,7 +30,6 @@ import java.util.List;
 import net.skweez.geoclipse.map.Overlay;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -98,9 +97,15 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
-	/** Reads all the registered extensions for the given extension point. */
+	/**
+	 * Reads all the registered extensions for the given extension point.
+	 * 
+	 * @throws CoreException
+	 */
 	@SuppressWarnings("unchecked")
-	private <T> List<T> readExtensionList(String extensionPoint) {
+	private <T> List<T> readExtensionList(String extensionPoint)
+			throws CoreException {
+
 		List<T> extensionList = new ArrayList<T>();
 
 		for (IExtension extension : registry.getExtensionPoint(extensionPoint)
@@ -110,12 +115,8 @@ public class Activator extends AbstractUIPlugin {
 			IConfigurationElement element = extension
 					.getConfigurationElements()[0];
 
-			try {
-				Object obj = element.createExecutableExtension("class");
-				extensionList.add((T) obj);
-			} catch (final CoreException e) {
-				Assert.isTrue(false, e.getMessage());
-			}
+			Object obj = element.createExecutableExtension("class");
+			extensionList.add((T) obj);
 		}
 
 		return extensionList;

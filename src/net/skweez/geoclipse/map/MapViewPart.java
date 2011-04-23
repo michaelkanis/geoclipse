@@ -114,9 +114,9 @@ public class MapViewPart extends ViewPart {
 		}
 
 		if (initialLongitude != null && initialLatitude != null) {
-			map.setPosition(new GeoPoint(initialLatitude, initialLongitude));
+			map.setMapCenter(new GeoPoint(initialLatitude, initialLongitude));
 		} else {
-			map.setPosition(Constants.START_POSITION);
+			map.setMapCenter(Constants.START_POSITION);
 		}
 
 		if (initalZoom != null) {
@@ -136,7 +136,7 @@ public class MapViewPart extends ViewPart {
 			/** {@inheritDoc} */
 			@Override
 			public void run() {
-				map.zoomIn();
+				map.getController().zoomIn();
 			}
 		};
 
@@ -145,7 +145,7 @@ public class MapViewPart extends ViewPart {
 			/** {@inheritDoc} */
 			@Override
 			public void run() {
-				map.zoomOut();
+				map.getController().zoomOut();
 			}
 		};
 	}

@@ -21,9 +21,6 @@
  ******************************************************************************/
 package net.skweez.geoclipse.map.internal;
 
-import java.awt.Dimension;
-import java.awt.Point;
-
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Resource;
@@ -85,14 +82,6 @@ public abstract class Util {
 		if (resource != null && !resource.isDisposed()) {
 			resource.dispose();
 		}
-	}
-
-	/**
-	 * Returns <code>true</code> if a tile with the given coordinates would be
-	 * on the map or <code>false</code> otherwise.
-	 */
-	public static boolean isTileOnMap(Point position, Dimension mapSize) {
-		return position.y >= 0 && position.y < mapSize.getHeight();
 	}
 
 }

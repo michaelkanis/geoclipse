@@ -20,7 +20,7 @@
 
 package net.skweez.geoclipse.map;
 
-import java.awt.Point;
+import org.eclipse.swt.graphics.Point;
 
 /**
  * A projection is a method to represent the surface of the three dimensional

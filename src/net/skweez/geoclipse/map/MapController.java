@@ -66,9 +66,9 @@ public class MapController implements MouseListener, MouseMoveListener,
 	@Override
 	public void mouseScrolled(final MouseEvent event) {
 		if (event.count < 0) {
-			map.zoomOut();
+			zoomOut();
 		} else {
-			map.zoomIn();
+			zoomIn();
 		}
 	}
 
@@ -82,8 +82,34 @@ public class MapController implements MouseListener, MouseMoveListener,
 	}
 
 	public void zoomInFixing(int xPixel, int yPixel) {
-		map.setMapCenter(new Point(xPixel, yPixel));
-		map.zoomIn();
+		animateTo(map.getProjection().pixelToGeo(xPixel, yPixel));
+		zoomIn();
+	}
+
+	/**
+	 * Increase the zoom level by one. This is exactly the same as calling
+	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
+	 * argument.
+	 */
+	/* package */void zoomIn() {
+		final GeoPoint center = map.getMapCenter();
+		setZoom(map.getZoomLevel() + 1);
+		map.setMapCenter(center);
+	}
+
+	/**
+	 * Decrease the zoom level by one. This is exactly the same as calling
+	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
+	 * argument.
+	 */
+	/* package */void zoomOut() {
+		final GeoPoint center = map.getMapCenter();
+		setZoom(map.getZoomLevel() - 1);
+		map.setMapCenter(center);
+	}
+
+	public void setZoom(int zoomLevel) {
+		map.setZoom(zoomLevel);
 	}
 
 	/**
@@ -109,9 +135,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 		map.setCursor(Constants.CURSOR_PAN);
 
-		int x = map.getOffset().x + oldPosition.x - e.x;
-		int y = map.getOffset().y + oldPosition.y - e.y;
-		map.setOffset(x, y);
+		scrollBy(oldPosition.x - e.x, oldPosition.y - e.y);
 
 		oldPosition = new Point(e.x, e.y);
 	}
@@ -131,38 +155,51 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Handle key presses. */
 	@Override
 	public void keyPressed(final KeyEvent event) {
-		int delta_x = 0;
-		int delta_y = 0;
+		int deltaX = 0;
+		int deltaY = 0;
 
 		switch (event.keyCode) {
 		case SWT.ARROW_LEFT:
-			delta_x -= OFFSET;
+			deltaX -= OFFSET;
 			break;
 		case SWT.ARROW_RIGHT:
-			delta_x += OFFSET;
+			deltaX += OFFSET;
 			break;
 		case SWT.ARROW_UP:
-			delta_y -= OFFSET;
+			deltaY -= OFFSET;
 			break;
 		case SWT.ARROW_DOWN:
-			delta_y += OFFSET;
+			deltaY += OFFSET;
 			break;
 		}
 
 		switch (event.character) {
 		case '+':
-			map.zoomIn();
+			zoomIn();
 			break;
 		case '-':
-			map.zoomOut();
+			zoomOut();
 			break;
 		}
 
-		if (delta_x != 0 || delta_y != 0) {
-			int x = map.getOffset().x + delta_x;
-			int y = map.getOffset().y + delta_y;
-			map.setOffset(x, y);
+		if (deltaX != 0 || deltaY != 0) {
+			scrollBy(deltaX, deltaY);
 		}
+	}
+
+	/** Scroll by a given amount, in pixels. There will be no animation. */
+	public void scrollBy(int x, int y) {
+		map.setOffset(map.getOffset().x + x, map.getOffset().y + y);
+	}
+
+	/** Start animating the map towards the given point. */
+	public void animateTo(GeoPoint point) {
+		setCenter(point);
+	}
+
+	/** Set the map view to the given center. There will be no animation. */
+	public void setCenter(GeoPoint point) {
+		map.setMapCenter(point);
 	}
 
 	/** {@inheritDoc} */
