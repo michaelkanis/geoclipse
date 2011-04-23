@@ -31,7 +31,6 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * This class implements all the listener interfaces for mouse interactions with
@@ -110,10 +109,9 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 		map.setCursor(Constants.CURSOR_PAN);
 
-		Rectangle viewport = map.getViewport();
-		viewport.x += oldPosition.x - e.x;
-		viewport.y += oldPosition.y - e.y;
-		map.setViewport(viewport);
+		int x = map.getOffset().x + oldPosition.x - e.x;
+		int y = map.getOffset().y + oldPosition.y - e.y;
+		map.setOffset(x, y);
 
 		oldPosition = new Point(e.x, e.y);
 	}
@@ -161,14 +159,10 @@ public class MapController implements MouseListener, MouseMoveListener,
 		}
 
 		if (delta_x != 0 || delta_y != 0) {
-			final Rectangle viewport = map.getViewport();
-
-			viewport.x += delta_x;
-			viewport.y += delta_y;
-			map.setViewport(viewport);
+			int x = map.getOffset().x + delta_x;
+			int y = map.getOffset().y + delta_y;
+			map.setOffset(x, y);
 		}
-
-		map.queueRedraw();
 	}
 
 	/** {@inheritDoc} */

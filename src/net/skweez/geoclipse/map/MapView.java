@@ -63,7 +63,7 @@ public class MapView extends Canvas {
 	private int zoomLevel = 1;
 
 	/** The viewport, i.e. the part of the map that is shown. */
-	private Rectangle viewport = new Rectangle(0, 0, 0, 0);
+	private final Rectangle viewport = new Rectangle(0, 0, 0, 0);
 
 	private final Point offset;
 
@@ -150,40 +150,6 @@ public class MapView extends Canvas {
 		return tileFactory;
 	}
 
-	/**
-	 * Set the currently displayed viewport. This gets normalized to be
-	 * centered, if it is bigger than the map and is inside the map if it is
-	 * smaller.
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public void setViewport(Rectangle viewport) {
-		final Dimension mapSize = tileFactory
-				.getMapSizeInPixels(getZoomLevel());
-
-		// normalize x
-		viewport.x %= mapSize.width;
-		if (viewport.x < 0) {
-			viewport.x += mapSize.width;
-		}
-
-		// normalize y
-		if (viewport.height > mapSize.height) {
-			viewport.y = (mapSize.height - viewport.height) / 2;
-		} else {
-			viewport.y = Math.min(viewport.y, mapSize.height - viewport.height);
-			viewport.y = Math.max(viewport.y, 0);
-		}
-
-		this.viewport = viewport;
-
-		setOffset(viewport.x, viewport.y);
-
-		queueRedraw();
-		updatePosition();
-	}
-
 	/** Sets offset. */
 	public void setOffset(int x, int y) {
 		offset.x = x;
@@ -193,38 +159,9 @@ public class MapView extends Canvas {
 		updatePosition();
 	}
 
-	/**
-	 * Returns the viewport. <code>x</code> and <code>y</code> contains the
-	 * position in world pixel, <code>width</code> and <code>height</code>
-	 * contains the visible area in device pixel
-	 * 
-	 * @deprecated Use {@link #getBounds()} for width and height. Use getOffset
-	 *             for x and y.
-	 */
-	@Deprecated
-	public Rectangle getViewport() {
-		return viewport;
-	}
-
 	/** Returns offset. */
 	public Point getOffset() {
 		return offset;
-	}
-
-	/**
-	 * Returns the bounds of the viewport in pixels. This can be used to
-	 * transform points into the world bitmap coordinate space. The viewport is
-	 * the part of the map, that you can currently see on the screen.
-	 */
-	private Rectangle calculateViewport(final Point center) {
-		// calculate the visible viewport area in pixels
-		final int width = getBounds().width;
-		final int height = getBounds().height;
-
-		final int x = center.x - width / 2;
-		final int y = center.y - height / 2;
-
-		return new Rectangle(x, y, width, height);
 	}
 
 	public Dimension getMapSizeInPixels() {
@@ -242,9 +179,10 @@ public class MapView extends Canvas {
 
 	/** Sets the new center of the map in pixel coordinates. */
 	/* package */void setMapCenter(Point center) {
-		setViewport(calculateViewport(center));
-		updatePosition();
-		queueRedraw();
+		Rectangle bounds = getBounds();
+		int x = center.x - bounds.width / 2;
+		int y = center.y - bounds.height / 2;
+		setOffset(x, y);
 	}
 
 	/** Recenter the map to the given location. */
