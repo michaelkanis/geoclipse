@@ -66,10 +66,4 @@
             class="net.skweez.geoclipse.map.tilefactories.internal.OpenStreetBrowserFactory"
             name="OpenStreetBrowserFactory"/>
    </extension>
-   <extension
-         point="net.skweez.geoclipse.TileFactory">
-      <tilefactory
-            class="net.skweez.geoclipse.map.tilefactories.internal.NasaBlueMarbleFactory"
-            name="NasaBlueMarbleFactory"/>
-   </extension>
 </plugin>
