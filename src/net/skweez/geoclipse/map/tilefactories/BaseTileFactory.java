@@ -2,7 +2,7 @@ package net.skweez.geoclipse.map.tilefactories;
 
 import java.awt.Dimension;
 
-import net.skweez.geoclipse.map.IProjection;
+import net.skweez.geoclipse.map.Projection;
 
 
 
@@ -19,10 +19,10 @@ import net.skweez.geoclipse.map.IProjection;
 public abstract class BaseTileFactory implements ITileFactory {
 
 	/** The projection that is used by this tile factory. */
-	private final IProjection projection;
+	private final Projection projection;
 
 	/** Constructor. */
-	public BaseTileFactory(IProjection projection) {
+	public BaseTileFactory(Projection projection) {
 		this.projection = projection;
 	}
 
@@ -37,7 +37,7 @@ public abstract class BaseTileFactory implements ITileFactory {
 	}
 
 	/** {@inheritDoc} */
-	public IProjection getProjection() {
+	public Projection getProjection() {
 		return projection;
 	}
 

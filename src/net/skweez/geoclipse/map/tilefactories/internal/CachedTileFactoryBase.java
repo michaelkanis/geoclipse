@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
-import net.skweez.geoclipse.map.IProjection;
+import net.skweez.geoclipse.map.Projection;
 import net.skweez.geoclipse.map.internal.MapImageCache;
 import net.skweez.geoclipse.map.internal.Tile;
 import net.skweez.geoclipse.map.tilefactories.BaseTileFactory;
@@ -99,9 +99,9 @@ public abstract class CachedTileFactoryBase extends BaseTileFactory {
 
 	/**
 	 * Creates a new DefaultTileFactory using the specified {@link MapInfo} and
-	 * {@link IProjection}.
+	 * {@link Projection}.
 	 */
-	public CachedTileFactoryBase(final IProjection projection,
+	public CachedTileFactoryBase(final Projection projection,
 			final MapInfo info) {
 		super(projection);
 		mapInfo = info;

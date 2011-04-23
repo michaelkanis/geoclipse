@@ -22,7 +22,7 @@ package net.skweez.geoclipse.projections;
 import java.awt.Point;
 
 import net.skweez.geoclipse.map.GeoPoint;
-import net.skweez.geoclipse.map.IProjection;
+import net.skweez.geoclipse.map.Projection;
 
 /**
  * This is an equirectangular cylindrical projection. This means that any pair
@@ -42,13 +42,13 @@ import net.skweez.geoclipse.map.IProjection;
  * @version $Rev: 649 $
  * @levd.rating YELLOW Rev: 503
  */
-public class EquirectangularProjection implements IProjection {
+public class EquirectangularProjection extends Projection {
 
 	/** {@inheritDoc} */
 	@Override
 	public Point geoToPixel(GeoPoint c, int width, int height) {
-		return new Point((int) lonToX(c.getLongitude(), width), (int) latToY(c
-				.getLatitude(), height));
+		return new Point((int) lonToX(c.getLongitude(), width), (int) latToY(
+				c.getLatitude(), height));
 	}
 
 	/** Converts a given longitude to a x coordinate using a given map width. */
@@ -64,6 +64,7 @@ public class EquirectangularProjection implements IProjection {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public GeoPoint pixelToGeo(int pixelX, int pixelY, int width, int height) {
 		return new GeoPoint(yToLat(pixelY, height), xToLon(pixelX, width));
 	}

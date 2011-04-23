@@ -22,12 +22,11 @@ package net.skweez.geoclipse.map;
 
 import java.awt.Point;
 
-
 /**
  * A projection is a method to represent the surface of the three dimensional
  * earth to a two dimensional map. Projections always distort the surface in one
  * way or another.
- *<p>
+ * <p>
  * There are a number of characteristics for preserving metric properties of
  * projections. Among them are:
  * <li><i>Conformal</i> - preserving angles
@@ -39,7 +38,7 @@ import java.awt.Point;
  * @version $Rev: 649 $
  * @levd.rating YELLOW Rev: 503
  */
-public interface IProjection {
+public abstract class Projection {
 
 	/**
 	 * Given a position (latitude/longitude pair) and a zoom level, returns the
