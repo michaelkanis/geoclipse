@@ -101,8 +101,8 @@ public abstract class CachedTileFactoryBase extends BaseTileFactory {
 	 * Creates a new DefaultTileFactory using the specified {@link MapInfo} and
 	 * {@link Projection}.
 	 */
-	public CachedTileFactoryBase(final Projection projection,
-			final MapInfo info) {
+	public CachedTileFactoryBase(final Projection projection, final MapInfo info) {
+
 		super(projection);
 		mapInfo = info;
 		mapImageCache = new MapImageCache() {

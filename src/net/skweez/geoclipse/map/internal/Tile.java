@@ -153,20 +153,23 @@ public class Tile extends Observable {
 	}
 
 	public void draw(GC gc) {
+		Image image = null;
 		switch (getStatus()) {
 		case READY:
-			gc.drawImage(getImage(), 0, 0);
+			image = getImage();
 			break;
 		case ERROR:
-			gc.drawImage(
-					Activator.getDefault().getImageRegistry()
-							.get(Constants.ERROR_IMG_KEY), 0, 0);
+			image = Activator.getDefault().getImageRegistry()
+					.get(Constants.ERROR_IMG_KEY);
 			break;
 		case LOADING:
-			gc.drawImage(
-					Activator.getDefault().getImageRegistry()
-							.get(Constants.LOADING_IMG_KEY), 0, 0);
+			image = Activator.getDefault().getImageRegistry()
+					.get(Constants.LOADING_IMG_KEY);
 			break;
+		}
+
+		if (image != null) {
+			gc.drawImage(image, 0, 0);
 		}
 	}
 

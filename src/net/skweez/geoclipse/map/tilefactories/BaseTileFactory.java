@@ -4,8 +4,6 @@ import java.awt.Dimension;
 
 import net.skweez.geoclipse.map.Projection;
 
-
-
 /**
  * A base class for tile factories. You can extend this class instead of
  * implementing {@link ITileFactory} directly.
@@ -24,6 +22,7 @@ public abstract class BaseTileFactory implements ITileFactory {
 	/** Constructor. */
 	public BaseTileFactory(Projection projection) {
 		this.projection = projection;
+		projection.setTileFactory(this);
 	}
 
 	/**

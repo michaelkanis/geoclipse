@@ -24,7 +24,6 @@ package net.skweez.geoclipse.map;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-
 import net.skweez.geoclipse.Constants;
 
 import org.eclipse.swt.SWT;
@@ -113,8 +112,6 @@ public class MapController implements MouseListener, MouseMoveListener,
 		viewport.y += oldPosition.y - e.y;
 		map.setViewport(viewport);
 
-		map.updatePosition();
-
 		oldPosition = new Point(e.x, e.y);
 	}
 
@@ -166,7 +163,6 @@ public class MapController implements MouseListener, MouseMoveListener,
 			viewport.x += delta_x;
 			viewport.y += delta_y;
 			map.setViewport(viewport);
-			map.updatePosition();
 		}
 
 		map.queueRedraw();

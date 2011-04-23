@@ -164,9 +164,9 @@ public class MapViewPart extends ViewPart {
 	public void saveState(IMemento memento) {
 		super.saveState(memento);
 
-		memento.putFloat(LON_KEY, (float) map.getPosition().getLongitude());
-		memento.putFloat(LAT_KEY, (float) map.getPosition().getLatitude());
-		memento.putInteger(ZOOM_KEY, map.getZoom());
+		memento.putFloat(LON_KEY, (float) map.getMapCenter().getLongitude());
+		memento.putFloat(LAT_KEY, (float) map.getMapCenter().getLatitude());
+		memento.putInteger(ZOOM_KEY, map.getZoomLevel());
 		memento.putString(TILEFACTORY_KEY, map.getTileFactory().getClass()
 				.getName());
 	}

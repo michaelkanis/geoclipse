@@ -22,7 +22,6 @@
 package net.skweez.geoclipse.map;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.Iterator;
@@ -40,6 +39,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
@@ -59,13 +59,13 @@ public class MapView extends Canvas {
 	public static final String ID = "net.skweez.geoclipse.mapview";
 
 	/** The zoom level. Normally a value between around 0 and 20. */
-	private int zoom = 1;
+	private int zoomLevel = 1;
 
 	/** The viewport, i.e. the part of the map that is shown. */
 	private Rectangle viewport = new Rectangle();
 
 	/** The position of the map, this is the center of the shown part. */
-	private GeoPoint position = new GeoPoint(0.0, 0.0);
+	private GeoPoint mapCenter = new GeoPoint(0.0, 0.0);
 
 	/** Factory used to grab the tiles necessary for painting the map. */
 	private ITileFactory tileFactory;
@@ -127,8 +127,8 @@ public class MapView extends Canvas {
 	}
 
 	/** Returns the center of the current map viewport. */
-	public GeoPoint getPosition() {
-		return position;
+	public GeoPoint getMapCenter() {
+		return mapCenter;
 	}
 
 	/** Returns the current factory used to draw the map tiles. */
@@ -142,7 +142,8 @@ public class MapView extends Canvas {
 	 * smaller.
 	 */
 	public void setViewport(Rectangle viewport) {
-		final Dimension mapSize = tileFactory.getMapSizeInPixels(getZoom());
+		final Dimension mapSize = tileFactory
+				.getMapSizeInPixels(getZoomLevel());
 
 		// normalize x
 		viewport.x %= mapSize.width;
@@ -160,15 +161,21 @@ public class MapView extends Canvas {
 
 		this.viewport = viewport;
 		queueRedraw();
+
+		updatePosition();
 	}
 
 	/**
 	 * Returns the viewport. <code>x</code> and <code>y</code> contains the
 	 * position in world pixel, <code>width</code> and <code>height</code>
 	 * contains the visible area in device pixel
+	 * 
+	 * @deprecated Use {@link #getBounds()} for width and height. Use getOffset
+	 *             for x and y.
 	 */
+	@Deprecated
 	public Rectangle getViewport() {
-		return new Rectangle(viewport);
+		return viewport;
 	}
 
 	/**
@@ -176,10 +183,10 @@ public class MapView extends Canvas {
 	 * transform points into the world bitmap coordinate space. The viewport is
 	 * the part of the map, that you can currently see on the screen.
 	 */
-	public Rectangle calculateViewport(final Point center) {
+	private Rectangle calculateViewport(final Point center) {
 		// calculate the visible viewport area in pixels
-		final int width = viewport.width;
-		final int height = viewport.height;
+		final int width = getBounds().width;
+		final int height = getBounds().height;
 
 		final int x = center.x - width / 2;
 		final int y = center.y - height / 2;
@@ -188,12 +195,12 @@ public class MapView extends Canvas {
 	}
 
 	/** Returns the current zoom level. */
-	public int getZoom() {
-		return zoom;
+	public int getZoomLevel() {
+		return zoomLevel;
 	}
 
 	/** Sets the new center of the map in pixel coordinates. */
-	public void setCenter(int x, int y) {
+	/* package */void setCenter(int x, int y) {
 		setCenter(new Point(x, y));
 	}
 
@@ -204,21 +211,21 @@ public class MapView extends Canvas {
 		queueRedraw();
 	}
 
-	/** Recenter the map to the given location. Causes a redraw of the map. */
-	public void setPosition(final GeoPoint position) {
-		this.position = position;
+	/** Recenter the map to the given location. */
+	/* package */void setPosition(final GeoPoint position) {
+		this.mapCenter = position;
 	}
 
 	/** Set the tile factory for the map. Causes a redraw of the map. */
-	public void setTileFactory(final ITileFactory factory) {
+	/* package */void setTileFactory(final ITileFactory factory) {
 		if (factory == null) {
 			return;
 		}
 
 		if (tileFactory != null) {
 			tileFactory = factory;
-			setZoom(getZoom());
-			setPosition(getPosition());
+			setZoom(getZoomLevel());
+			setPosition(getMapCenter());
 		} else {
 			tileFactory = factory;
 			setZoom(factory.getMinimumZoom());
@@ -234,56 +241,60 @@ public class MapView extends Canvas {
 	 * Set a new zoom level keeping the current center position. Causes a redraw
 	 * of the map.
 	 */
-	public void setZoom(int zoom) {
+	/* package */void setZoom(int zoom) {
 		// Restrict zoom to the min and max values of the factory
 		if (zoom < tileFactory.getMinimumZoom()
 				|| zoom > tileFactory.getMaximumZoom()) {
 			return;
 		}
 
-		this.zoom = zoom;
+		this.zoomLevel = zoom;
 		queueRedraw();
 	}
 
 	/**
 	 * Increase the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoom()} + 1</code> as
+	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
 	 * argument.
 	 */
-	public void zoomIn() {
-		final GeoPoint center = getPosition();
-		setZoom(getZoom() + 1);
+	/* package */void zoomIn() {
+		final GeoPoint center = getMapCenter();
+		setZoom(getZoomLevel() + 1);
 		setPosition(center);
 		updateViewport();
 	}
 
 	/**
 	 * Decrease the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoom()} - 1</code> as
+	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
 	 * argument.
 	 */
-	public void zoomOut() {
-		final GeoPoint center = getPosition();
-		setZoom(getZoom() - 1);
+	/* package */void zoomOut() {
+		final GeoPoint center = getMapCenter();
+		setZoom(getZoomLevel() - 1);
 		setPosition(center);
 		updateViewport();
 	}
 
 	/** Update the viewport based on a set position. */
-	public void updateViewport() {
-		Dimension dim = tileFactory.getMapSizeInPixels(getZoom());
-		setCenter(tileFactory.getProjection().geoToPixel(getPosition(),
-				dim.width, dim.height));
+	private void updateViewport() {
+		Dimension dim = tileFactory.getMapSizeInPixels(getZoomLevel());
+		setCenter(pointToPoint(tileFactory.getProjection().geoToPixel(
+				getMapCenter(), dim.width, dim.height)));
+	}
+
+	private Point pointToPoint(java.awt.Point point) {
+		return new Point(point.x, point.y);
 	}
 
 	/** Update the position based on the currently displayed viewport. */
-	public void updatePosition() {
+	private void updatePosition() {
 		setPosition(tileFactory.getProjection().pixelToGeo(
 				(int) getViewport().getCenterX(),
 				(int) getViewport().getCenterY(),
-				tileFactory.getMapSize(getZoom()).width
+				tileFactory.getMapSize(getZoomLevel()).width
 						* tileFactory.getTileSize(),
-				tileFactory.getMapSize(getZoom()).height
+				tileFactory.getMapSize(getZoomLevel()).height
 						* tileFactory.getTileSize()));
 	}
 
@@ -346,7 +357,7 @@ public class MapView extends Canvas {
 					return;
 				}
 
-				drawMap();
+				draw();
 			}
 		};
 
@@ -359,7 +370,7 @@ public class MapView extends Canvas {
 	 * {@link #paintControl(PaintEvent)}. This method <b>must</b> be called from
 	 * the UI thread!
 	 */
-	private void drawMap() {
+	private void draw() {
 		if (isDisposed()) {
 			return;
 		}
@@ -368,9 +379,9 @@ public class MapView extends Canvas {
 			mapImage = checkOrCreateImage(mapImage);
 			gc = new GC(mapImage);
 			drawBackground();
-			drawTiles();
+			drawGroundLayer();
 			drawOverlays();
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			// map image is corrupt
 			Util.disposeResource(mapImage);
 		} finally {
@@ -387,40 +398,54 @@ public class MapView extends Canvas {
 	}
 
 	/** Draws all visible tiles of the map. */
-	private void drawTiles() {
+	private void drawGroundLayer() {
 
 		final Rectangle viewport = getViewport();
-
-		final Rectangle targetViewport = new Rectangle(viewport);
-		targetViewport.setLocation(0, 0);
+		org.eclipse.swt.graphics.Rectangle bounds = getBounds();
 
 		final int tileSize = getTileFactory().getTileSize();
-		final Dimension tileMapSize = getTileFactory().getMapSize(getZoom());
 
 		// get the visible tiles in the viewport area
-		final int tilesWide = calculateTileNumber(viewport.width);
-		final int tilesHigh = calculateTileNumber(viewport.height);
+		final int tilesWide = calculateTileNumber(bounds.width);
+		final int tilesHigh = Math.min(calculateTileNumber(bounds.height),
+				getTileFactory().getMapSize(getZoomLevel()).height);
 
-		// the offset of the visible screen to the origin of the map
-		final Point offset = new Point(calculateTileOffset(viewport.x),
+		System.out.println("tilesWide:" + tilesWide);
+		System.out.println("tilesHigh:" + tilesHigh);
+
+		// the offset of the visible screen to the origin of the map in tiles
+		final Point tileOffset = new Point(calculateTileOffset(viewport.x),
 				calculateTileOffset(viewport.y));
+
+		System.out.println("tileOffset:" + tileOffset);
 
 		Transform transform = new Transform(getDisplay());
 		transform.translate(-viewport.x, -viewport.y);
-		gc.setTransform(transform);
+		System.out.println("transform:" + transform);
+		// gc.setTransform(transform);
 
 		// draw all visible tiles
 		for (int x = 0; x <= tilesWide; x++) {
 			for (int y = 0; y <= tilesHigh; y++) {
 
-				final Point position = new Point(offset.x + x, offset.y + y);
+				Point position = new Point(tileOffset.x + x, tileOffset.y + y);
+				System.out.println("position:" + position);
 
-				if (Util.isTileOnMap(position, tileMapSize)) {
-					// draw tile according to its state
-					Point p = new Point(position.x * tileSize, position.y
-							* tileSize);
-					drawTile(getTile(position), p);
-				}
+				Point pixelPosition = new Point(position.x * tileSize,
+						position.y * tileSize);
+				System.out.println("pixelPosition:" + pixelPosition);
+
+				// draw tile according to its state
+				transform.translate(pixelPosition.x, pixelPosition.y);
+				System.out.println("transform:" + transform);
+				gc.setTransform(transform);
+
+				gc.setClipping(0, 0, tileSize, tileSize);
+
+				drawTile(getTile(position));
+
+				transform.translate(-pixelPosition.x, -pixelPosition.y);
+				gc.setTransform(transform);
 			}
 		}
 
@@ -430,33 +455,19 @@ public class MapView extends Canvas {
 
 	/** Retrieve a tile from the given position. */
 	private Tile getTile(Point tilePosition) {
-		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y, zoom);
+		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y,
+				zoomLevel);
 		Assert.isTrue(tile != null, "Tile may never be null.");
 		return tile;
 	}
 
 	/** Draw one specific tile at its position. */
-	private void drawTile(Tile tile, Point where) {
-		int tileSize = getTileFactory().getTileSize();
-
-		Transform transform = new Transform(getDisplay());
-		gc.getTransform(transform);
-
-		transform.translate(where.x, where.y);
-		gc.setTransform(transform);
-
-		gc.setClipping(0, 0, tileSize, tileSize);
-
+	private void drawTile(Tile tile) {
 		if (tile.getStatus() == Tile.Status.LOADING) {
 			tile.addObserver(tileLoadListener);
 		}
 
 		tile.draw(gc);
-
-		transform.translate(-where.x, -where.y);
-		gc.setTransform(transform);
-
-		Util.disposeResource(transform);
 	}
 
 	/** Draws overlays as described in {@link #getOverlays()}. */
@@ -470,7 +481,7 @@ public class MapView extends Canvas {
 		synchronized (overlays) {
 			Iterator<Overlay> iterator = overlays.iterator();
 			while (iterator.hasNext()) {
-				iterator.next().draw(gc, this, false);
+				iterator.next().draw(gc, this);
 			}
 		}
 
@@ -481,10 +492,10 @@ public class MapView extends Canvas {
 	/**
 	 * This method gets called whenever SWT wants to redraw the widget. It gets
 	 * called by the private {@link PaintListener} in this class. For
-	 * performance reasons {@link #drawMap()} is called directly from the
-	 * methods that change the view of the map (e.g. zoom, pan, etc.). This
-	 * method only paints the offscreen buffer image produced by
-	 * {@link #drawMap()} to the screen.
+	 * performance reasons {@link #draw()} is called directly from the methods
+	 * that change the view of the map (e.g. zoom, pan, etc.). This method only
+	 * paints the offscreen buffer image produced by {@link #draw()} to the
+	 * screen.
 	 */
 	private void paintControl(final PaintEvent event) {
 		if (mapImage == null || mapImage.isDisposed()) {

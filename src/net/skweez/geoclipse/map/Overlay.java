@@ -16,6 +16,10 @@ import org.eclipse.swt.graphics.GC;
  */
 public abstract class Overlay {
 
+	public void draw(GC gc, MapView mapView) {
+		draw(gc, mapView, false);
+	}
+
 	public void draw(GC gc, MapView mapView, boolean shadowLayer) {
 		// Draw nothing by default
 	}
