@@ -55,7 +55,7 @@ public class DefaultTileFactory extends CachedTileFactoryBase {
 
 	/** {@inheritDoc} */
 	@Override
-	public int getMaximumZoom() {
+	public int getMaxZoomLevel() {
 		return mapInfo.getMaximumZoom();
 	}
 

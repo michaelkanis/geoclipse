@@ -231,6 +231,10 @@ public class MapView extends Canvas {
 		return getTileFactory().getMapSizeInPixels(getZoomLevel());
 	}
 
+	public int getMaxZoomLevel() {
+		return getTileFactory().getMaxZoomLevel();
+	}
+
 	/** Returns the current zoom level. */
 	public int getZoomLevel() {
 		return zoomLevel;
@@ -275,8 +279,7 @@ public class MapView extends Canvas {
 	 */
 	/* package */void setZoom(int zoom) {
 		// Restrict zoom to the min and max values of the factory
-		if (zoom < tileFactory.getMinimumZoom()
-				|| zoom > tileFactory.getMaximumZoom()) {
+		if (zoom < tileFactory.getMinimumZoom() || zoom > getMaxZoomLevel()) {
 			return;
 		}
 

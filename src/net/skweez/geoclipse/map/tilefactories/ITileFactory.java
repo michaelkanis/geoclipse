@@ -70,7 +70,7 @@ public interface ITileFactory {
 	public abstract int getMinimumZoom();
 
 	/** The factory's maximum zoom. */
-	public abstract int getMaximumZoom();
+	public abstract int getMaxZoomLevel();
 
 	/** Implementing classes can get rid of used resources in this method. */
 	public void dispose();
