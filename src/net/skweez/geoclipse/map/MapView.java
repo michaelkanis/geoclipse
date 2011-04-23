@@ -133,6 +133,10 @@ public class MapView extends Canvas {
 		return mapCenter;
 	}
 
+	public Projection getProjection() {
+		return getTileFactory().getProjection();
+	}
+
 	/** Returns the current factory used to draw the map tiles. */
 	public ITileFactory getTileFactory() {
 		return tileFactory;
@@ -295,8 +299,8 @@ public class MapView extends Canvas {
 	/** Update the viewport based on a set position. */
 	private void updateViewport() {
 		Dimension dim = tileFactory.getMapSizeInPixels(getZoomLevel());
-		setMapCenter(pointToPoint(tileFactory.getProjection().geoToPixel(
-				getMapCenter(), dim.width, dim.height)));
+		setMapCenter(pointToPoint(getProjection().geoToPixel(getMapCenter(),
+				dim.width, dim.height)));
 	}
 
 	private Point pointToPoint(java.awt.Point point) {
@@ -310,7 +314,7 @@ public class MapView extends Canvas {
 		int centerX = offset.x + bounds.width / 2;
 		int centerY = offset.y + bounds.height / 2;
 
-		setPosition(tileFactory.getProjection().pixelToGeo(
+		setPosition(getProjection().pixelToGeo(
 				centerX,
 				centerY,
 				tileFactory.getMapSize(getZoomLevel()).width
