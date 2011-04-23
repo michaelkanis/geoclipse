@@ -425,7 +425,6 @@ public class MapView extends Canvas {
 		}
 
 		Util.disposeResource(transform);
-
 		gc.setTransform(null);
 	}
 
@@ -464,12 +463,19 @@ public class MapView extends Canvas {
 	private void drawOverlays() {
 		gc.setClipping((org.eclipse.swt.graphics.Rectangle) null);
 
+		Transform transform = new Transform(getDisplay());
+		transform.translate(-viewport.x, -viewport.y);
+		gc.setTransform(transform);
+
 		synchronized (overlays) {
 			Iterator<Overlay> iterator = overlays.iterator();
 			while (iterator.hasNext()) {
 				iterator.next().draw(gc, this, false);
 			}
 		}
+
+		Util.disposeResource(transform);
+		gc.setTransform(null);
 	}
 
 	/**
