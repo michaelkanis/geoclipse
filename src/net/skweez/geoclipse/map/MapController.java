@@ -21,9 +21,6 @@
  ******************************************************************************/
 package net.skweez.geoclipse.map;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-
 import net.skweez.geoclipse.Constants;
 
 import org.eclipse.swt.SWT;
@@ -33,6 +30,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseWheelListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 
 /**
  * This class implements all the listener interfaces for mouse interactions with
@@ -78,10 +77,14 @@ public class MapController implements MouseListener, MouseMoveListener,
 	@Override
 	public void mouseDoubleClick(final MouseEvent event) {
 		if (event.button == 1) {
-			Rectangle viewport = map.getViewport();
-			map.setCenter(viewport.x + event.x, viewport.y + event.y);
-			map.zoomIn();
+			Point offset = map.getOffset();
+			zoomInFixing(offset.x + event.x, offset.y + event.y);
 		}
+	}
+
+	public void zoomInFixing(int xPixel, int yPixel) {
+		map.setMapCenter(new Point(xPixel, yPixel));
+		map.zoomIn();
 	}
 
 	/**
@@ -107,7 +110,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 		map.setCursor(Constants.CURSOR_PAN);
 
-		final Rectangle viewport = map.getViewport();
+		Rectangle viewport = map.getViewport();
 		viewport.x += oldPosition.x - e.x;
 		viewport.y += oldPosition.y - e.y;
 		map.setViewport(viewport);

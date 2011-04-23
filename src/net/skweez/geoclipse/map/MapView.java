@@ -22,7 +22,6 @@
 package net.skweez.geoclipse.map;
 
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +39,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
@@ -62,7 +62,9 @@ public class MapView extends Canvas {
 	private int zoomLevel = 1;
 
 	/** The viewport, i.e. the part of the map that is shown. */
-	private Rectangle viewport = new Rectangle();
+	private Rectangle viewport = new Rectangle(0, 0, 0, 0);
+
+	private final Point offset;
 
 	/** The position of the map, this is the center of the shown part. */
 	private GeoPoint mapCenter = new GeoPoint(0.0, 0.0);
@@ -88,6 +90,8 @@ public class MapView extends Canvas {
 	public MapView(final Composite parent) {
 		super(parent, SWT.DOUBLE_BUFFERED);
 		tileLoadListener = new TileLoadListener(this);
+
+		offset = new Point(0, 0);
 
 		overlays = Activator.getDefault().getOverlays();
 
@@ -118,8 +122,6 @@ public class MapView extends Canvas {
 		addListener(SWT.Resize, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				viewport.width = getClientArea().width;
-				viewport.height = getClientArea().height;
 				updateViewport();
 				queueRedraw();
 			}
@@ -140,7 +142,10 @@ public class MapView extends Canvas {
 	 * Set the currently displayed viewport. This gets normalized to be
 	 * centered, if it is bigger than the map and is inside the map if it is
 	 * smaller.
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	public void setViewport(Rectangle viewport) {
 		final Dimension mapSize = tileFactory
 				.getMapSizeInPixels(getZoomLevel());
@@ -160,9 +165,16 @@ public class MapView extends Canvas {
 		}
 
 		this.viewport = viewport;
+		setOffset(viewport.x, viewport.y);
 		queueRedraw();
 
 		updatePosition();
+	}
+
+	/** Sets offset. */
+	public void setOffset(int x, int y) {
+		offset.x = x;
+		offset.y = y;
 	}
 
 	/**
@@ -176,6 +188,11 @@ public class MapView extends Canvas {
 	@Deprecated
 	public Rectangle getViewport() {
 		return viewport;
+	}
+
+	/** Returns offset. */
+	public Point getOffset() {
+		return offset;
 	}
 
 	/**
@@ -200,12 +217,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Sets the new center of the map in pixel coordinates. */
-	/* package */void setCenter(int x, int y) {
-		setCenter(new Point(x, y));
-	}
-
-	/** Sets the new center of the map in pixel coordinates. */
-	private void setCenter(Point center) {
+	/* package */void setMapCenter(Point center) {
 		setViewport(calculateViewport(center));
 		updatePosition();
 		queueRedraw();
@@ -279,7 +291,7 @@ public class MapView extends Canvas {
 	/** Update the viewport based on a set position. */
 	private void updateViewport() {
 		Dimension dim = tileFactory.getMapSizeInPixels(getZoomLevel());
-		setCenter(pointToPoint(tileFactory.getProjection().geoToPixel(
+		setMapCenter(pointToPoint(tileFactory.getProjection().geoToPixel(
 				getMapCenter(), dim.width, dim.height)));
 	}
 
@@ -289,9 +301,14 @@ public class MapView extends Canvas {
 
 	/** Update the position based on the currently displayed viewport. */
 	private void updatePosition() {
+
+		Rectangle bounds = getBounds();
+		int centerX = offset.x + bounds.width / 2;
+		int centerY = offset.y + bounds.height / 2;
+
 		setPosition(tileFactory.getProjection().pixelToGeo(
-				(int) getViewport().getCenterX(),
-				(int) getViewport().getCenterY(),
+				centerX,
+				centerY,
 				tileFactory.getMapSize(getZoomLevel()).width
 						* tileFactory.getTileSize(),
 				tileFactory.getMapSize(getZoomLevel()).height
@@ -400,7 +417,6 @@ public class MapView extends Canvas {
 	/** Draws all visible tiles of the map. */
 	private void drawGroundLayer() {
 
-		final Rectangle viewport = getViewport();
 		org.eclipse.swt.graphics.Rectangle bounds = getBounds();
 
 		final int tileSize = getTileFactory().getTileSize();
@@ -414,13 +430,13 @@ public class MapView extends Canvas {
 		System.out.println("tilesHigh:" + tilesHigh);
 
 		// the offset of the visible screen to the origin of the map in tiles
-		final Point tileOffset = new Point(calculateTileOffset(viewport.x),
-				calculateTileOffset(viewport.y));
+		final Point tileOffset = new Point(calculateTileOffset(getOffset().x),
+				calculateTileOffset(getOffset().y));
 
 		System.out.println("tileOffset:" + tileOffset);
 
 		Transform transform = new Transform(getDisplay());
-		transform.translate(-viewport.x, -viewport.y);
+		transform.translate(-getOffset().x, -getOffset().y);
 		System.out.println("transform:" + transform);
 		// gc.setTransform(transform);
 
@@ -475,7 +491,7 @@ public class MapView extends Canvas {
 		gc.setClipping((org.eclipse.swt.graphics.Rectangle) null);
 
 		Transform transform = new Transform(getDisplay());
-		transform.translate(-viewport.x, -viewport.y);
+		transform.translate(-getOffset().x, -getOffset().y);
 		gc.setTransform(transform);
 
 		synchronized (overlays) {
@@ -507,7 +523,7 @@ public class MapView extends Canvas {
 	/** Check the image or create it when it has the wrong size. */
 	private Image checkOrCreateImage(Image image) {
 
-		final Rectangle mapRect = getViewport();
+		final org.eclipse.swt.graphics.Rectangle mapRect = getBounds();
 
 		// create map image
 		if (!(Util.canReuseImage(image, mapRect))) {

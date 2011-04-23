@@ -23,9 +23,9 @@ package net.skweez.geoclipse.map.internal;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Resource;
 import org.eclipse.swt.widgets.Display;
 
@@ -49,7 +49,7 @@ public abstract class Util {
 		}
 
 		// image exist, check for the bounds
-		final org.eclipse.swt.graphics.Rectangle oldBounds = image.getBounds();
+		final Rectangle oldBounds = image.getBounds();
 
 		if (!(oldBounds.width == rect.width && oldBounds.height == rect.height)) {
 			return false;
