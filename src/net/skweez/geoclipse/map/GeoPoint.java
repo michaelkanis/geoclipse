@@ -118,6 +118,11 @@ public class GeoPoint {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return latitude + ", " + longitude;
+		StringBuilder builder = new StringBuilder("{");
+
+		builder.append("latitude:").append(latitude).append(",");
+		builder.append("longitude:").append(longitude).append("}");
+
+		return builder.toString();
 	}
 }
