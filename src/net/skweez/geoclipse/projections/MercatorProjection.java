@@ -20,6 +20,7 @@
 
 package net.skweez.geoclipse.projections;
 
+import net.skweez.geoclipse.map.MapView;
 import net.skweez.geoclipse.util.MathUtils;
 
 /**
@@ -41,6 +42,10 @@ import net.skweez.geoclipse.util.MathUtils;
  * @levd.rating YELLOW Rev: 503
  */
 public final class MercatorProjection extends EquirectangularProjection {
+
+	public MercatorProjection(MapView mapView) {
+		super(mapView);
+	}
 
 	/** {@inheritDoc} */
 	@Override

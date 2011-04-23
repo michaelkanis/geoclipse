@@ -97,7 +97,7 @@ public class MapView extends Canvas {
 
 		// FIXME net.skweez.map.Projection must be an extension point
 		// and TileFactory extensions must reference one
-		projection = new MercatorProjection();
+		projection = new MercatorProjection(this);
 
 		offset = new Point(0, 0);
 
@@ -227,6 +227,10 @@ public class MapView extends Canvas {
 		return new Rectangle(x, y, width, height);
 	}
 
+	public Dimension getMapSizeInPixels() {
+		return getTileFactory().getMapSizeInPixels(getZoomLevel());
+	}
+
 	/** Returns the current zoom level. */
 	public int getZoomLevel() {
 		return zoomLevel;
@@ -307,8 +311,7 @@ public class MapView extends Canvas {
 	/** Update the viewport based on a set position. */
 	private void updateViewport() {
 		Dimension dim = tileFactory.getMapSizeInPixels(getZoomLevel());
-		setMapCenter(pointToPoint(getProjection().geoToPixel(getMapCenter(),
-				dim.width, dim.height)));
+		setMapCenter(pointToPoint(getProjection().geoToPixel(getMapCenter())));
 	}
 
 	private Point pointToPoint(java.awt.Point point) {
@@ -322,13 +325,7 @@ public class MapView extends Canvas {
 		int centerX = offset.x + bounds.width / 2;
 		int centerY = offset.y + bounds.height / 2;
 
-		setPosition(getProjection().pixelToGeo(
-				centerX,
-				centerY,
-				tileFactory.getMapSize(getZoomLevel()).width
-						* tileFactory.getTileSize(),
-				tileFactory.getMapSize(getZoomLevel()).height
-						* tileFactory.getTileSize()));
+		setPosition(getProjection().pixelToGeo(centerX, centerY));
 	}
 
 	/**

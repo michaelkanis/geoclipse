@@ -22,8 +22,6 @@ package net.skweez.geoclipse.map;
 
 import java.awt.Point;
 
-import net.skweez.geoclipse.map.tilefactories.ITileFactory;
-
 /**
  * A projection is a method to represent the surface of the three dimensional
  * earth to a two dimensional map. Projections always distort the surface in one
@@ -42,26 +40,14 @@ import net.skweez.geoclipse.map.tilefactories.ITileFactory;
  */
 public abstract class Projection {
 
-	private ITileFactory tileFactory;
-
 	/**
 	 * Given a position (latitude/longitude pair) and a zoom level, returns the
 	 * appropriate point in <em>pixels</em>. The zoom level is necessary because
 	 * pixel coordinates are in terms of the zoom level.
 	 */
-	public abstract Point geoToPixel(GeoPoint c, int width, int height);
+	public abstract Point geoToPixel(GeoPoint c);
 
 	/** Converts an on screen pixel coordinate to a geo position. */
-	public abstract GeoPoint pixelToGeo(int pixelX, int pixelY, int width,
-			int height);
-
-	/** Returns tileFactory. */
-	public ITileFactory getTileFactory() {
-		return tileFactory;
-	}
-
-	public void setTileFactory(ITileFactory tileFactory) {
-		this.tileFactory = tileFactory;
-	}
+	public abstract GeoPoint pixelToGeo(int pixelX, int pixelY);
 
 }
