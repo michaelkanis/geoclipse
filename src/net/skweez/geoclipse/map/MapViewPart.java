@@ -124,9 +124,9 @@ public class MapViewPart extends ViewPart {
 		}
 
 		if (initalZoom != null) {
-			map.setZoom(initalZoom);
+			map.getController().setZoom(initalZoom);
 		} else {
-			map.setZoom(Constants.START_ZOOM);
+			map.getController().setZoom(Constants.START_ZOOM);
 		}
 
 		Activator.getDefault().makeDefaultTileImages(

@@ -59,6 +59,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Holds the state of the left mouse button. */
 	private boolean isLeftMouseButtonPressed = false;
 
+	/** Set the MapView this controller belongs to. */
 	public void setMapView(MapView mapView) {
 		this.map = mapView;
 	}
@@ -82,35 +83,40 @@ public class MapController implements MouseListener, MouseMoveListener,
 		}
 	}
 
-	public void zoomInFixing(int xPixel, int yPixel) {
+	/**
+	 * Zoom in by one zoom level.
+	 * 
+	 * @param xPixel
+	 *            offset, in pixels from the left of the map, where the fixed
+	 *            point of our zoom will be.
+	 * @param yPixel
+	 *            offset, in pixels from the top of the map, where the fixed
+	 *            point of our zoom will be.
+	 */
+	public boolean zoomInFixing(int xPixel, int yPixel) {
 		animateTo(map.getProjection().pixelToGeo(xPixel, yPixel));
-		zoomIn();
+		return zoomIn();
 	}
 
-	/**
-	 * Increase the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
-	 * argument.
-	 */
-	/* package */void zoomIn() {
+	/** Increase the zoom level by one. */
+	public boolean zoomIn() {
 		final GeoPoint center = map.getMapCenter();
-		setZoom(map.getZoomLevel() + 1);
+		boolean b = setZoom(map.getZoomLevel() + 1);
 		map.setMapCenter(center);
+		return b;
 	}
 
-	/**
-	 * Decrease the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
-	 * argument.
-	 */
-	/* package */void zoomOut() {
+	/** Decrease the zoom level by one. */
+	public boolean zoomOut() {
 		final GeoPoint center = map.getMapCenter();
-		setZoom(map.getZoomLevel() - 1);
+		boolean b = setZoom(map.getZoomLevel() - 1);
 		map.setMapCenter(center);
+		return b;
 	}
 
-	public void setZoom(int zoomLevel) {
-		map.setZoom(zoomLevel);
+	/** Sets the zoomlevel of the map. */
+	public boolean setZoom(int zoomLevel) {
+		return map.setZoom(zoomLevel);
 	}
 
 	/**
@@ -190,7 +196,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 	/** Scroll by a given amount, in pixels. There will be no animation. */
 	public void scrollBy(int x, int y) {
-		map.setOffset(map.getOffset().x + x, map.getOffset().y + y);
+		map.setMapCenter(map.getCenter().x + x, map.getCenter().y + y);
 	}
 
 	/** Start animating the map towards the given point. */
