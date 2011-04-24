@@ -92,7 +92,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
 	 * argument.
 	 */
-	/* package */void zoomIn() {
+	public void zoomIn() {
 		final GeoPoint center = map.getMapCenter();
 		setZoom(map.getZoomLevel() + 1);
 		map.setMapCenter(center);
@@ -103,7 +103,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
 	 * argument.
 	 */
-	/* package */void zoomOut() {
+	public void zoomOut() {
 		final GeoPoint center = map.getMapCenter();
 		setZoom(map.getZoomLevel() - 1);
 		map.setMapCenter(center);
