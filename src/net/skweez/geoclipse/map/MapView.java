@@ -100,19 +100,6 @@ public class MapView extends Canvas {
 
 		overlays = Activator.getDefault().getOverlays();
 
-		/*
-		 * We could implement the listener interfaces directly, but that would
-		 * make the interface methods public. Instead, the SWT convention is to
-		 * use anonymous inner classes to forward the functionality to
-		 * non-public methods of the same name.
-		 */
-		addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(final PaintEvent e) {
-				MapView.this.paintControl(e);
-			}
-		});
-
 		this.controller = controller;
 		registerController(controller);
 	}
@@ -120,6 +107,8 @@ public class MapView extends Canvas {
 	/** Setup the listeners. */
 	private void registerController(MapController controller) {
 		controller.setMapView(this);
+
+		addPaintListener(controller);
 
 		addMouseListener(controller);
 		addMouseMoveListener(controller);
@@ -420,7 +409,7 @@ public class MapView extends Canvas {
 	 * paints the offscreen buffer image produced by {@link #draw()} to the
 	 * screen.
 	 */
-	private void paintControl(final PaintEvent event) {
+	/* package */void paintControl(final PaintEvent event) {
 		if (mapImage == null || mapImage.isDisposed()) {
 			return;
 		}

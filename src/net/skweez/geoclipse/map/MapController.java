@@ -30,6 +30,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseWheelListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 
 /**
@@ -43,7 +45,7 @@ import org.eclipse.swt.graphics.Point;
  * @levd.rating RED Rev:
  */
 public class MapController implements MouseListener, MouseMoveListener,
-		MouseWheelListener, KeyListener {
+		MouseWheelListener, KeyListener, PaintListener {
 
 	/** The amount by which the map is moved, when pressing the arrow keys. */
 	private static final int OFFSET = 10;
@@ -205,5 +207,16 @@ public class MapController implements MouseListener, MouseMoveListener,
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// Do nothing
+	}
+
+	/**
+	 * We could implement the listener interfaces directly in {@link MapView},
+	 * but that would make the interface methods public.
+	 * 
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void paintControl(PaintEvent event) {
+		map.paintControl(event);
 	}
 }
