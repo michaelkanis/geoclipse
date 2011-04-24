@@ -129,15 +129,6 @@ public class MapView extends Canvas {
 		return controller;
 	}
 
-	/** Returns the center of the current map viewport. */
-	public GeoPoint getMapCenter() {
-		Rectangle bounds = getBounds();
-		int x = getOffset().x + bounds.width / 2;
-		int y = getOffset().y + bounds.height / 2;
-
-		return getProjection().pixelToGeo(x, y);
-	}
-
 	public Projection getProjection() {
 		return projection;
 	}
@@ -147,17 +138,17 @@ public class MapView extends Canvas {
 		return tileFactory;
 	}
 
+	/** Returns offset. */
+	/* package */Point getOffset() {
+		return offset;
+	}
+
 	/** Sets offset. */
-	public void setOffset(int x, int y) {
+	/* package */void setOffset(int x, int y) {
 		offset.x = x;
 		offset.y = y;
 
 		queueRedraw();
-	}
-
-	/** Returns offset. */
-	public Point getOffset() {
-		return offset;
 	}
 
 	public Dimension getMapSizeInPixels() {
@@ -173,17 +164,29 @@ public class MapView extends Canvas {
 		return zoomLevel;
 	}
 
+	/** Returns the center of the current map viewport. */
+	public GeoPoint getMapCenter() {
+		Rectangle bounds = getBounds();
+		int x = getOffset().x + bounds.width / 2;
+		int y = getOffset().y + bounds.height / 2;
+
+		return getProjection().pixelToGeo(x, y);
+	}
+
 	/** Recenter the map to the given location. */
-	/* package */void setMapCenter(final GeoPoint position) {
+	public void setMapCenter(final GeoPoint position) {
 		setMapCenter(getProjection().geoToPixel(position));
 	}
 
 	/** Sets the new center of the map in pixel coordinates. */
 	/* package */void setMapCenter(Point center) {
+		setMapCenter(center.x, center.y);
+	}
+
+	/** Sets the new center of the map in pixel coordinates. */
+	/* package */void setMapCenter(int x, int y) {
 		Rectangle bounds = getBounds();
-		int x = center.x - bounds.width / 2;
-		int y = center.y - bounds.height / 2;
-		setOffset(x, y);
+		setOffset(x - bounds.width / 2, y - bounds.height / 2);
 	}
 
 	/** Set the tile factory for the map. Causes a redraw of the map. */
