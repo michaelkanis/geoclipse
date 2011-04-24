@@ -57,6 +57,7 @@ import org.eclipse.swt.widgets.Listener;
  */
 public class MapView extends Canvas {
 
+	/** The extension id. */
 	public static final String ID = "net.skweez.geoclipse.mapview";
 
 	/** The zoom level. Normally a value between around 0 and 20. */
