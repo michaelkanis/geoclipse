@@ -346,10 +346,10 @@ public class MapView extends Canvas {
 		Rectangle bounds = getBounds();
 		int tileSize = getTileFactory().getTileSize();
 
-		int x0 = calculateTileOffset(getOffset().x);
-		int x1 = calculateTileOffset(getOffset().x + bounds.width);
-		int y0 = calculateTileOffset(getOffset().y);
-		int y1 = calculateTileOffset(getOffset().y + bounds.height);
+		int x0 = calculateTileOffset(getOffset().x, false);
+		int x1 = calculateTileOffset(getOffset().x + bounds.width, false);
+		int y0 = calculateTileOffset(getOffset().y, true);
+		int y1 = calculateTileOffset(getOffset().y + bounds.height, true);
 
 		Transform transform = new Transform(getDisplay());
 		transform.translate(-getOffset().x, -getOffset().y);
@@ -373,12 +373,14 @@ public class MapView extends Canvas {
 	 * map.
 	 * 
 	 * @param pixel
-	 *            is the value of the pixel coordinate of the tile.
+	 *            the value of the pixel coordinate of the tile.
 	 */
-	private int calculateTileOffset(int pixel) {
-		pixel = Math.max(0, Math.min(getMapSizeInPixels().width, pixel) - 1);
-		return (int) Math.floor((double) pixel
-				/ (double) tileFactory.getTileSize());
+	private int calculateTileOffset(int pixel, boolean limitToMapSize) {
+		if (limitToMapSize) {
+			pixel = Math.min(getMapSizeInPixels().width, pixel);
+			pixel = Math.max(0, pixel - 1);
+		}
+		return (int) Math.floor((double) pixel / tileFactory.getTileSize());
 	}
 
 	/** Retrieve a tile from the given position. */
