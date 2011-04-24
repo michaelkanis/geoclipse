@@ -158,6 +158,7 @@ public class MapView extends Canvas {
 		return getTileFactory().getMapSizeInPixels(getZoomLevel());
 	}
 
+	/** Returns the maximum zoom level for the currently drawn map. */
 	public int getMaxZoomLevel() {
 		return getTileFactory().getMaxZoomLevel();
 	}
