@@ -21,7 +21,11 @@
  ******************************************************************************/
 package net.skweez.geoclipse.map;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import net.skweez.geoclipse.Constants;
+import net.skweez.geoclipse.map.internal.PanAnimation;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -138,6 +142,10 @@ public class MapController implements MouseListener, MouseMoveListener,
 		if (e.button == 1) {
 			oldPosition = new Point(e.x, e.y);
 			isLeftMouseButtonPressed = true;
+		} else if (e.button == 2) {
+			Projection projection = map.getProjection();
+			Point offset = map.getOffset();
+			animateTo(projection.pixelToGeo(offset.x + e.x, offset.y + e.y));
 		}
 	}
 
@@ -211,8 +219,10 @@ public class MapController implements MouseListener, MouseMoveListener,
 	}
 
 	/** Start animating the map towards the given point. */
-	public void animateTo(GeoPoint point) {
-		setCenter(point);
+	public void animateTo(final GeoPoint point) {
+		Timer timer = new Timer();
+		TimerTask task = new PanAnimation(map.getMapCenter(), point, this);
+		timer.scheduleAtFixedRate(task, 0, 30);
 	}
 
 	/** Set the map view to the given center. There will be no animation. */
