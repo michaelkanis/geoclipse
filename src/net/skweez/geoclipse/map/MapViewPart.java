@@ -62,6 +62,8 @@ public class MapViewPart extends ViewPart {
 	/** The map widget. */
 	private MapView map;
 
+	private MapController mapController;
+
 	/** Holds all the registered tile factories. */
 	private List<ITileFactory> factories;
 
@@ -86,11 +88,13 @@ public class MapViewPart extends ViewPart {
 	/** {@inheritDoc} */
 	@Override
 	public void createPartControl(Composite parent) {
-		map = new MapView(parent);
-		factories = Activator.getDefault().getTileFactories();
 
+		factories = Activator.getDefault().getTileFactories();
 		Assert.isTrue(factories != null && factories.size() > 0,
 				"At least one tile factory is needed to run Geoclipse.");
+
+		mapController = new MapController();
+		map = new MapView(parent, mapController);
 
 		// Add actions to toolbar
 		makeActions();

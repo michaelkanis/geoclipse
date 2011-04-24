@@ -49,7 +49,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	private static final int OFFSET = 10;
 
 	/** The Map this listener is handling. */
-	private final MapView map;
+	private MapView map;
 
 	/** Holds the mouse position for the previous event. */
 	private Point oldPosition;
@@ -57,9 +57,8 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Holds the state of the left mouse button. */
 	private boolean isLeftMouseButtonPressed = false;
 
-	/** Constructor. */
-	public MapController(MapView map) {
-		this.map = map;
+	public void setMapView(MapView mapView) {
+		this.map = mapView;
 	}
 
 	/** Zoom in or out when the user scrolls on the canvas. */

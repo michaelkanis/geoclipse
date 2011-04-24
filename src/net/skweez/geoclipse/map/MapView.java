@@ -84,10 +84,10 @@ public class MapView extends Canvas {
 
 	private final List<Overlay> overlays;
 
-	private MapController controller;
+	private final MapController controller;
 
 	/** Default constructor. */
-	public MapView(final Composite parent) {
+	public MapView(final Composite parent, MapController controller) {
 		super(parent, SWT.DOUBLE_BUFFERED);
 
 		tileLoadListener = new TileLoadListener(this);
@@ -113,12 +113,14 @@ public class MapView extends Canvas {
 			}
 		});
 
-		setupListeners();
+		this.controller = controller;
+		registerController(controller);
 	}
 
 	/** Setup the listeners. */
-	private void setupListeners() {
-		controller = new MapController(this);
+	private void registerController(MapController controller) {
+		controller.setMapView(this);
+
 		addMouseListener(controller);
 		addMouseMoveListener(controller);
 		addMouseWheelListener(controller);
