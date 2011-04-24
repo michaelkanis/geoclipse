@@ -82,33 +82,36 @@ public class MapController implements MouseListener, MouseMoveListener,
 		}
 	}
 
+	/**
+	 * Zoom in by one zoom level.
+	 * 
+	 * @param xPixel
+	 *            offset, in pixels from the left of the map, where the fixed
+	 *            point of our zoom will be.
+	 * @param yPixel
+	 *            offset, in pixels from the top of the map, where the fixed
+	 *            point of our zoom will be.
+	 */
 	public void zoomInFixing(int xPixel, int yPixel) {
 		animateTo(map.getProjection().pixelToGeo(xPixel, yPixel));
 		zoomIn();
 	}
 
-	/**
-	 * Increase the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} + 1</code> as
-	 * argument.
-	 */
+	/** Increase the zoom level by one. */
 	public void zoomIn() {
 		final GeoPoint center = map.getMapCenter();
 		setZoom(map.getZoomLevel() + 1);
 		map.setMapCenter(center);
 	}
 
-	/**
-	 * Decrease the zoom level by one. This is exactly the same as calling
-	 * {@link #setZoom(int)} with <code>{@link #getZoomLevel()} - 1</code> as
-	 * argument.
-	 */
+	/** Decrease the zoom level by one. */
 	public void zoomOut() {
 		final GeoPoint center = map.getMapCenter();
 		setZoom(map.getZoomLevel() - 1);
 		map.setMapCenter(center);
 	}
 
+	/** Sets the zoomlevel of the map. */
 	public void setZoom(int zoomLevel) {
 		map.setZoom(zoomLevel);
 	}
