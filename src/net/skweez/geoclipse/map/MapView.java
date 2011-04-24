@@ -63,8 +63,8 @@ public class MapView extends Canvas {
 	/** The zoom level. Normally a value between around 0 and 20. */
 	private int zoomLevel = 1;
 
-	/** The viewport, i.e. the part of the map that is shown. */
-	private final Point offset;
+	/** The offset of the visible part from the top left corner of the map. */
+	private final Point mapCenter;
 
 	/** Factory used to grab the tiles necessary for painting the map. */
 	private ITileFactory tileFactory;
@@ -97,7 +97,7 @@ public class MapView extends Canvas {
 		// and TileFactory extensions must reference one
 		projection = new MercatorProjection(this);
 
-		offset = new Point(0, 0);
+		mapCenter = new Point(0, 0);
 
 		overlays = Activator.getDefault().getOverlays();
 
@@ -140,15 +140,10 @@ public class MapView extends Canvas {
 
 	/** Returns offset. */
 	/* package */Point getOffset() {
-		return offset;
-	}
-
-	/** Sets offset. */
-	private void setOffset(int x, int y) {
-		offset.x = x;
-		offset.y = y;
-
-		queueRedraw();
+		Rectangle bounds = getBounds();
+		int x = mapCenter.x - bounds.width / 2;
+		int y = mapCenter.y - bounds.height / 2;
+		return new Point(x, y);
 	}
 
 	public Dimension getMapSizeInPixels() {
@@ -191,8 +186,9 @@ public class MapView extends Canvas {
 
 	/** Sets the new center of the map in pixel coordinates. */
 	/* package */void setMapCenter(int x, int y) {
-		Rectangle bounds = getBounds();
-		setOffset(x - bounds.width / 2, y - bounds.height / 2);
+		mapCenter.x = x;
+		mapCenter.y = y;
+		queueRedraw();
 	}
 
 	/** Set the tile factory for the map. Causes a redraw of the map. */
