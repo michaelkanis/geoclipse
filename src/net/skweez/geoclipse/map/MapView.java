@@ -129,6 +129,14 @@ public class MapView extends Canvas {
 		return controller;
 	}
 
+	/**
+	 * Get a projection for converting between screen-pixel coordinates and
+	 * latitude/longitude coordinates.
+	 * 
+	 * @return The Projection of the map in its current state. You should not
+	 *         hold on to this object for more than one draw, since the
+	 *         projection of the map could change.
+	 */
 	public Projection getProjection() {
 		return projection;
 	}
