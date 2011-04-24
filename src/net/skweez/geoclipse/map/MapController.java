@@ -133,7 +133,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 	/** Sets the zoomlevel of the map. */
 	public boolean setZoom(int zoomLevel) {
-		return map.setZoom(zoomLevel);
+		return map.setZoomLevel(zoomLevel);
 	}
 
 	/**

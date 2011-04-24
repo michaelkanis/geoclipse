@@ -163,11 +163,6 @@ public class MapView extends Canvas {
 		return getTileFactory().getMaxZoomLevel();
 	}
 
-	/** Returns the current zoom level. */
-	public int getZoomLevel() {
-		return zoomLevel;
-	}
-
 	/** Returns the center of the visible part of the map as {@link GeoPoint}. */
 	public GeoPoint getMapCenter() {
 		Point center = getCenter();
@@ -209,11 +204,11 @@ public class MapView extends Canvas {
 		if (tileFactory != null) {
 			GeoPoint center = getMapCenter();
 			tileFactory = factory;
-			setZoom(getZoomLevel());
+			setZoomLevel(getZoomLevel());
 			setMapCenter(center);
 		} else {
 			tileFactory = factory;
-			setZoom(factory.getMinimumZoom());
+			setZoomLevel(factory.getMinimumZoom());
 		}
 
 		Activator.getDefault().makeDefaultTileImages(factory.getTileSize());
@@ -221,11 +216,16 @@ public class MapView extends Canvas {
 		queueRedraw();
 	}
 
+	/** Returns the current zoom level. */
+	public int getZoomLevel() {
+		return zoomLevel;
+	}
+
 	/**
 	 * Set a new zoom level keeping the current center position. Causes a redraw
 	 * of the map.
 	 */
-	/* package */boolean setZoom(int zoom) {
+	/* package */boolean setZoomLevel(int zoom) {
 		// Restrict zoom to the min and max values of the factory
 		if (zoom < tileFactory.getMinimumZoom() || zoom > getMaxZoomLevel()) {
 			return false;
@@ -322,8 +322,15 @@ public class MapView extends Canvas {
 			mapImage = checkOrCreateImage(mapImage);
 			gc = new GC(mapImage);
 			drawBackground();
-			drawGroundLayer();
+
+			Transform transform = new Transform(getDisplay());
+			transform.translate(-getOffset().x, -getOffset().y);
+			gc.setTransform(transform);
+
+			drawGroundLayer(transform);
 			drawOverlays();
+
+			gc.setTransform(null);
 		} catch (Exception e) {
 			// map image is corrupt
 			Util.disposeResource(mapImage);
@@ -341,7 +348,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Draws all visible tiles of the map. */
-	private void drawGroundLayer() {
+	private void drawGroundLayer(Transform transform) {
 
 		Rectangle bounds = getBounds();
 		int tileSize = getTileFactory().getTileSize();
@@ -350,10 +357,6 @@ public class MapView extends Canvas {
 		int x1 = calculateTileOffset(getOffset().x + bounds.width, false);
 		int y0 = calculateTileOffset(getOffset().y, true);
 		int y1 = calculateTileOffset(getOffset().y + bounds.height, true);
-
-		Transform transform = new Transform(getDisplay());
-		transform.translate(-getOffset().x, -getOffset().y);
-		gc.setTransform(transform);
 
 		for (int x = x0; x <= x1; x++) {
 			for (int y = y0; y <= y1; y++) {
@@ -364,8 +367,6 @@ public class MapView extends Canvas {
 				gc.setTransform(transform);
 			}
 		}
-
-		gc.setTransform(null);
 	}
 
 	/**
@@ -403,19 +404,12 @@ public class MapView extends Canvas {
 	private void drawOverlays() {
 		gc.setClipping((org.eclipse.swt.graphics.Rectangle) null);
 
-		Transform transform = new Transform(getDisplay());
-		transform.translate(-getOffset().x, -getOffset().y);
-		gc.setTransform(transform);
-
 		synchronized (overlays) {
 			Iterator<Overlay> iterator = overlays.iterator();
 			while (iterator.hasNext()) {
 				iterator.next().draw(gc, this);
 			}
 		}
-
-		Util.disposeResource(transform);
-		gc.setTransform(null);
 	}
 
 	/**
