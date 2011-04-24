@@ -225,14 +225,16 @@ public class MapView extends Canvas {
 	 * Set a new zoom level keeping the current center position. Causes a redraw
 	 * of the map.
 	 */
-	/* package */void setZoom(int zoom) {
+	/* package */boolean setZoom(int zoom) {
 		// Restrict zoom to the min and max values of the factory
 		if (zoom < tileFactory.getMinimumZoom() || zoom > getMaxZoomLevel()) {
-			return;
+			return false;
 		}
 
 		this.zoomLevel = zoom;
 		queueRedraw();
+
+		return true;
 	}
 
 	/**

@@ -59,6 +59,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Holds the state of the left mouse button. */
 	private boolean isLeftMouseButtonPressed = false;
 
+	/** Set the MapView this controller belongs to. */
 	public void setMapView(MapView mapView) {
 		this.map = mapView;
 	}
@@ -92,28 +93,30 @@ public class MapController implements MouseListener, MouseMoveListener,
 	 *            offset, in pixels from the top of the map, where the fixed
 	 *            point of our zoom will be.
 	 */
-	public void zoomInFixing(int xPixel, int yPixel) {
+	public boolean zoomInFixing(int xPixel, int yPixel) {
 		animateTo(map.getProjection().pixelToGeo(xPixel, yPixel));
-		zoomIn();
+		return zoomIn();
 	}
 
 	/** Increase the zoom level by one. */
-	public void zoomIn() {
+	public boolean zoomIn() {
 		final GeoPoint center = map.getMapCenter();
-		setZoom(map.getZoomLevel() + 1);
+		boolean b = setZoom(map.getZoomLevel() + 1);
 		map.setMapCenter(center);
+		return b;
 	}
 
 	/** Decrease the zoom level by one. */
-	public void zoomOut() {
+	public boolean zoomOut() {
 		final GeoPoint center = map.getMapCenter();
-		setZoom(map.getZoomLevel() - 1);
+		boolean b = setZoom(map.getZoomLevel() - 1);
 		map.setMapCenter(center);
+		return b;
 	}
 
 	/** Sets the zoomlevel of the map. */
-	public void setZoom(int zoomLevel) {
-		map.setZoom(zoomLevel);
+	public boolean setZoom(int zoomLevel) {
+		return map.setZoom(zoomLevel);
 	}
 
 	/**
