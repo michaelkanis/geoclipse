@@ -240,24 +240,6 @@ public class MapView extends Canvas {
 	}
 
 	/**
-	 * Calculates the offset of a tile's x- or y-component to the origin of the
-	 * map.
-	 * 
-	 * @param pixel
-	 *            is the value of the pixel coordinate of the tile.
-	 */
-	private int calculateTileOffset(int pixel) {
-		return (int) Math.floor((double) pixel
-				/ (double) tileFactory.getTileSize());
-	}
-
-	/** Calculates the number of tiles we need for a given number of pixels. */
-	private int calculateTileNumber(int pixelNumber) {
-		return (int) Math.ceil((double) pixelNumber
-				/ (double) tileFactory.getTileSize());
-	}
-
-	/**
 	 * Put a map redraw into the GUI thread queue. Only the last entry in the
 	 * queue will be executed.
 	 */
@@ -323,53 +305,47 @@ public class MapView extends Canvas {
 	/** Draws all visible tiles of the map. */
 	private void drawGroundLayer() {
 
-		org.eclipse.swt.graphics.Rectangle bounds = getBounds();
+		Rectangle bounds = getBounds();
+		int tileSize = getTileFactory().getTileSize();
 
-		final int tileSize = getTileFactory().getTileSize();
-
-		// get the visible tiles in the viewport area
-		final int tilesWide = calculateTileNumber(bounds.width);
-		final int tilesHigh = Math.min(calculateTileNumber(bounds.height),
-				getTileFactory().getMapSize(getZoomLevel()).height);
-
-		// the offset of the visible screen to the origin of the map in tiles
-		final Point tileOffset = new Point(calculateTileOffset(getOffset().x),
-				calculateTileOffset(getOffset().y));
+		int x0 = calculateTileOffset(getOffset().x);
+		int x1 = calculateTileOffset(getOffset().x + bounds.width);
+		int y0 = calculateTileOffset(getOffset().y);
+		int y1 = calculateTileOffset(getOffset().y + bounds.height);
 
 		Transform transform = new Transform(getDisplay());
 		transform.translate(-getOffset().x, -getOffset().y);
-		// gc.setTransform(transform);
+		gc.setTransform(transform);
 
-		// draw all visible tiles
-		for (int x = 0; x <= tilesWide; x++) {
-			for (int y = 0; y <= tilesHigh; y++) {
-
-				Point position = new Point(tileOffset.x + x, tileOffset.y + y);
-
-				Point pixelPosition = new Point(position.x * tileSize,
-						position.y * tileSize);
-
-				// draw tile according to its state
-				transform.translate(pixelPosition.x, pixelPosition.y);
+		for (int x = x0; x <= x1; x++) {
+			for (int y = y0; y <= y1; y++) {
+				transform.translate(x * tileSize, y * tileSize);
 				gc.setTransform(transform);
-
-				gc.setClipping(0, 0, tileSize, tileSize);
-
-				drawTile(getTile(position));
-
-				transform.translate(-pixelPosition.x, -pixelPosition.y);
+				drawTile(getTile(x, y));
+				transform.translate(-x * tileSize, -y * tileSize);
 				gc.setTransform(transform);
 			}
 		}
 
-		Util.disposeResource(transform);
 		gc.setTransform(null);
 	}
 
+	/**
+	 * Calculates the offset of a tile's x- or y-component to the origin of the
+	 * map.
+	 * 
+	 * @param pixel
+	 *            is the value of the pixel coordinate of the tile.
+	 */
+	private int calculateTileOffset(int pixel) {
+		pixel = Math.max(0, Math.min(getMapSizeInPixels().width, pixel) - 1);
+		return (int) Math.floor((double) pixel
+				/ (double) tileFactory.getTileSize());
+	}
+
 	/** Retrieve a tile from the given position. */
-	private Tile getTile(Point tilePosition) {
-		Tile tile = tileFactory.getTile(tilePosition.x, tilePosition.y,
-				zoomLevel);
+	private Tile getTile(int x, int y) {
+		Tile tile = tileFactory.getTile(x, y, zoomLevel);
 		Assert.isTrue(tile != null, "Tile may never be null.");
 		return tile;
 	}
