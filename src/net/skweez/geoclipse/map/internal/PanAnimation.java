@@ -18,7 +18,6 @@ public class PanAnimation extends TimerTask {
 	private final MapController controller;
 
 	public PanAnimation(GeoPoint start, GeoPoint end, MapController controller) {
-
 		this.start = start;
 		this.end = end;
 		this.controller = controller;
