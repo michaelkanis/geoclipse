@@ -190,7 +190,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 	/** Scroll by a given amount, in pixels. There will be no animation. */
 	public void scrollBy(int x, int y) {
-		map.setOffset(map.getOffset().x + x, map.getOffset().y + y);
+		map.setMapCenter(map.getCenter().x + x, map.getCenter().y + y);
 	}
 
 	/** Start animating the map towards the given point. */

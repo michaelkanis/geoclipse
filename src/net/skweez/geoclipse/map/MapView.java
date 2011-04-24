@@ -144,7 +144,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Sets offset. */
-	/* package */void setOffset(int x, int y) {
+	private void setOffset(int x, int y) {
 		offset.x = x;
 		offset.y = y;
 
@@ -164,13 +164,19 @@ public class MapView extends Canvas {
 		return zoomLevel;
 	}
 
-	/** Returns the center of the current map viewport. */
+	/** Returns the center of the visible part of the map as {@link GeoPoint}. */
 	public GeoPoint getMapCenter() {
+		Point center = getCenter();
+		return getProjection().pixelToGeo(center.x, center.y);
+	}
+
+	/** Returns the center of the visible map in absolute pixel coordinates. */
+	/* package */Point getCenter() {
 		Rectangle bounds = getBounds();
 		int x = getOffset().x + bounds.width / 2;
 		int y = getOffset().y + bounds.height / 2;
 
-		return getProjection().pixelToGeo(x, y);
+		return new Point(x, y);
 	}
 
 	/** Recenter the map to the given location. */
