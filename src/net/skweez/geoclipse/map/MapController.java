@@ -63,6 +63,8 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Holds the state of the left mouse button. */
 	private boolean isLeftMouseButtonPressed = false;
 
+	private Timer timer;
+
 	/** Set the MapView this controller belongs to. */
 	public void setMapView(MapView mapView) {
 		this.map = mapView;
@@ -139,6 +141,9 @@ public class MapController implements MouseListener, MouseMoveListener,
 	 */
 	@Override
 	public void mouseDown(final MouseEvent e) {
+
+		stopAnimation(false);
+
 		if (e.button == 1) {
 			oldPosition = new Point(e.x, e.y);
 			isLeftMouseButtonPressed = true;
@@ -166,10 +171,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 		oldPosition = new Point(e.x, e.y);
 	}
 
-	/**
-	 * Centers the map to the position that was clicked on for the second button
-	 * (normally the middle one). Resets state for primary mouse button.
-	 */
+	/** Resets state for primary mouse button. */
 	@Override
 	public void mouseUp(final MouseEvent e) {
 		if (e.button == 1) {
@@ -181,6 +183,9 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Handle key presses. */
 	@Override
 	public void keyPressed(final KeyEvent event) {
+
+		stopAnimation(false);
+
 		int deltaX = 0;
 		int deltaY = 0;
 
@@ -220,9 +225,15 @@ public class MapController implements MouseListener, MouseMoveListener,
 
 	/** Start animating the map towards the given point. */
 	public void animateTo(final GeoPoint point) {
-		Timer timer = new Timer();
-		TimerTask task = new PanAnimation(map.getMapCenter(), point, this);
+		timer = new Timer();
+		TimerTask task = new PanAnimation(map.getMapCenter(), point, this, 600);
 		timer.scheduleAtFixedRate(task, 0, 30);
+	}
+
+	public void stopAnimation(boolean jumpToFinish) {
+		if (timer != null) {
+			timer.cancel();
+		}
 	}
 
 	/** Set the map view to the given center. There will be no animation. */

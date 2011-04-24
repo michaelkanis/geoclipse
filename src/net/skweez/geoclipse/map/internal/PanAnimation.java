@@ -7,9 +7,9 @@ import net.skweez.geoclipse.map.MapController;
 
 public class PanAnimation extends TimerTask {
 
-	private static final int DURATION = 250;
+	private final int duration;
 
-	private long startTime = 0;
+	private final long startTime;
 
 	private final GeoPoint start;
 
@@ -17,10 +17,13 @@ public class PanAnimation extends TimerTask {
 
 	private final MapController controller;
 
-	public PanAnimation(GeoPoint start, GeoPoint end, MapController controller) {
+	public PanAnimation(GeoPoint start, GeoPoint end, MapController controller,
+			int duration) {
+
 		this.start = start;
 		this.end = end;
 		this.controller = controller;
+		this.duration = duration;
 		startTime = System.nanoTime() / 1000000;
 	}
 
@@ -31,21 +34,26 @@ public class PanAnimation extends TimerTask {
 		long currentTime = System.nanoTime() / 1000000;
 		long totalTime = currentTime - startTime;
 
-		if (totalTime > DURATION) {
+		if (totalTime > duration) {
 			cancel();
 		}
 
-		float fraction = Math.min(1.0f, (float) totalTime / DURATION);
+		double fraction = Math.min(1.0f, (float) totalTime / duration);
 
-		// x = x0 + f * (x1 - x0)
-		double lat0 = start.getLatitude();
-		double lat1 = end.getLatitude();
-		double latitude = lat0 + fraction * (lat1 - lat0);
+		// Use non-linear accelartion
+		fraction = Math.sqrt(fraction);
 
-		double lon0 = start.getLongitude();
-		double lon1 = end.getLongitude();
-		double longitude = lon0 + fraction * (lon1 - lon0);
+		double latitude = linearInterpolation(start.getLatitude(),
+				end.getLatitude(), fraction);
+
+		double longitude = linearInterpolation(start.getLongitude(),
+				end.getLongitude(), fraction);
 
 		controller.setCenter(new GeoPoint(latitude, longitude));
+	}
+
+	// x = x0 + f * (x1 - x0)
+	private double linearInterpolation(double x0, double x1, double f) {
+		return x0 + f * (x1 - x0);
 	}
 }
