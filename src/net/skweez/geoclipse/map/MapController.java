@@ -114,6 +114,17 @@ public class MapController implements MouseListener, MouseMoveListener,
 		return b;
 	}
 
+	public void zoomToSpan(double latSpan, double lonSpan) {
+
+		double currentLatSpan = map.getLatitudeSpan();
+		double currentLonSpan = map.getLongitudeSpan();
+		while (currentLatSpan > latSpan | currentLonSpan > lonSpan) {
+			zoomIn();
+			currentLatSpan = map.getLatitudeSpan();
+			currentLonSpan = map.getLongitudeSpan();
+		}
+	}
+
 	/** Sets the zoomlevel of the map. */
 	public boolean setZoom(int zoomLevel) {
 		return map.setZoom(zoomLevel);

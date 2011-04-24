@@ -255,6 +255,28 @@ public class MapView extends Canvas {
 		return Collections.synchronizedList(overlays);
 	}
 
+	public double getLatitudeSpan() {
+		Point offset = getOffset();
+		Rectangle bounds = getBounds();
+
+		GeoPoint top = getProjection().pixelToGeo(offset.x, offset.y);
+		GeoPoint bottom = getProjection().pixelToGeo(offset.x + bounds.width,
+				offset.y + bounds.height);
+
+		return Math.abs(bottom.getLatitude() - top.getLatitude());
+	}
+
+	public double getLongitudeSpan() {
+		Point offset = getOffset();
+		Rectangle bounds = getBounds();
+
+		GeoPoint left = getProjection().pixelToGeo(offset.x, offset.y);
+		GeoPoint right = getProjection().pixelToGeo(offset.x + bounds.width,
+				offset.y + bounds.height);
+
+		return Math.abs(right.getLongitude() - left.getLongitude());
+	}
+
 	/**
 	 * Put a map redraw into the GUI thread queue. Only the last entry in the
 	 * queue will be executed.
