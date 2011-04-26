@@ -6,9 +6,7 @@ Bundle-Version: 0.2.0.v20090627
 Bundle-Activator: net.skweez.geoclipse.Activator
 Bundle-Vendor: %PLUGIN_PROVIDER
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.ui.views;bundle-version="3.3.1",
- org.eclipse.jface.text;bundle-version="3.4.2"
+ org.eclipse.ui
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Export-Package: net.skweez.geoclipse.map
