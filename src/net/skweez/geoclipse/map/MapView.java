@@ -357,13 +357,13 @@ public class MapView extends Canvas {
 		Transform transform = new Transform(gc.getDevice());
 		gc.getTransform(transform);
 
-		Rectangle bounds = getBounds();
+		Rectangle bounds = gc.getClipping();
 		int tileSize = getTileFactory().getTileSize();
 
-		int x0 = calculateTileOffset(getOffset().x, false);
-		int x1 = calculateTileOffset(getOffset().x + bounds.width, false);
-		int y0 = calculateTileOffset(getOffset().y, true);
-		int y1 = calculateTileOffset(getOffset().y + bounds.height, true);
+		int x0 = calculateTileOffset(bounds.x, false);
+		int x1 = calculateTileOffset(bounds.x + bounds.width, false);
+		int y0 = calculateTileOffset(bounds.y, true);
+		int y1 = calculateTileOffset(bounds.y + bounds.height, true);
 
 		for (int x = x0; x <= x1; x++) {
 			for (int y = y0; y <= y1; y++) {
