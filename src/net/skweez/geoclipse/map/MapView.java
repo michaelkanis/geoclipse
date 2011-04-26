@@ -74,9 +74,6 @@ public class MapView extends Canvas {
 	/** Buffer image that'll hold the visible part of the map. */
 	private Image mapImage;
 
-	/** The graphics context for the map image that we will draw on. */
-	private GC gc;
-
 	/** Queues redraws when a tile has been fully loaded. */
 	private final TileLoadListener tileLoadListener;
 
@@ -318,23 +315,30 @@ public class MapView extends Canvas {
 			return;
 		}
 
+		GC gc = null;
+		Transform transform = null;
 		try {
 			mapImage = checkOrCreateImage(mapImage);
-			gc = new GC(mapImage);
-			drawBackground();
 
-			Transform transform = new Transform(getDisplay());
+			gc = new GC(mapImage);
+
+			drawBackground(gc);
+
+			transform = new Transform(getDisplay());
 			transform.translate(-getOffset().x, -getOffset().y);
 			gc.setTransform(transform);
 
-			drawGroundLayer(transform);
-			drawOverlays();
+			drawGroundLayer(gc);
+			drawOverlays(gc);
 
 			gc.setTransform(null);
+			Util.disposeResource(transform);
+
 		} catch (Exception e) {
 			// map image is corrupt
 			Util.disposeResource(mapImage);
 		} finally {
+			Util.disposeResource(transform);
 			Util.disposeResource(gc);
 		}
 
@@ -342,13 +346,16 @@ public class MapView extends Canvas {
 	}
 
 	/** Fill the background. */
-	private void drawBackground() {
+	private void drawBackground(GC gc) {
 		gc.setBackground(getBackground());
 		drawBackground(gc, 0, 0, getBounds().width, getBounds().height);
 	}
 
 	/** Draws all visible tiles of the map. */
-	private void drawGroundLayer(Transform transform) {
+	private void drawGroundLayer(GC gc) {
+
+		Transform transform = new Transform(gc.getDevice());
+		gc.getTransform(transform);
 
 		Rectangle bounds = getBounds();
 		int tileSize = getTileFactory().getTileSize();
@@ -362,11 +369,13 @@ public class MapView extends Canvas {
 			for (int y = y0; y <= y1; y++) {
 				transform.translate(x * tileSize, y * tileSize);
 				gc.setTransform(transform);
-				drawTile(getTile(x, y));
+				drawTile(gc, getTile(x, y));
 				transform.translate(-x * tileSize, -y * tileSize);
 				gc.setTransform(transform);
 			}
 		}
+
+		Util.disposeResource(transform);
 	}
 
 	/**
@@ -392,7 +401,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Draw one specific tile at its position. */
-	private void drawTile(Tile tile) {
+	private void drawTile(GC gc, Tile tile) {
 		if (tile.getStatus() == Tile.Status.LOADING) {
 			tile.addObserver(tileLoadListener);
 		}
@@ -401,7 +410,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Draws overlays as described in {@link #getOverlays()}. */
-	private void drawOverlays() {
+	private void drawOverlays(GC gc) {
 		gc.setClipping((org.eclipse.swt.graphics.Rectangle) null);
 
 		synchronized (overlays) {
@@ -430,7 +439,7 @@ public class MapView extends Canvas {
 	/** Check the image or create it when it has the wrong size. */
 	private Image checkOrCreateImage(Image image) {
 
-		final org.eclipse.swt.graphics.Rectangle mapRect = getBounds();
+		final Rectangle mapRect = getBounds();
 
 		// create map image
 		if (!(Util.canReuseImage(image, mapRect))) {
@@ -444,7 +453,6 @@ public class MapView extends Canvas {
 	@Override
 	public void dispose() {
 		Util.disposeResource(mapImage);
-		Util.disposeResource(gc);
 		super.dispose();
 	}
 
