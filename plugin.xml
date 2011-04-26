@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="TileFactory" name="TileFactory" schema="schema/TileFactory.exsd"/>
-   <extension-point id="Overlay" name="Overlay" schema="schema/Overlay.exsd"/>
+   <extension-point id="tileFactories" name="TileFactories" schema="schema/TileFactory.exsd"/>
+   <extension-point id="overlays" name="Overlays" schema="schema/Overlay.exsd"/>
      <extension
          point="org.eclipse.ui.preferencePages">
         <page
@@ -43,25 +43,25 @@
             name="Geoclipse"/>
    </extension>
    <extension
-         point="net.skweez.geoclipse.TileFactory">
+         point="net.skweez.geoclipse.tileFactories">
       <tilefactory
             class="net.skweez.geoclipse.map.tilefactories.internal.OsmMapnikFactory"
             name="OsmMapnikFactory"/>
    </extension>
    <extension
-         point="net.skweez.geoclipse.TileFactory">
+         point="net.skweez.geoclipse.tileFactories">
       <tilefactory
             class="net.skweez.geoclipse.map.tilefactories.internal.OsmCycleFactory"
             name="OsmCycleFactory"/>
    </extension>
    <extension
-         point="net.skweez.geoclipse.TileFactory">
+         point="net.skweez.geoclipse.tileFactories">
       <tilefactory
             class="net.skweez.geoclipse.map.tilefactories.internal.OsmTilesAtHomeFactory"
             name="OsmTilesAtHomeFactory"/>
    </extension>
    <extension
-         point="net.skweez.geoclipse.TileFactory">
+         point="net.skweez.geoclipse.tileFactories">
       <tilefactory
             class="net.skweez.geoclipse.map.tilefactories.internal.OpenStreetBrowserFactory"
             name="OpenStreetBrowserFactory"/>

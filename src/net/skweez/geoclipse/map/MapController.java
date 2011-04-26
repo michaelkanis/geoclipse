@@ -39,9 +39,9 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 
 /**
- * This class implements all the listener interfaces for mouse interactions with
- * the map. This includes panning by dragging, double click to zoom, mouse wheel
- * to zoom and middle click to center.
+ * A utility class to manage mouse and keyboard interactions. It implements all
+ * the listener interfaces for mouse and keyboard interactions with the map.
+ * This includes panning and zooming.
  * 
  * @author mks
  * @author $Author: damumbl $
@@ -63,6 +63,7 @@ public class MapController implements MouseListener, MouseMoveListener,
 	/** Holds the state of the left mouse button. */
 	private boolean isLeftMouseButtonPressed = false;
 
+	/** Time for animations. */
 	private Timer timer;
 
 	/** Set the MapView this controller belongs to. */
@@ -120,6 +121,10 @@ public class MapController implements MouseListener, MouseMoveListener,
 		return b;
 	}
 
+	/**
+	 * Attempts to adjust the zoom of the map so that the given span of latitude
+	 * and longitude will be displayed.
+	 */
 	public void zoomToSpan(double latSpan, double lonSpan) {
 
 		double currentLatSpan = map.getLatitudeSpan();
@@ -230,6 +235,15 @@ public class MapController implements MouseListener, MouseMoveListener,
 		timer.scheduleAtFixedRate(task, 0, 30);
 	}
 
+	/**
+	 * Stops any animation that may be in progress, and conditionally update the
+	 * map center to whatever offset the partial animation had achieved.
+	 * 
+	 * @param jumpToFinish
+	 *            - if true, we'll shortcut the animation to its endpoint. if
+	 *            false, we'll cut it off where it stands. <strong>This is not
+	 *            yet implemented!</strong>
+	 */
 	public void stopAnimation(boolean jumpToFinish) {
 		if (timer != null) {
 			timer.cancel();

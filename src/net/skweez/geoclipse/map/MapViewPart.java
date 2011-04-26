@@ -38,7 +38,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * An Eclipse view that shows a map.
+ * An Eclipse ViewPart that shows a {@link MapView}. This class is not intended
+ * to be part of the public API and will probably be removed later. You should
+ * not use it.
  * 
  * @author Michael Kanis
  * @author $Author: damumbl $
@@ -62,6 +64,7 @@ public class MapViewPart extends ViewPart {
 	/** The map widget. */
 	private MapView map;
 
+	/** The controller in the MVC pattern. */
 	private MapController mapController;
 
 	/** Holds all the registered tile factories. */

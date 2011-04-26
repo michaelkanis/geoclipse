@@ -23,15 +23,18 @@ package net.skweez.geoclipse.map;
 import org.eclipse.swt.graphics.Point;
 
 /**
- * A projection is a method to represent the surface of the three dimensional
- * earth to a two dimensional map. Projections always distort the surface in one
- * way or another.
+ * A projection is a method to represent the surface of the 3-dimensional earth
+ * on a 2-dimensional map. Projections always distort the surface in one way or
+ * another.
  * <p>
  * There are a number of characteristics for preserving metric properties of
  * projections. Among them are:
- * <li><i>Conformal</i> - preserving angles
- * <li><i>Equal-area</i> - preserving area ratios
- * <li><i>Equidistant</i> - preserving distance ratios
+ * <li><i>Conformal</i> - preserving angles</li>
+ * <li><i>Equal-area</i> - preserving area ratios</li>
+ * <li><i>Equidistant</i> - preserving distance ratios</li>
+ * 
+ * <p>
+ * You obtain a Projection from {@link MapView#getProjection()}.
  * 
  * @author Michael Kanis
  * @author $Author: damumbl $
@@ -41,9 +44,8 @@ import org.eclipse.swt.graphics.Point;
 public abstract class Projection {
 
 	/**
-	 * Given a position (latitude/longitude pair) and a zoom level, returns the
-	 * appropriate point in <em>pixels</em>. The zoom level is necessary because
-	 * pixel coordinates are in terms of the zoom level.
+	 * Given a position (latitude/longitude pair) returns the appropriate point
+	 * in <em>pixels</em>.
 	 */
 	public abstract Point geoToPixel(GeoPoint c);
 

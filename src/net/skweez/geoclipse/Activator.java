@@ -58,10 +58,7 @@ public class Activator extends AbstractUIPlugin {
 	private static final String PLUGIN_ID = "net.skweez.geoclipse";
 
 	/** The extension point ID for tile factories. */
-	/* package */static final String TILE_FACTORY_EXTENSION_POINT = "net.skweez.geoclipse.TileFactory";
-
-	/** The extension point ID for map overlays. */
-	/* package */static final String OVERLAY_EXTENSION_POINT = "net.skweez.geoclipse.Overlay";
+	/* package */static final String TILE_FACTORY_EXTENSION_POINT = "net.skweez.geoclipse.tileFactories";
 
 	/** The shared instance. */
 	private static Activator plugin;
@@ -82,7 +79,7 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 
 		tileFactories = readExtensionList(TILE_FACTORY_EXTENSION_POINT);
-		overlays = readExtensionList(OVERLAY_EXTENSION_POINT);
+		overlays = readExtensionList(Overlay.EXTENSION_POINT);
 	}
 
 	/** {@inheritDoc} */
