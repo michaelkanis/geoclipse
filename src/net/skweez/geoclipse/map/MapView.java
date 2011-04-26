@@ -411,8 +411,6 @@ public class MapView extends Canvas {
 
 	/** Draws overlays as described in {@link #getOverlays()}. */
 	private void drawOverlays(GC gc) {
-		gc.setClipping((org.eclipse.swt.graphics.Rectangle) null);
-
 		synchronized (overlays) {
 			Iterator<Overlay> iterator = overlays.iterator();
 			while (iterator.hasNext()) {
