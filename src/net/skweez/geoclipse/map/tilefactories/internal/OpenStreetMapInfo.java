@@ -1,31 +1,27 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: OpenStreetMapInfo.java 558 2009-06-27 08:24:48Z damumbl $
- *
- * Copyright (C) 2009 Michael Kanis and others
+/*
+ *  Copyright (C) 2009-2011 Michael Kanis and others
  *  
- * This file is part of Geoclipse.
+ *  This file is part of Geoclipse.
  *
- * Geoclipse is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 2 of the License, or
- * (at your option) any later version.
+ *  Geoclipse is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 2 of the License, or
+ *  (at your option) any later version.
  *
- * Geoclipse is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  Geoclipse is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  You should have received a copy of the GNU General Public License
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.skweez.geoclipse.map.internal.Tile;
-
 
 /**
  * 
@@ -53,10 +49,11 @@ public class OpenStreetMapInfo extends MapInfo {
 	/** {@inheritDoc} */
 	@Override
 	public URL getTileUrl(Tile tile) {
-		final StringBuilder url = new StringBuilder(this.getBaseURL()).append(
-				URL_SEPARATOR).append(tile.getZoom()).append(URL_SEPARATOR)
-				.append(tile.getX()).append(URL_SEPARATOR).append(tile.getY())
-				.append('.').append(FILE_EXT);
+		final StringBuilder url = new StringBuilder(this.getBaseURL())
+				.append(URL_SEPARATOR).append(tile.getZoom())
+				.append(URL_SEPARATOR).append(tile.getX())
+				.append(URL_SEPARATOR).append(tile.getY()).append('.')
+				.append(FILE_EXT);
 
 		try {
 			return new URL(url.toString());

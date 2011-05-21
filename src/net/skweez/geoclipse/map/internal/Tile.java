@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * $Id: Tile.java 657 2009-12-30 12:27:37Z damumbl $
- * de.byteholder.geoclipse.map
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -17,8 +14,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map.internal;
 
 import java.util.Observable;
@@ -34,12 +31,8 @@ import org.eclipse.swt.graphics.Image;
  * The Tile class represents a particular square image piece of the world bitmap
  * at a particular zoom level.
  * 
- * @author Joshua Marinacci
  * @author Michael Kanis
  * @author Wolfgang Schramm
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating RED Rev: 475
  */
 
 public class Tile extends Observable {

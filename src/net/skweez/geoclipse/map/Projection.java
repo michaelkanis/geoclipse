@@ -1,6 +1,5 @@
-/* *****************************************************************************
- *  Copyright (C) 2008-2009 Michael Kanis and others
- *  $Id: IProjection.java 649 2009-12-29 10:22:00Z damumbl $
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -15,9 +14,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- *******************************************************************************/
-
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map;
 
 import org.eclipse.swt.graphics.Point;
@@ -37,9 +35,6 @@ import org.eclipse.swt.graphics.Point;
  * You obtain a Projection from {@link MapView#getProjection()}.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 649 $
- * @levd.rating YELLOW Rev: 503
  */
 public abstract class Projection {
 

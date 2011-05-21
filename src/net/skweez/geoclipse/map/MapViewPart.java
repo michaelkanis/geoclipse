@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * $Id: MapView.java 657 2009-12-30 12:27:37Z damumbl $
- * de.byteholder.geoclipse.map
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -17,9 +14,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
-
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map;
 
 import java.util.List;
@@ -43,9 +39,6 @@ import org.eclipse.ui.part.ViewPart;
  * not use it.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating YELLOW Rev: 484
  */
 public class MapViewPart extends ViewPart {
 

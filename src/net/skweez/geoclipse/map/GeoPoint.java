@@ -1,5 +1,5 @@
-/* *****************************************************************************
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -14,9 +14,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- *******************************************************************************/
-
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map;
 
 /**

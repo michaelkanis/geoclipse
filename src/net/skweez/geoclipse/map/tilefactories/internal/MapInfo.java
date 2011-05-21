@@ -1,12 +1,21 @@
 /*
- * TileFactoryInfo.java
+ *  Copyright (C) 2008-2011 Michael Kanis and others
+ *  
+ *  This file is part of Geoclipse.
  *
- * Created on June 26, 2006, 10:47 AM
+ *  Geoclipse is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 2 of the License, or
+ *  (at your option) any later version.
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ *  Geoclipse is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.awt.Dimension;
@@ -14,7 +23,6 @@ import java.awt.geom.Point2D;
 import java.net.URL;
 
 import net.skweez.geoclipse.map.internal.Tile;
-
 
 /**
  * A MapInfo encapsulates all information specific to a map server. This
@@ -73,8 +81,8 @@ public abstract class MapInfo {
 		Dimension dimension = getMapSize(zoom);
 		dimension.height *= getTileSize();
 		dimension.width *= getTileSize();
-		return new Point2D.Double(dimension.getWidth() / 2d, dimension
-				.getHeight() / 2d);
+		return new Point2D.Double(dimension.getWidth() / 2d,
+				dimension.getHeight() / 2d);
 	}
 
 	/**

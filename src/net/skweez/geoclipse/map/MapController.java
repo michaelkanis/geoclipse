@@ -1,24 +1,21 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: MapMouseListener.java 657 2009-12-30 12:27:37Z damumbl $
- *
- * Copyright (C) 2009 mks and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
- * This file is part of Geoclipse.
+ *  This file is part of Geoclipse.
  *
- * Geoclipse is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 2 of the License, or
- * (at your option) any later version.
+ *  Geoclipse is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 2 of the License, or
+ *  (at your option) any later version.
  *
- * Geoclipse is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  Geoclipse is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  You should have received a copy of the GNU General Public License
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map;
 
 import java.util.Timer;
@@ -43,10 +40,7 @@ import org.eclipse.swt.graphics.Point;
  * the listener interfaces for mouse and keyboard interactions with the map.
  * This includes panning and zooming.
  * 
- * @author mks
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating RED Rev:
+ * @author Michael Kanis
  */
 public class MapController implements MouseListener, MouseMoveListener,
 		MouseWheelListener, KeyListener, PaintListener {

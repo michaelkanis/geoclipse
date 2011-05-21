@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2008-2011 Michael Kanis and others
- * $Id: EquirectangularProjection.java 649 2009-12-29 10:22:00Z damumbl $
  *  
  * This file is part of Geoclipse.
  *

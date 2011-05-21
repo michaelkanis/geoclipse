@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
+ *  
+ *  This file is part of Geoclipse.
+ *
+ *  Geoclipse is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Geoclipse is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map.preferences;
 
 import java.util.List;
@@ -21,7 +39,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-
 
 /**
  * This preference page shows all available tile factories. It will allow the
@@ -89,8 +106,8 @@ public class PrefPageMapFactories extends PreferencePage implements
 		factoriesLabel.setText(Messages.pref_map_lbl_avail_map_provider);
 
 		viewer = new TableViewer(uiContainer);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(
-				viewer.getTable());
+		GridDataFactory.fillDefaults().grab(true, true)
+				.applyTo(viewer.getTable());
 
 		viewer.setLabelProvider(new TileFactoryLabelProvider());
 		viewer.setContentProvider(new MapContentProvider());

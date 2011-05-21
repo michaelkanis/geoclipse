@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: MapImageCache.java 558 2009-06-27 08:24:48Z damumbl $
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -17,8 +14,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map.internal;
 
 import java.util.Collection;
@@ -34,12 +31,8 @@ import org.eclipse.swt.graphics.Image;
 /**
  * This cache manages map images by saving the images for the offline mode.
  * 
- * @author Joshua Marinacci
  * @author Michael Kanis
  * @author Wolfgang Schramm
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating RED Rev:
  */
 public abstract class MapImageCache {
 

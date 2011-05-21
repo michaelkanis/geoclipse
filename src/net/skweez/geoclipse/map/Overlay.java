@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
+ *  
+ *  This file is part of Geoclipse.
+ *
+ *  Geoclipse is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Geoclipse is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.skweez.geoclipse.map;
 
 import org.eclipse.swt.graphics.GC;
@@ -7,10 +25,7 @@ import org.eclipse.swt.graphics.GC;
  * overlay, use the extension point <code>net.skweez.geoclipse.overlays</code>
  * and subclass this class.
  * 
- * @author mks
- * @author $Author: mks $
- * @version $Rev$
- * @levd.rating RED Hash:
+ * @author Michael Kanis
  */
 public abstract class Overlay {
 
