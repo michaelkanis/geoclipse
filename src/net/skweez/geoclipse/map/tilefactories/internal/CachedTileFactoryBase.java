@@ -147,9 +147,9 @@ public abstract class CachedTileFactoryBase extends BaseTileFactory {
 	public Tile getTile(int x, final int y, final int zoom) {
 
 		// wrap the tiles horizontally --> mod the x with the max width
-		x = x % getMapSize(zoom).width;
+		x = x % getMapSize(zoom);
 		if (x < 0) {
-			x += getMapSize(zoom).width;
+			x += getMapSize(zoom);
 		}
 
 		return mapImageCache.obtainTile(x, y, zoom);

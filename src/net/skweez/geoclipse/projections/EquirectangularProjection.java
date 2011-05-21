@@ -18,8 +18,6 @@
  */
 package net.skweez.geoclipse.projections;
 
-import java.awt.Dimension;
-
 import net.skweez.geoclipse.map.GeoPoint;
 import net.skweez.geoclipse.map.MapView;
 import net.skweez.geoclipse.map.Projection;
@@ -52,9 +50,9 @@ public class EquirectangularProjection extends Projection {
 	/** {@inheritDoc} */
 	@Override
 	public Point geoToPixel(GeoPoint c) {
-		Dimension dimension = mapView.getMapSizeInPixels();
-		return new Point((int) lonToX(c.getLongitude(), dimension.width),
-				(int) latToY(c.getLatitude(), dimension.height));
+		int mapSize = mapView.getMapSizeInPixels();
+		return new Point((int) lonToX(c.getLongitude(), mapSize), (int) latToY(
+				c.getLatitude(), mapSize));
 	}
 
 	/** Converts a given longitude to a x coordinate using a given map width. */
@@ -72,9 +70,8 @@ public class EquirectangularProjection extends Projection {
 	/** {@inheritDoc} */
 	@Override
 	public GeoPoint pixelToGeo(int pixelX, int pixelY) {
-		Dimension dimension = mapView.getMapSizeInPixels();
-		return new GeoPoint(yToLat(pixelY, dimension.height), xToLon(pixelX,
-				dimension.width));
+		int mapSize = mapView.getMapSizeInPixels();
+		return new GeoPoint(yToLat(pixelY, mapSize), xToLon(pixelX, mapSize));
 	}
 
 	/** Converts a given x coordinate to a longitude using a given map width. */

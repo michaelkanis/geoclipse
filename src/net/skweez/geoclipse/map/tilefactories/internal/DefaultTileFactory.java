@@ -18,7 +18,6 @@
  */
 package net.skweez.geoclipse.map.tilefactories.internal;
 
-import java.awt.Dimension;
 
 /**
  * TODO
@@ -38,7 +37,7 @@ public class DefaultTileFactory extends CachedTileFactoryBase {
 
 	/** Returns the size of the world bitmap at the given zoom in <b>tiles</b>. */
 	@Override
-	public Dimension getMapSize(final int zoom) {
+	public int getMapSize(final int zoom) {
 		return mapInfo.getMapSize(zoom);
 	}
 

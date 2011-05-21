@@ -18,7 +18,6 @@
  */
 package net.skweez.geoclipse.map;
 
-import java.awt.Dimension;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -145,7 +144,7 @@ public class MapView extends Canvas {
 		return new Point(x, y);
 	}
 
-	public Dimension getMapSizeInPixels() {
+	public int getMapSizeInPixels() {
 		return getTileFactory().getMapSizeInPixels(getZoomLevel());
 	}
 
@@ -381,7 +380,7 @@ public class MapView extends Canvas {
 	 */
 	private int calculateTileOffset(int pixel, boolean limitToMapSize) {
 		if (limitToMapSize) {
-			pixel = Math.min(getMapSizeInPixels().width, pixel);
+			pixel = Math.min(getMapSizeInPixels(), pixel);
 			pixel = Math.max(0, pixel - 1);
 		}
 		return (int) Math.floor((double) pixel / tileFactory.getTileSize());

@@ -18,8 +18,6 @@
  */
 package net.skweez.geoclipse.map.tilefactories.internal;
 
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
 import java.net.URL;
 
 import net.skweez.geoclipse.map.internal.Tile;
@@ -70,24 +68,11 @@ public abstract class MapInfo {
 	}
 
 	/**
-	 * Returns a {@link Point2D} that points to the center of the map at the
-	 * given zoom.
-	 */
-	private Point2D getMapCenterInPixelsAtZoom(final int zoom) {
-		Dimension dimension = getMapSize(zoom);
-		dimension.height *= getTileSize();
-		dimension.width *= getTileSize();
-		return new Point2D.Double(dimension.getWidth() / 2d,
-				dimension.getHeight() / 2d);
-	}
-
-	/**
 	 * Returns the size of the map at the given zoom, in tiles (num tiles tall
 	 * by num tiles wide).
 	 */
-	public Dimension getMapSize(final int zoom) {
-		return new Dimension(getMapWidthInTilesAtZoom(zoom),
-				getMapWidthInTilesAtZoom(zoom));
+	public int getMapSize(final int zoom) {
+		return getMapWidthInTilesAtZoom(zoom);
 	}
 
 	/** Returns the number of tiles the map is wide at the given zoom level. */

@@ -18,7 +18,6 @@
  */
 package net.skweez.geoclipse.map.tilefactories;
 
-import java.awt.Dimension;
 
 /**
  * A base class for tile factories. You can extend this class instead of
@@ -45,8 +44,7 @@ public abstract class BaseTileFactory implements ITileFactory {
 
 	/** {@inheritDoc} */
 	@Override
-	public Dimension getMapSizeInPixels(int zoom) {
-		return new Dimension(getMapSize(zoom).width * getTileSize(),
-				getMapSize(zoom).height * getTileSize());
+	public int getMapSizeInPixels(int zoom) {
+		return getMapSize(zoom) * getTileSize();
 	}
 }

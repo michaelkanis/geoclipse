@@ -18,8 +18,6 @@
  */
 package net.skweez.geoclipse.map.tilefactories;
 
-import java.awt.Dimension;
-
 import net.skweez.geoclipse.map.internal.Tile;
 
 /**
@@ -38,13 +36,13 @@ public interface ITileFactory {
 	 * getTileSize() to determine the pixel width/height for the map at the
 	 * given zoom level.
 	 */
-	public abstract Dimension getMapSize(int zoom);
+	public abstract int getMapSize(int zoom);
 
 	/**
 	 * Convenient method. This is the same as {@link #getMapSize(int)} *
 	 * {@link #getTileSize()}.
 	 */
-	public abstract Dimension getMapSizeInPixels(int zoom);
+	public abstract int getMapSizeInPixels(int zoom);
 
 	/**
 	 * Return the Tile at a given TilePoint and zoom level. This method must not
