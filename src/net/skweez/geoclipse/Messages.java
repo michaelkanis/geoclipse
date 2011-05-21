@@ -15,9 +15,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
- *   
- * @ConQAT.Rating YELLOW Hash: 573FE1A5B576321F051672C75FA8CE22
  */
+// @ConQAT.Rating YELLOW Hash: 573FE1A5B576321F051672C75FA8CE22
 package net.skweez.geoclipse;
 
 import org.eclipse.osgi.util.NLS;
