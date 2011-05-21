@@ -187,7 +187,7 @@ public class MapView extends Canvas {
 	}
 
 	/** Set the tile factory for the map. Causes a redraw of the map. */
-	/* package */void setTileFactory(final ITileFactory factory) {
+	public void setTileFactory(final ITileFactory factory) {
 		if (factory == null) {
 			return;
 		}

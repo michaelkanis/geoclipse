@@ -16,12 +16,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.skweez.geoclipse.map;
+package net.skweez.geoclipse.map.internal;
 
 import java.util.List;
 
 import net.skweez.geoclipse.Activator;
 import net.skweez.geoclipse.Constants;
+import net.skweez.geoclipse.map.GeoPoint;
+import net.skweez.geoclipse.map.MapController;
+import net.skweez.geoclipse.map.MapView;
 import net.skweez.geoclipse.map.tilefactories.ITileFactory;
 
 import org.eclipse.core.runtime.Assert;
@@ -34,9 +37,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * An Eclipse ViewPart that shows a {@link MapView}. This class is not intended
- * to be part of the public API and will probably be removed later. You should
- * not use it.
+ * An Eclipse ViewPart that shows a {@link MapView}.
  * 
  * @author Michael Kanis
  */

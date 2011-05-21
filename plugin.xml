@@ -34,7 +34,7 @@
       <view
             allowMultiple="true"
             category="net.skweez.geoclipse.mapcategory"
-            class="net.skweez.geoclipse.map.MapViewPart"
+            class="net.skweez.geoclipse.map.internal.MapViewPart"
             icon="icons/map.png"
             id="net.skweez.geoclipse.mapview"
             name="Map"/>
