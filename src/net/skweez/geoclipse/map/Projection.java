@@ -16,6 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
  */
+// @ConQAT.Rating YELLOW Hash: DF4E13918E7F8503FD81695B48450C27
 package net.skweez.geoclipse.map;
 
 import org.eclipse.swt.graphics.Point;
