@@ -28,9 +28,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * Category page for the map.
  * 
  * @author Wolfgang Schramm
- * @author $Author: damumbl $
- * @version $Rev: 481 $
- * @levd.rating YELLOW Rev: 481
+ * @author Author: Michael Kanis
  */
 public class PrefPageMap extends PreferencePage implements
 		IWorkbenchPreferencePage {

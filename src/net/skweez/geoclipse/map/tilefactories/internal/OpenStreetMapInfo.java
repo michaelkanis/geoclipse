@@ -26,9 +26,6 @@ import net.skweez.geoclipse.map.internal.Tile;
 /**
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating RED Rev:
  */
 public class OpenStreetMapInfo extends MapInfo {
 

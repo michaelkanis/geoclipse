@@ -23,9 +23,6 @@ package net.skweez.geoclipse.map.tilefactories.internal;
  * are rendered using the Osmarender program.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating YELLOW Rev: 483
  */
 public class OsmTilesAtHomeFactory extends DefaultTileFactory {
 

@@ -42,13 +42,9 @@ import org.eclipse.swt.widgets.Display;
 /**
  * TODO class comment
  * 
- * @author Joshua Marinacci
  * @author Michael Kanis
  * @author Wolfgang Schramm
  * @author Alfred Barten
- * @author $Author: damumbl $
- * @version $Rev: 561 $
- * @levd.rating RED Rev:
  */
 public abstract class CachedTileFactoryBase extends BaseTileFactory {
 

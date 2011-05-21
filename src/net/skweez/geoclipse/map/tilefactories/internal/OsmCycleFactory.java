@@ -22,9 +22,6 @@ package net.skweez.geoclipse.map.tilefactories.internal;
  * The OpenStreetMap bicycle map.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating YELLOW Rev: 483
  */
 public class OsmCycleFactory extends DefaultTileFactory {
 

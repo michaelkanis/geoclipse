@@ -30,11 +30,7 @@ import net.skweez.geoclipse.map.internal.Tile;
  * depth of the tiles. Theoretically any map server can be used by installing a
  * customized TileFactoryInfo.
  * 
- * @author Joshua Marinacci
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating RED Rev:
  */
 public abstract class MapInfo {
 

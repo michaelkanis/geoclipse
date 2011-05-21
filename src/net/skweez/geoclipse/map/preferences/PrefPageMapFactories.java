@@ -46,9 +46,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * 
  * @author Wolfgang Schramm
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 493 $
- * @levd.rating RED Rev:
  */
 public class PrefPageMapFactories extends PreferencePage implements
 		IWorkbenchPreferencePage {

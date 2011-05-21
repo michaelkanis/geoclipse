@@ -21,11 +21,9 @@ package net.skweez.geoclipse.map.tilefactories.internal;
 import java.awt.Dimension;
 
 /**
+ * TODO
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 558 $
- * @levd.rating RED Rev:
  */
 public class DefaultTileFactory extends CachedTileFactoryBase {
 

@@ -29,9 +29,6 @@ import net.skweez.geoclipse.map.internal.Tile;
  * specific to the {@link NasaBlueMarbleFactory}.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 561 $
- * @levd.rating YELLOW Rev: 561
  */
 public class WmsMapInfo extends MapInfo {
 

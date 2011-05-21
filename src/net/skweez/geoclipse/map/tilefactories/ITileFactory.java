@@ -28,9 +28,6 @@ import net.skweez.geoclipse.map.internal.Tile;
  * but extend {@link BaseTileFactory}.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 651 $
- * @levd.rating YELLOW Rev: 561
  */
 public interface ITileFactory {
 
