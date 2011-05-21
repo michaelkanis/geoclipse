@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * $Id: Messages.java 657 2009-12-30 12:27:37Z damumbl $
- * de.byteholder.geoclipse.map
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -17,8 +14,10 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ *   
+ * @ConQAT.Rating YELLOW Hash: 573FE1A5B576321F051672C75FA8CE22
+ */
 package net.skweez.geoclipse;
 
 import org.eclipse.osgi.util.NLS;
@@ -27,9 +26,6 @@ import org.eclipse.osgi.util.NLS;
  * Contains constants for accessing the NLS strings of this bundle.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating YELLOW Rev: 475
  */
 /* package */abstract class Messages extends NLS {
 

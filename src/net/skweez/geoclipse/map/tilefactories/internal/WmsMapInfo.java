@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: WmsMapInfo.java 561 2009-06-27 14:16:16Z damumbl $
- *
- * Copyright (C) 2009 Michael Kanis and others
+/*
+ * Copyright (C) 2009-2011 Michael Kanis and others
  *  
  * This file is part of Geoclipse.
  *
@@ -18,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ */
 package net.skweez.geoclipse.map.tilefactories.internal;
 
 import java.awt.Dimension;
@@ -26,7 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.skweez.geoclipse.map.internal.Tile;
-
 
 /**
  * A {@link MapInfo} for WMS based servers. It is, however, currently pretty

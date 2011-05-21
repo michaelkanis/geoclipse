@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: Constants.java 657 2009-12-30 12:27:37Z damumbl $
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -18,7 +15,9 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ * 
+ * @ConQAT.Rating YELLOW Hash: AD3BA7330C4B08683C183778EDAF275C
+ */
 package net.skweez.geoclipse;
 
 import net.skweez.geoclipse.map.GeoPoint;
@@ -33,9 +32,6 @@ import org.eclipse.swt.widgets.Display;
  * A class containing constants used throughout the program.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating RED Rev:
  */
 public abstract class Constants {
 

@@ -1,8 +1,5 @@
-/* *****************************************************************************
- * de.byteholder.geoclipse.map
- * $Id: Activator.java 657 2009-12-30 12:27:37Z damumbl $
- *
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -17,8 +14,10 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ *   
+ * @ConQAT.Rating YELLOW Hash: 95598D665CD289AD068F5D0487E78D1F
+ */
 package net.skweez.geoclipse;
 
 import static net.skweez.geoclipse.Constants.ERROR_IMG_KEY;
@@ -48,9 +47,6 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 657 $
- * @levd.rating YELLOW Rev: 484
  */
 public class Activator extends AbstractUIPlugin {
 

@@ -1,6 +1,5 @@
-/* *****************************************************************************
- * Copyright (C) 2009 Michael Kanis and others
- * $Id: MercatorProjection.java 503 2009-04-11 08:36:01Z damumbl $
+/*
+ * Copyright (C) 2009-2011 Michael Kanis and others
  *  
  * This file is part of Geoclipse.
  *
@@ -16,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ */
 
 package net.skweez.geoclipse.projections;
 
@@ -37,9 +36,6 @@ import net.skweez.geoclipse.util.MathUtils;
  * description.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 503 $
- * @levd.rating YELLOW Rev: 503
  */
 public final class MercatorProjection extends EquirectangularProjection {
 

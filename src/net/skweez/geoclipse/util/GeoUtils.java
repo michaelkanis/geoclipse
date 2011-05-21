@@ -1,5 +1,5 @@
-/* *****************************************************************************
- *  Copyright (C) 2008 Michael Kanis and others
+/*
+ *  Copyright (C) 2008-2011 Michael Kanis and others
  *  
  *  This file is part of Geoclipse.
  *
@@ -14,8 +14,10 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- *******************************************************************************/
+ *  along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>.
+ *   
+ * @ConQAT.Rating YELLOW Hash: FB7FD7B0834903EBE315ECE993E1B3D7
+ */
 
 package net.skweez.geoclipse.util;
 
@@ -25,9 +27,6 @@ import net.skweez.geoclipse.map.GeoPoint;
  * A utility class for geographical calculations.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 464 $
- * @levd.rating YELLOW Rev: 464
  */
 public class GeoUtils {
 
@@ -39,8 +38,7 @@ public class GeoUtils {
 	private static final double EARTH_RADIUS = 6380d;
 
 	/** Returns the distance between two points on earth, pos1 and pos2 in km. */
-	public static double getDistance(final GeoPoint pos1,
-			final GeoPoint pos2) {
+	public static double getDistance(final GeoPoint pos1, final GeoPoint pos2) {
 
 		final double lat1 = Math.toRadians(pos1.getLatitude());
 		final double lon1 = Math.toRadians(pos1.getLongitude());

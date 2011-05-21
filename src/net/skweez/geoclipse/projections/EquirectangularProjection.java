@@ -1,5 +1,5 @@
-/* *****************************************************************************
- * Copyright (C) 2008-2009 Michael Kanis and others
+/*
+ * Copyright (C) 2008-2011 Michael Kanis and others
  * $Id: EquirectangularProjection.java 649 2009-12-29 10:22:00Z damumbl $
  *  
  * This file is part of Geoclipse.
@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Geoclipse.  If not, see <http://www.gnu.org/licenses/>. 
- ******************************************************************************/
+ */
 package net.skweez.geoclipse.projections;
 
 import java.awt.Dimension;
@@ -41,9 +41,6 @@ import org.eclipse.swt.graphics.Point;
  * detailed description.
  * 
  * @author Michael Kanis
- * @author $Author: damumbl $
- * @version $Rev: 649 $
- * @levd.rating YELLOW Rev: 503
  */
 public class EquirectangularProjection extends Projection {
 
